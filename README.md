@@ -22,7 +22,7 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 #### WireFrame
 [Figma]()
 
-<img width="517" alt="Screenshot 2023-09-28 025951" src="https://i.imgur.com/AmRaq4K_d.jpg?maxwidth=520&shape=thumb&fidelity=high">
+<img width="517" alt="Screenshot 2023-09-28 025951" src="">
 
 
 ***
