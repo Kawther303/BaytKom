@@ -14,7 +14,7 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 [Trello board](https://trello.com/b/eqmUkVsq/baytkom)
 
 #### Entity Relationship Diagram
-[ERD]() 
+[ERD](https://i.imgur.com/ZiSreP5_d.jpg?maxwidth=520&shape=thumb&fidelity=high) 
 
 <img width="344" alt="Screenshot 2023-10-02 225831" src="">
 
