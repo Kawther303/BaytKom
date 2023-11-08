@@ -11,7 +11,7 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 ***
 ## Getting Started
 #### Task Tracking
-[Trello board]()
+[Trello board](https://trello.com/b/eqmUkVsq/baytkom)
 
 #### Entity Relationship Diagram
 [ERD]() 
