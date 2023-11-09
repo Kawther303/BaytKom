@@ -11,8 +11,8 @@ urlpatterns = [
   path('rooms/', views.rooms_index, name='index'),
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('accounts/signup/', views.signup, name='signup'),
-path('accounts/profile/', views.profile, name='profile'),
-path('password-change/', ChangePasswordView.as_view(), name='password_change'),
+  path('accounts/profile/', views.profile, name='profile'),
+  path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
     # Room url
   path('rooms/<int:room_id>/', views.rooms_detail, name='detail'),
