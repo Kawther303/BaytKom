@@ -17,11 +17,9 @@ urlpatterns = [
   path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
     # Room url
-
   path('rooms/<int:room_id>/', views.rooms_detail, name='detail'),
   path('rooms/<int:pk>/update/', views.RoomUpdate.as_view(), name='rooms_update'),
   path('rooms/<int:pk>/delete/', views.RoomDelete.as_view(), name='rooms_delete'),
-
 
   # Facility
   path('facilities/', views.FacilityList.as_view(), name='facilities_index'),
