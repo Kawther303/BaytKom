@@ -3,12 +3,13 @@ from django import forms
 from .models import Profile
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from .models import Room
+# from .models import Room
 
-class RoomForm(ModelForm):
-  class Meta:
-    model =Room
-    fields = ['roomType']
+
+# class RoomForm(ModelForm):
+#   class Meta:
+#     model =Room
+#     fields = ['roomType']
 
 TYPES=(
   ('A','ADMIN'),
@@ -41,4 +42,5 @@ class UpdateProfileForm(forms.ModelForm):
       # class Meta:
       #  model = Profile
       #  fields = ['full_name', 'user_type', 'address', 'phone_number', 'image' ]
+
 
