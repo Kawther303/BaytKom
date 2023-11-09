@@ -30,6 +30,7 @@ class Facility(models.Model):
 
 # Create your models here.
 
+
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   full_name = models.CharField(max_length=100)
@@ -71,12 +72,12 @@ class Booking(models.Model):
   guest_name = models.CharField(max_length=100,default="")
   guest_email = models.EmailField(default="")
   guest_mobile = models.CharField(max_length=25,default="")
-  price =  models.FloatField()
+  price =  models.FloatField( default=0.00)
 
   def __str__(self):
     return self.name
   
-  # def get_absolute_url(self):
-  #   return reverse('', kwargs={'pk': self.id})
 
+  def get_absolute_url(self):
+    return reverse('toys_detail', kwargs={'pk': self.id})
 

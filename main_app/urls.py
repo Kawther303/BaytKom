@@ -12,7 +12,7 @@ urlpatterns = [
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('accounts/signup/', views.signup, name='signup'),
 
-  path('rooms/<int:room_id>/booking/', views.BookCreate.as_view(), name='book_create'),
+  path('rooms/booking/', views.BookCreate.as_view(), name='book_create'),
   path('accounts/profile/', views.profile, name='profile'),
   path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
