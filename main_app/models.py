@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 RoomType = (
-  ('1', 'Sigle Room'),
+  ('1', 'Single Room'),
   ('2', 'Double Room'),
   ('3', 'Shared Room'),
   ('4', 'Studio'),
@@ -28,9 +28,7 @@ class Facility(models.Model):
     return reverse('facilities_detail', kwargs={'pk': self.id})
 
 
-
 # Create your models here.
-
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -41,6 +39,7 @@ class Profile(models.Model):
   image = models.ImageField(upload_to='main_app/static/uploads', default='')
   def _str_(self):
     return self.user.username
+
 
 class Room(models.Model):
   name = models.CharField(max_length=100)
@@ -64,16 +63,20 @@ class Room(models.Model):
   def get_absolute_url(self):
     return reverse('detail', kwargs={'room_id': self.id}) 
 
+class Booking(models.Model):
+  # user = models.ForeignKey(User, on_delete=models.CASCADE)
+  room = models.ForeignKey(Room, on_delete=models.CASCADE)
+  from_date = models.DateField('from date')
+  to_date = models.DateField('to date')
+  guest_name = models.CharField(max_length=100,default="")
+  guest_email = models.EmailField(default="")
+  guest_mobile = models.CharField(max_length=25,default="")
+  price =  models.FloatField()
 
-
-
-
-
-
-
-
-
-
-
+  def __str__(self):
+    return self.name
+  
+  # def get_absolute_url(self):
+  #   return reverse('', kwargs={'pk': self.id})
 
 

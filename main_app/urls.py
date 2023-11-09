@@ -12,6 +12,7 @@ urlpatterns = [
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('accounts/signup/', views.signup, name='signup'),
 
+  path('rooms/<int:room_id>/booking/', views.BookCreate.as_view(), name='book_create'),
   path('accounts/profile/', views.profile, name='profile'),
   path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
@@ -28,6 +29,5 @@ urlpatterns = [
   path('facilities/create/', views.FacilityCreate.as_view(), name='facilities_create'),
   path('facilities/<int:pk>/update/', views.FacilityUpdate.as_view(), name='facilities_update'),
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
-
 
 ]

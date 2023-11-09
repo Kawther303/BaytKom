@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room, Facility
+
+from .models import Room, Booking,  Facility
+
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -52,7 +54,15 @@ class RoomDelete(LoginRequiredMixin, DeleteView):
   success_url = '/rooms/'
 
 
+
+class BookCreate(CreateView):
+  model = Booking
+  fields = ['room', 'from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile','price']
+  success_url = '/rooms/'
+
+
 @login_required
+
 def rooms_detail(request, room_id):
   room = Room.objects.get(id=room_id)
   return render(request, 'rooms/detail.html', {'room': room})
