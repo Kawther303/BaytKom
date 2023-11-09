@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 body{
-  background-image: url('../uploads/Sand to Blue.jpg');
+  background-color: #d8dddf;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
   /* font-family: 'Times New Roman', Times, serif; */
-  font-family: 'Dancing Script', cursive;
+  /* font-family: 'Dancing Script', cursive; */
   /* color: black; */
   /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
 }

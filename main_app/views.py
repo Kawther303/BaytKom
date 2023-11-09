@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room
+from .models import Room, Booking
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
 
@@ -34,6 +34,12 @@ class RoomUpdate(UpdateView):
 
 class RoomDelete(DeleteView):
   model = Room
+  success_url = '/rooms/'
+
+
+class BookCreate(CreateView):
+  model = Booking
+  fields = ['room', 'from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile','price']
   success_url = '/rooms/'
 
 def rooms_detail(request, room_id):
