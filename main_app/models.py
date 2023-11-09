@@ -10,7 +10,8 @@ RoomType = (
   ('3', 'Shared Room'),
   ('4', 'Studio'),
   ('5', 'Suite'),
-  ('6','Guest House')
+  ('6','Guest House'),
+  ('7','Duplex')
 )
 
 
@@ -20,7 +21,7 @@ class Room(models.Model):
   roomType = models.CharField(max_length=1, choices=RoomType, default=RoomType[0][0])
   image = models.ImageField(upload_to = "main_app/static/uploads", default="")
   size = models.CharField(max_length=100)
-  price = models.IntegerField()
+  # price = models.IntegerField() 
   description = models.TextField(max_length=250)
   country = models.CharField(max_length=100)    
   city = models.CharField(max_length=100)
@@ -30,3 +31,10 @@ class Room(models.Model):
 
   def __str__(self):
     return f"{self.name}"
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'room_id': self.id}) 
+
+
+
+

@@ -17,6 +17,19 @@ def rooms_index(request):
 
 class RoomCreate(CreateView):
   model = Room
-  fields = ['name', 'roomType', 'description', 'image', 'size', 'price', 'country', 'city', 'street', 'address', 'location']
+  fields = ['name', 'roomType', 'description', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
+
+class RoomUpdate(UpdateView):
+  model = Room
+  fields = ['roomType', 'description', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
+
+class RoomDelete(DeleteView):
+  model = Room
+  success_url = '/rooms/'
+
+def rooms_detail(request, room_id):
+  room = Room.objects.get(id=room_id)
+  return render(request, 'rooms/detail.html', {'room': room})
+
 
 

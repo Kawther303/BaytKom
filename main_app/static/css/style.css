@@ -19,4 +19,5 @@ text-align: right;
 .flex-container{
   display: flex;
   justify-content: space-between;
+  align-content: center;
 }
