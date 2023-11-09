@@ -16,8 +16,8 @@ RoomType = (
 
 class Facility(models.Model):
   name = models.CharField(max_length=100, default="")
-  description = models.TextField(max_length=250)
-  icon = models.ImageField(upload_to = "main_app/static/uploads", default="")
+  description = models.TextField(max_length=250, blank=True)
+  icon = models.ImageField(upload_to = "main_app/static/facilityImg", blank=True, null=True)
 
 
   def __str__(self):

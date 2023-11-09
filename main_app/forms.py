@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Room
+# from .models import Room
 
-class RoomForm(ModelForm):
-  class Meta:
-    model =Room
-    fields = ['roomType']
+# class RoomForm(ModelForm):
+#   class Meta:
+#     model =Room
+#     fields = ['roomType']
