@@ -6,7 +6,9 @@ from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from .models import Room
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
+
 from django.contrib.auth import login
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -38,6 +40,7 @@ def rooms_detail(request, room_id):
   room = Room.objects.get(id=room_id)
   return render(request, 'rooms/detail.html', {'room': room})
 
+
 def signup(request):
   error_message = ''
   if request.method == 'POST':
@@ -53,4 +56,5 @@ def signup(request):
   context = {'form': form,
   'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
 

@@ -81,11 +81,9 @@ WSGI_APPLICATION = 'baytkom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'USER': os.getenv('DATABASEUSER'),
+        'PASSWORD': os.getenv('DATABASEPASSWORD'),
         'NAME': os.getenv('DATABASENAME'),
-        'HOST' :os.getenv('DATABASEHOST'),
-        'PORT' : os.getenv('DATABASEPORT'),
-        'USER' : os.getenv('DATABASEUSER'),
-        'PASSWORD' :os.getenv('DATABASEPASSWORD')
     }
 }
 
