@@ -1,5 +1,8 @@
 .env
 migrations/
 __pycache__/
+<<<<<<< HEAD
 .env_old
 
+=======
+>>>>>>> 1a8b7c0 (hh)
