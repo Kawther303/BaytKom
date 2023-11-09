@@ -41,7 +41,7 @@ class Room(models.Model):
   street = models.CharField(max_length=255)
   address = models.CharField(max_length=255)
   location = models.CharField(max_length=100)
-  facilities = models.ManyToManyField(Facility)
+  # facilities = models.ManyToManyField(Facility)
 
   def __str__(self):
     return f"{self.name}"
