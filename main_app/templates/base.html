@@ -1,31 +1,39 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Baytkom</title>
+  
   <link rel="shortcut icon" href="{% static 'image/favicon2.png' %}" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+
 <body>
   <header class="navbar-fixed">
     <nav>
       <div class="nav-wrapper blue-grey darken-4">
         <ul>
+
           <li> <a href="{% url 'home' %}" class='left brand-logo'><img src="\static\uploads\Baytkom logo.png" alt="Baytkom"width="100px" height="65"></a></li>
-          </ul>
-          <ul class="right">  <li> <a href="{% url 'about' %}"> About</a></li>
-            <ul class="right">  <li> <a href="{% url 'index' %}"> Rooms</a></li>
-            <li> <a href="{% url 'room_create' %}"> Add Room</a></li>
-          </ul>
-        
+        </ul>
+        <ul class="right">
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          <li> <a href="{% url 'about' %}"> About</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">Signup</a></li>
           
+        </ul>
+
+
       </div>
     </nav>
- 
+
   </header>
   <main class="container">
     {% block content %}
@@ -33,7 +41,10 @@
   </main>
 
   <footer class="page-footer blue-grey darken-4"> 
+
     <div class="right">
-    All Rights Reserved, &copy; 2023 BaytKom </div></footer>
+      All Rights Reserved, &copy; 2023 BaytKom </div>
+  </footer>
 </body>
+
 </html>
