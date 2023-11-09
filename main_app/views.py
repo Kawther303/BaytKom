@@ -17,7 +17,7 @@ def rooms_index(request):
 
 class RoomCreate(CreateView):
   model = Room
-  fields = ['name', 'roomType', 'description', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
+  fields = ['name', 'roomType', 'description', 'price', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
 
 class RoomUpdate(UpdateView):
   model = Room
