@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Room
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Define the home view
 def home(request):
@@ -32,4 +34,23 @@ def rooms_detail(request, room_id):
   return render(request, 'rooms/detail.html', {'room': room})
 
 
+# facility 
+
+# class FacilityList(LoginRequiredMixin, ListView):
+#   model = Toy
+
+# class FacilityDetail(LoginRequiredMixin, DetailView):
+#   model = Toy
+
+# class FacilityCreate(LoginRequiredMixin, CreateView):
+#   model =Toy
+#   fields = ['name', 'color']
+
+# class FacilityUpdate(LoginRequiredMixin, UpdateView):
+#   model = Toy
+#   fields = ['name', 'color']
+
+# class FacilityDelete(LoginRequiredMixin, DeleteView):
+#   model = Toy
+#   success_url = '/toys/'
 
