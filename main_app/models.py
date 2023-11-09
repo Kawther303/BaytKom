@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   full_name = models.CharField(max_length=100)
-  user_type = models.CharField(choices=[('admin', 'Admin'), ('renter', 'Renter')], max_length=10)
+  user_type = models.CharField(choices=[('ADMIN', 'Admin'), ('RENTER', 'Renter')], max_length=10)
   address = models.TextField()
-  phone_number = models.CharField(max_length=15)
+  phone_number = models.IntegerField(default=0)
   image = models.ImageField(upload_to='main_app/static/uploads', default='')
-  def __str__(self):
+  def _str_(self):
     return self.user.username
-  
+    

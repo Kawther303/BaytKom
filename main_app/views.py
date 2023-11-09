@@ -7,15 +7,25 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Profile
 # from .forms import Profile
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import UpdateUserForm,UpdateProfileForm
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+
 # Define the home view
 def home(request):
   return render(request, 'index.html')
 
 def about(request):
   return render(request,'about.html')
+
 
 def signup(request):
     error_message = ''
@@ -31,8 +41,25 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
+
 @login_required
 def profile(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
-    context = {'profile': profile}
-    return render(request, 'profile.html',context)
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm()
+
+    return render(request, 'profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('home')
