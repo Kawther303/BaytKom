@@ -14,17 +14,17 @@ RoomType = (
   ('7','Duplex')
 )
 
-class Facility(models.Model):
-  name = models.CharField(max_length=100, default="")
-  description = models.TextField(max_length=250)
-  models.ImageField(upload_to = "main_app/static/uploads", default="")
-  room = models.ForeignKey(Room, on_delete=models.CASCADE)
+# class Facility(models.Model):
+#   name = models.CharField(max_length=100, default="")
+#   description = models.TextField(max_length=250)
+#   models.ImageField(upload_to = "main_app/static/uploads", default="")
+#   room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
-  def __str__(self):
-    return self.name
+#   def __str__(self):
+#     return self.name
 
-  # def get_absolute_url(self):
-  #   return reverse('toys_detail', kwargs={'pk': self.id})
+#   # def get_absolute_url(self):
+#   #   return reverse('toys_detail', kwargs={'pk': self.id})
 
 
 
