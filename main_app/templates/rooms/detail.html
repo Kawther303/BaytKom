@@ -5,17 +5,10 @@
 <h1> Room Details </h1>
 
   <div class="card">
-    <div>
       {% load static %}
       <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize"/>
-    </div>
-
+      <div class="flex-container"></div>
     <div class="card-content">
-
-      <div class="flex-container">
-
-      <div>
-
       <span class="card-title">{{ room.name }}</span>
       <p>Description: {{ room.description }}</p>
       <p>roomType:  {{room.roomType}}</p>
@@ -26,20 +19,39 @@
       <p>street:  {{room.street}}</p>
       <p>address:  {{room.address}}</p>
       <p>location:  {{room.location}}</p>
-
-
+      <div>
       <div class="card-action">
         <a href="{% url 'rooms_update' room.id %}">Edit</a>
         <a href="{% url 'rooms_delete' room.id %}">Delete</a>
-      </div>
-      
-      </div>
-
-
+          </div>
+        </div>
       </div>
     </div>
 
-
+    <div class="row">
+    <div class="col s6 ">
+      <h3> {{ room.name }}'s Facility</h3>
+      {% if room.facilities.count  %}
+        {% for facility in room.facilities.all  %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <div>
+                {% load static %}
+                <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="right"/>
+              </div>
+              A <span > {{facility.name}} </span>
+              <div class="card-action">
+                <a href="{% url 'facilities_update' facility.id %}">Edit</a>
+                <a href="{% url 'facilities_delete' facility.id %}">Delete</a>
+                </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5></h5>
+        {% endif %}
+      </div>
   </div>
 
 {% endblock %}

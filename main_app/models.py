@@ -16,8 +16,8 @@ RoomType = (
 
 class Facility(models.Model):
   name = models.CharField(max_length=100, default="")
-  description = models.TextField(max_length=250)
-  icon = models.ImageField(upload_to = "main_app/static/uploads", default="")
+  description = models.TextField(max_length=250, blank=True)
+  icon = models.ImageField(upload_to = "main_app/static/facilityImg", blank=True, null=True)
 
 
   def __str__(self):
@@ -29,6 +29,17 @@ class Facility(models.Model):
 
 
 # Create your models here.
+
+class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  full_name = models.CharField(max_length=100)
+  user_type = models.CharField(choices=[('ADMIN', 'Admin'), ('RENTER', 'Renter')], max_length=10)
+  address = models.TextField()
+  phone_number = models.IntegerField(default=0)
+  image = models.ImageField(upload_to='main_app/static/uploads', default='')
+  def _str_(self):
+    return self.user.username
+
 
 class Room(models.Model):
   name = models.CharField(max_length=100)
@@ -67,4 +78,5 @@ class Booking(models.Model):
   
   # def get_absolute_url(self):
   #   return reverse('', kwargs={'pk': self.id})
+
 
