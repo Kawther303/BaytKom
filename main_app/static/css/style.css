@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 body{
-  background-color: #37474F;
+  background-image: url('../uploads/Sand to Blue.jpg');
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -19,4 +19,5 @@ text-align: right;
 .flex-container{
   display: flex;
   justify-content: space-between;
+  align-content: center;
 }
