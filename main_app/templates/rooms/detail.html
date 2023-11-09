@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Room Details </h1>
+
+  <div class="card">
+    <div>
+      {% load static %}
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize"/>
+    </div>
+
+    <div class="card-content">
+
+      <div class="flex-container">
+
+      <div>
+
+      <span class="card-title">{{ room.name }}</span>
+      <p>Description: {{ room.description }}</p>
+      <p>roomType:  {{room.roomType}}</p>
+      <p>size:  {{room.size}}</p>
+      <p>Price: {{room.price}}</p>
+      <p>country:  {{room.country}}</p>
+      <p>city:  {{room.city}}</p>
+      <p>street:  {{room.street}}</p>
+      <p>address:  {{room.address}}</p>
+      <p>location:  {{room.location}}</p>
+
+
+      <div class="card-action">
+        <a href="{% url 'rooms_update' room.id %}">Edit</a>
+        <a href="{% url 'rooms_delete' room.id %}">Delete</a>
+      </div>
+      
+      </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+{% endblock %}
