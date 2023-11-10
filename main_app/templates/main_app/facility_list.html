@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Facility List</h1>
+
+{% for facility in facility_list %}
+<a href="{% url 'facility_detail' facility.id %}">
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ facility.name }}</span>
+    <div>
+      {% load static %}
+      <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="imgsize"/>
+    </div>
+  </div>
+</div>
+</a>
+{% endfor %}
+{% endblock %}

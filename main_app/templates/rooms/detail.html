@@ -27,31 +27,64 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-    <div class="col s6 ">
-      <h3> {{ room.name }}'s Facility</h3>
-      {% if room.facilities.count  %}
-        {% for facility in room.facilities.all  %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              <div>
-                {% load static %}
-                <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="right"/>
-              </div>
-              A <span > {{facility.name}} </span>
+    
+      <div class="row">
+        <div class="col s6 ">
+          <h3> {{ room.name }}'s Facilities</h3>
+          {% if room.facilities.count  %}
+            {% for facility in room.facilities.all  %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">
+                  {{ facility.name }}
+                </span>
+                  <div>
+                    {% load static %}
+                    <img width="40px" height="40px" src="{% static facility.icon|cut:'main_app/static/' %}" class="imgsize right"/>
+                  </div>
+              
               <div class="card-action">
-                <a href="{% url 'facilities_update' facility.id %}">Edit</a>
-                <a href="{% url 'facilities_delete' facility.id %}">Delete</a>
+                <form action="{% url 'unassoc_facility' room.id facility.id%}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn grey darken-1">Remove</button>
+                </form>
+            </div>
+            </div>
+          </div>
+            {% endfor %}
+            {% else %}
+            <h5>No Facility</h5>
+            {% endif %}
+          </div>
+          <div class="row">
+        <div class="col s6">
+          <h3>Facility</h3>
+          {% for facility in facilities.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+                {{ facility.name }}
+              </span>
+                <div>
+                  {% load static %}
+                  <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="imgsize right"/>
                 </div>
+            <div class="card-action">
+              
+              <form action="{% url 'assoc_facility' room.id facility.id%}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn grey darken-1">Add</button>
+              </form>
+              </div>
           </div>
         </div>
-        {% endfor %}
-        {% else %}
-        <h5></h5>
-        {% endif %}
+          {% endfor %}
       </div>
-  </div>
-
-{% endblock %}
+      <div>
+      <form action="{% url 'add_facility' room.id %}" method="POST">
+        {% csrf_token %}
+        {{ facility_form.as_p }}
+        <input type="submit" class="btn grey darken-4" value="Add facility">
+      </form>
+      </div>
+        {% endblock %}

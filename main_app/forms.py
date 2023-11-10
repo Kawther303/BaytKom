@@ -1,7 +1,8 @@
 from django.forms import ModelForm
-# from .models import Room
+from .models import Facility
 
-# class RoomForm(ModelForm):
-#   class Meta:
-#     model =Room
-#     fields = ['roomType']
+class FacilityForm(ModelForm):
+  # it needed for custome model form (to not provide fields like CBV)
+  class Meta:
+    model = Facility
+    fields = ['name', 'icon', 'description']
