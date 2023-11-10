@@ -7,18 +7,17 @@
   <div class="card">
       {% load static %}
       <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize"/>
-      <div class="flex-container"></div>
     <div class="card-content">
       <span class="card-title">{{ room.name }}</span>
       <p>Description: {{ room.description }}</p>
-      <p>roomType:  {{room.roomType}}</p>
-      <p>size:  {{room.size}}</p>
+      <p>Room Type:  {{room.get_roomType_display}}</p>
+      <p>Size:  {{room.size}}</p>
       <p>Price: {{room.price}}</p>
-      <p>country:  {{room.country}}</p>
-      <p>city:  {{room.city}}</p>
-      <p>street:  {{room.street}}</p>
-      <p>address:  {{room.address}}</p>
-      <p>location:  {{room.location}}</p>
+      <p>Country:  {{room.country}}</p>
+      <p>City:  {{room.city}}</p>
+      <p>Street:  {{room.street}}</p>
+      <p>Address:  {{room.address}}</p>
+      <p>Location:  {{room.location}}</p>
       <div>
       <div class="card-action">
         <a href="{% url 'rooms_update' room.id %}">Edit</a>
@@ -83,8 +82,34 @@
       <div>
       <form action="{% url 'add_facility' room.id %}" method="POST">
         {% csrf_token %}
-        {{ facility_form.as_p }}
+        <table>
+        {{ facility_form.as_table }}
+      </table>
         <input type="submit" class="btn grey darken-4" value="Add facility">
       </form>
       </div>
+      <hr>      
+      
+    <div>
+      <div class="row">
+          {% for roomPic in room.roomPic_set.all %}
+      <div>
+        {% load static %}
+        <img width="300px" height="300px" src="{% static roomPic.RoomImages|cut:'main_app/static/' %}" class="imgsize right"/>
+      </div>
+    {% endfor %}
+  <div>
+        <form action="{% url 'add_roomPic' room.id %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <table>
+          {{ roomPic_form.as_table }}
+        </table>
+          <input type="submit" class="btn grey darken-4" value="Add Room Imges">
+        </form>
+        </div>
+      </div>
+    </div>
+
         {% endblock %}
+
+

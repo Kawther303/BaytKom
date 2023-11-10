@@ -28,16 +28,7 @@ class Facility(models.Model):
     return reverse('detail', kwargs={'pk': self.id})
 
 
-class RoomPic(models.Model):
-  RoomImages = models.ImageField(upload_to = "main_app/static/roomImg", blank=True, null=True)
 
-
-  def __str__(self):
-    return self.RoomImages
-
-
-  def get_absolute_url(self):
-    return reverse('detail', kwargs={'pk': self.id})
 
 
 # Create your models here.
@@ -58,12 +49,25 @@ class Room(models.Model):
 
   def __str__(self):
     return f"{self.name}"
+    return f"{self.room.name} {self.get_roomType_display()}"
 
 
   def get_absolute_url(self):
     return reverse('detail', kwargs={'room_id': self.id}) 
 
 
+class RoomPic(models.Model):
+  RoomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
+  room = models.ForeignKey(Room, on_delete=models.CASCADE, default="")
+
+
+
+  def __str__(self):
+    return str(self.room)
+
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'pk': self.id})
 
 
 

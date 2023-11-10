@@ -13,14 +13,13 @@ urlpatterns = [
   path('rooms/<int:pk>/delete/', views.RoomDelete.as_view(), name='rooms_delete'),
 
 
-  # Facility
+  # Facility  
+  path('rooms/<int:room_id>/add_roomPic', views.add_roomPic, name='add_roomPic'),
+
   path('facilities/', views.FacilityList.as_view(), name='facilities_index'),
-  # path('facilities/<int:facility_id>/', views.facilities_detail, name='detail'),
-
-
 
   path('facilities/<int:pk>/', views.FacilityDetail.as_view(), name='facilities_detail'),
-  path('facilities//<int:room_id>/add_facility', views.add_facility, name='add_facility'),
+  path('facilities/<int:room_id>/add_facility', views.add_facility, name='add_facility'),
   path('facilities/<int:pk>/update/', views.FacilityUpdate.as_view(), name='facilities_update'),
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
     # assosiate a facility with a room

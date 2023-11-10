@@ -4,7 +4,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from .models import Room, Facility
-from .forms import FacilityForm
+from .forms import FacilityForm, RoomPicForm
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -42,8 +42,9 @@ class RoomDelete(LoginRequiredMixin, DeleteView):
 def rooms_detail(request, room_id):
   room = Room.objects.get(id=room_id)
   facility_form = FacilityForm()
+  roomPic_form = RoomPicForm()
   facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
-  return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'facilities': facilities_room_dosent_have })
+  return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roomPic_form': roomPic_form, 'facilities': facilities_room_dosent_have })
 
 
 def signup(request):
@@ -77,9 +78,19 @@ def add_facility(request, room_id):
     new_facility.save()
   return redirect('detail', room_id =room_id) 
 
+@login_required
+def add_roomPic(request, room_id):
+  form = RoomPicForm(request.POST)
+  if form.is_valid():
+    new_roomPic = form.save(commit = False)
+    new_roomPic.room_id = room_id
+    new_roomPic.save()
+  return redirect('detail', room_id =room_id) 
+
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
   model = Facility
   fields = ['name', 'icon', 'description']
+  success_url = '/facilities/'
 
 class FacilityDelete(LoginRequiredMixin, DeleteView):
   model = Facility
