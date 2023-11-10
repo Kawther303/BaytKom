@@ -123,7 +123,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_REDIRECT_URL = '/about'
+LOGIN_REDIRECT_URL = '/accounts/profile'
 LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type

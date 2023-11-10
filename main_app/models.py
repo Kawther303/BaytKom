@@ -33,7 +33,7 @@ class Facility(models.Model):
 
 
 class Profile(models.Model):
-  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
   full_name = models.CharField(max_length=100)
   user_type = models.CharField(choices=[('ADMIN', 'Admin'), ('RENTER', 'Renter')], max_length=10)
   address = models.TextField()
