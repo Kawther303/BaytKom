@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room
+
+from .models import Room, Booking,  Facility
+
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
-
 from django.contrib.auth import login
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Profile
@@ -36,17 +36,28 @@ def rooms_index(request):
   rooms = Room.objects.all()
   return render(request, 'rooms/index.html', {'rooms': rooms})
 
-class RoomCreate(CreateView):
+
+class RoomCreate(LoginRequiredMixin, CreateView):
   model = Room
   fields = ['name', 'roomType', 'description', 'price', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
 
-class RoomUpdate(UpdateView):
+class RoomUpdate(LoginRequiredMixin, UpdateView):
   model = Room
   fields = ['roomType', 'description', 'image', 'size', 'country', 'city', 'street', 'address', 'location']
 
-class RoomDelete(DeleteView):
+class RoomDelete(LoginRequiredMixin, DeleteView):
   model = Room
   success_url = '/rooms/'
+
+
+
+class BookCreate(CreateView):
+  model = Booking
+  fields = ['room', 'from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile','price']
+  success_url = '/rooms/'
+
+
+@login_required
 
 def rooms_detail(request, room_id):
   room = Room.objects.get(id=room_id)
@@ -80,7 +91,6 @@ def profile(request):
             messages.success(request, 'Your profile is updated successfully')
             return redirect(to='profile')
     else:
-
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm()
 
@@ -91,3 +101,22 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('home')
 
+
+class FacilityList(LoginRequiredMixin, ListView):
+  model = Facility
+
+class FacilityDetail(LoginRequiredMixin, DetailView):
+  model = Facility
+
+class FacilityCreate(LoginRequiredMixin, CreateView):
+  model =Facility
+  fields = ['name', 'icon', 'description']
+
+class FacilityUpdate(LoginRequiredMixin, UpdateView):
+  model = Facility
+  fields = ['name', 'icon', 'description']
+ 
+class FacilityDelete(LoginRequiredMixin, DeleteView):
+  model = Facility
+  success_url = '/facilities/'
+  

@@ -4,3 +4,5 @@ __pycache__/
 /.env_old
 old.env
 .env_old/
+.env_old
+

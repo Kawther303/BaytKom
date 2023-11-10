@@ -12,11 +12,14 @@ class UpdateProfileForm(forms.ModelForm):
     fields = ['full_name', 'user_type', 'address', 'phone_number', 'image']
     user_type = forms.ChoiceField(choices=[('admin', 'Admin'), ('customer', 'Customer')], required=True)
 
+# from .models import Room
 
-class RoomForm(ModelForm):
-  class Meta:
-    model =Room
-    fields = ['roomType']
+
+
+# class RoomForm(ModelForm):
+#   class Meta:
+#     model =Room
+#     fields = ['roomType']
 
 class Profile(forms.ModelForm):
    class Meta:
@@ -30,6 +33,7 @@ class UpdateUserForm(forms.ModelForm):
       fields = ['username', 'email']
       username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
       email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
 
 
 
