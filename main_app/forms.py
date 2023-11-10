@@ -3,8 +3,7 @@ from django import forms
 from .models import Profile
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-# from .models import Room
-
+from .models import Booking, Room
 
 # class RoomForm(ModelForm):
 #   class Meta:
@@ -43,4 +42,12 @@ class UpdateProfileForm(forms.ModelForm):
       #  model = Profile
       #  fields = ['full_name', 'user_type', 'address', 'phone_number', 'image' ]
 
+class BookingForm(ModelForm):
+  class Meta: #addional functionalty to access and use CBV
+    model = Booking
+    fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile']
 
+# class SearchForm(ModelForm):
+#   class Meta: #addional functionalty to access and use CBV
+#     model = Room
+#     fields = __all__

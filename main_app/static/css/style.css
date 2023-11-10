@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 body{
-  background-color: #d9ebf4;
+  background-color: #9baab1;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -20,6 +20,10 @@ text-align: right;
   display: flex;
   justify-content: space-between;
   align-content: center;
+}
+
+nav,footer ,.page-footer{
+  background-color: #1F4172;
 }
 
 nav,footer ,.page-footer{

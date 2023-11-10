@@ -30,7 +30,6 @@ class Facility(models.Model):
 
 # Create your models here.
 
-
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   full_name = models.CharField(max_length=100)
@@ -56,6 +55,15 @@ class Room(models.Model):
   location = models.CharField(max_length=100)
   facilities = models.ManyToManyField(Facility)
 
+  def book_for_today(self,f_date,t_date):
+    return self.booking_set.filter(date__range=(f_date, t_date)).count() >= 1
+  
+  def no_of_nights(self,f_date,t_date):
+    return t_date - f_date
+  
+  def booking_price(self,f_date,t_date):
+    return  self.price * (t_date - f_date)
+
 
   def __str__(self):
     return f"{self.name}"
@@ -65,19 +73,19 @@ class Room(models.Model):
     return reverse('detail', kwargs={'room_id': self.id}) 
 
 class Booking(models.Model):
-  # user = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   room = models.ForeignKey(Room, on_delete=models.CASCADE)
   from_date = models.DateField('from date')
   to_date = models.DateField('to date')
   guest_name = models.CharField(max_length=100,default="")
   guest_email = models.EmailField(default="")
   guest_mobile = models.CharField(max_length=25,default="")
+  # comment = models.CharField(max_length=250,default="")
   price =  models.FloatField( default=0.00)
 
-  def __str__(self):
-    return self.name
-  
 
-  def get_absolute_url(self):
-    return reverse('toys_detail', kwargs={'pk': self.id})
+  def __str__(self):
+    return self.guest_name
+  
+  
 

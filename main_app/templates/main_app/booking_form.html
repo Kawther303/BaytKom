@@ -20,7 +20,7 @@
     autoClose: true
   })  
   let toDateEle = document.getElementById('id_to_date');
-  M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
+  M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     setDefaultDate: true,
     autoClose: true
   })  

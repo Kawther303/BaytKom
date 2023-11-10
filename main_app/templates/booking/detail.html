@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Booking Details </h1>
+
+  <div class="card">
+      {% load static %}
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize"/>
+      <div class="flex-container"></div>
+    <div class="card-content">
+      <span class="card-title">{{ room.name }}</span>
+      <p>Description: {{ room.description }}</p>
+      <p>roomType:  {{room.roomType}}</p>
+      <p>size:  {{room.size}}</p>
+      <p>Price: BD <span id=room_price>{{room.price}}</span></p>
+      <!-- <p>country:  {{room.country}}</p>
+      <p>city:  {{room.city}}</p>
+      <p>street:  {{room.street}}</p>
+      <p>address:  {{room.address}}</p>
+      <p>location:  {{room.location}}</p> -->
+      <div>
+      <!-- <div class="card-action">
+        <a href="{% url 'rooms_update' room.id %}">Edit</a>
+        <a href="{% url 'rooms_delete' room.id %}">Delete</a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div>  <form method="post" action="{% url 'add_booking' room.id user.id %}">
+      {% csrf_token %}
+      {{ booking_form.as_p }}
+      {% if booking_form.from_date  %}
+      <p id="date_note" class="red-text"></p>
+      <p id="result"></p>
+
+     <p> No of nights: <span id="n_result"></span></p>
+ 
+      <p>Price : <span id="p_result"> </span></p>
+      <br>
+      <hr>
+      {% endif %}
+      <input id="book_btn" type="submit" class="btn" value="Place Booking">
+        </form></div>
+       
+      {% if room.book_for_today %}
+      <div class="card-panel red-text center-align">
+        {{room.name}} has already booked for today! 
+        </div>
+      {% else %}
+      <div class="card-panel teal-text center-align" > 
+         {{ room.name }} is available for today!
+       </div>
+        {% endif %}
+      </div>
+  <script>
+   
+    let differenceInDays
+    let fromDateEle = document.getElementById('id_from_date');
+    let toDateEle = document.getElementById('id_to_date');
+   
+    M.Datepicker.init(fromDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
+      setDefaultDate: false,
+      autoClose: true
+    })  
+
+    M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+      setDefaultDate: false,
+      autoClose: true
+    })  
+    const booking_btn = document.getElementById('book_btn');
+    let priceEle = document.getElementById('id_price');
+    let note = document.getElementById("date_note"); 
+    let n_resultElement = document.getElementById('n_result');
+    let p_resultElement = document.getElementById('p_result');
+    let room_p = document.getElementById('room_price');
+    console.log('pp:',room_p);
+    console.log('dd1:',fromDateEle.value);
+
+    const calculateDifference=()=> {
+      console.log('dd1x:',fromDateEle.value);
+      const date1 = new Date(fromDateEle.value);
+      const date2 = new Date(toDateEle.value);
+      const today = new Date();
+      if (date1 >= date2 || date1 < today-1){
+        fromDateEle.innerText = '';
+        toDateEle.innerText = '';
+        note.innerText = 'Invalid Dates';
+        booking_btn.disabled = true; 
+
+      } else {
+        note.innerText = '';
+        booking_btn.disabled = false; 
+      }
+
+      console.log('dd1:',date1);
+      console.log('dd2:',date2);
+      if (date1 && date2) {
+        const differenceInTime = date2.getTime() - date1.getTime();
+         differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        n_resultElement.textContent = ` ${differenceInDays} nights.`;
+        p_resultElement.textContent = differenceInDays * room_p;
+      } else {
+        n_resultElement.textContent = '';
+        p_resultElement.textContent = '';
+      }
+    }
+  
+    fromDateEle.addEventListener('click', calculateDifference);
+    toDateEle.addEventListener('mouseover', calculateDifference);
+
+    </script>
+{% endblock %}

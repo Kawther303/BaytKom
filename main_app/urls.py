@@ -8,11 +8,15 @@ urlpatterns = [
   path('', views.home, name='home'),
   path('about/',views.about,name='about'),
 
-  path('rooms/', views.rooms_index, name='index'),
+  # path('rooms/', views.rooms_index, name='index'),
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('accounts/signup/', views.signup, name='signup'),
-
-  path('rooms/booking/', views.BookCreate.as_view(), name='book_create'),
+  
+  path('rooms/', views.getRooms, name='index'),
+  path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
+  path('booking/<int:room_id><int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
+  path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
+  
   path('accounts/profile/', views.profile, name='profile'),
   path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
