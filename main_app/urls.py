@@ -15,6 +15,10 @@ urlpatterns = [
 
   # Facility
   path('facilities/', views.FacilityList.as_view(), name='facilities_index'),
+  # path('facilities/<int:facility_id>/', views.facilities_detail, name='detail'),
+
+
+
   path('facilities/<int:pk>/', views.FacilityDetail.as_view(), name='facilities_detail'),
   path('facilities//<int:room_id>/add_facility', views.add_facility, name='add_facility'),
   path('facilities/<int:pk>/update/', views.FacilityUpdate.as_view(), name='facilities_update'),

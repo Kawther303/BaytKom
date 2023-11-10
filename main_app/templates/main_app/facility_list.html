@@ -5,7 +5,7 @@
 <h1>Facility List</h1>
 
 {% for facility in facility_list %}
-<a href="{% url 'facility_detail' facility.id %}">
+<a href="{% url 'facilities_detail' facility.id %}">
 <div class="card">
   <div class="card-content">
     <span class="card-title">{{ facility.name }}</span>

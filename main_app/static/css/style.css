@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Love+Light&display=swap');
 body{
-  background-image: url('../uploads/Sand to Blue.jpg');
+  background-color: aliceblue;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  /* font-family: 'Times New Roman', Times, serif; */
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Times New Roman', Times, serif;
+  /* font-family: 'Dancing Script', cursive; */
   /* color: black; */
   /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
+}
+.BaytKom-footer{
+  font-family: 'Love Light', cursive;
+}
+.Baytkom-Logo{
+  font-family: 'Love Light', cursive;
+  margin: 12px;
 }
 main{
   flex: 1 0 auto;
@@ -20,4 +28,11 @@ text-align: right;
   display: flex;
   justify-content: space-between;
   align-content: center;
+}
+button{
+  margin: 10px;
+}
+.submitbtn{
+  margin: 10px;
+
 }

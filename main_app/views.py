@@ -37,17 +37,14 @@ class RoomDelete(LoginRequiredMixin, DeleteView):
   success_url = '/rooms/'
 
 
+# room will display all the facility and have the form for adding new facility for specific image 
 @login_required
 def rooms_detail(request, room_id):
-  # room = Room.objects.get(id=room_id)
-  # return render(request, 'rooms/detail.html', {'room': room})
-  # SELECT * from 'main_app_cat' WHERE id = cat_id
   room = Room.objects.get(id=room_id)
-  # feeding form is class so we should be like this (feeding_form = FeedingForm())
   facility_form = FacilityForm()
-  # Exclude tose ids which exist in cat_toys(join table) table with the current cat id.
   facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
   return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'facilities': facilities_room_dosent_have })
+
 
 def signup(request):
   error_message = ''
