@@ -190,6 +190,6 @@ def getRooms(request):
   for room in rooms:
      if checkAvailable(room.id,from_date,to_date):
         the_available_rooms.append(room)
-  return render(request, 'rooms/index.html', {'rooms': the_available_rooms})
+  return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
   # return HttpResponse(country)
    

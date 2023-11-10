@@ -2,7 +2,18 @@
 
 {% block content %}
 
-<h1> Rooms List </h1>
+{% if country %}
+  <h2> Search Result </h2>
+  <div class="row">
+  <p> Country: {{ country }}</p>
+  <p> Check-in: {{ from_date }}</p>
+  <p> Check-out: {{ to_date }}</p>
+  </div>
+
+  {%  else %}
+  <h1> Rooms List </h1>
+
+{% endif  %}
 
 {% for room in rooms %}
   <div class="row">
