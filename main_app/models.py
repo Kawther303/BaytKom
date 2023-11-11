@@ -57,13 +57,13 @@ class Room(models.Model):
 
 
 class RoomPic(models.Model):
-  RoomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
+  roomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
   room = models.ForeignKey(Room, on_delete=models.CASCADE, default="")
 
 
 
   def __str__(self):
-    return str(self.room)
+    return f"{self.room.name} {self.roomImages}"
 
 
   def get_absolute_url(self):

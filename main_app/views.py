@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room, Facility
-from .forms import FacilityForm, RoomPicForm
+from .models import Room, Facility, RoomPic
+from .forms import FacilityForm
+from .forms import RoomPicForm
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -37,14 +38,6 @@ class RoomDelete(LoginRequiredMixin, DeleteView):
   success_url = '/rooms/'
 
 
-# room will display all the facility and have the form for adding new facility for specific image 
-@login_required
-def rooms_detail(request, room_id):
-  room = Room.objects.get(id=room_id)
-  facility_form = FacilityForm()
-  roomPic_form = RoomPicForm()
-  facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
-  return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roomPic_form': roomPic_form, 'facilities': facilities_room_dosent_have })
 
 
 def signup(request):
@@ -69,6 +62,16 @@ class FacilityList(LoginRequiredMixin, ListView):
 class FacilityDetail(LoginRequiredMixin, DetailView):
   model = Facility
 
+
+# room will display all the facility and have the form for adding new facility for specific image 
+@login_required
+def rooms_detail(request, room_id):
+  room = Room.objects.get(id=room_id)
+  facility_form = FacilityForm()
+  roompic_form = RoomPicForm()
+  facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
+  return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have })
+
 @login_required
 def add_facility(request, room_id):
   form = FacilityForm(request.POST)
@@ -78,14 +81,23 @@ def add_facility(request, room_id):
     new_facility.save()
   return redirect('detail', room_id =room_id) 
 
+
 @login_required
-def add_roomPic(request, room_id):
-  form = RoomPicForm(request.POST)
-  if form.is_valid():
-    new_roomPic = form.save(commit = False)
-    new_roomPic.room_id = room_id
-    new_roomPic.save()
-  return redirect('detail', room_id =room_id) 
+def add_roompic(request, room_id):
+    if request.method == 'POST':
+        form = RoomPicForm(request.POST, request.FILES)  
+        if form.is_valid():
+            new_roompic = form.save(commit=False)
+            new_roompic.room_id = room_id
+            new_roompic.save()
+            return redirect('detail', room_id=room_id)
+    else:
+        form = RoomPicForm()
+    
+    return render(request, 'add_roompic.html', {'form': form})
+
+
+
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
   model = Facility

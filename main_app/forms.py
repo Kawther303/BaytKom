@@ -11,5 +11,4 @@ class RoomPicForm(ModelForm):
   # it needed for custome model form (to not provide fields like CBV)
   class Meta:
     model = RoomPic
-    fields = ['RoomImages']
-    
+    fields = ['roomImages']
