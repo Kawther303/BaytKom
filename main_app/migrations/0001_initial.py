@@ -53,18 +53,5 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.CreateModel(
-            name='Booking',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('from_date', models.DateField(verbose_name='from date')),
-                ('to_date', models.DateField(verbose_name='to date')),
-                ('guest_name', models.CharField(default='', max_length=100)),
-                ('guest_email', models.EmailField(default='', max_length=254)),
-                ('guest_mobile', models.CharField(default='', max_length=25)),
-                ('price', models.FloatField(default=0.0)),
-                ('room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main_app.room')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
+      
     ]

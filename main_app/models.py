@@ -14,6 +14,8 @@ RoomType = (
   ('7','Duplex')
 )
 
+#  user_type = models.CharField(choices=UserType, default=UserType[1][0], max_length=10)
+
 class Facility(models.Model):
   name = models.CharField(max_length=100, default="")
   description = models.TextField(max_length=250, blank=True)

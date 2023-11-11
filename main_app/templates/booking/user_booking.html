@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if bookings %}
+<h2>Booking List:</h2>
+{% for booking in bookings %}
+<div class="card">
+
+
+<div class="card-content">
+
+<div class="flex-container"> 
+
+  <div>
+
+ 
+<span class="card-title">{{ booking.room }}</span>
+<p>Booking#: {{ booking.id }}</p>
+<p>check-in: {{ booking.from_date }}</p>
+<p>check-out: {{ booking.to_date }}</p>
+<p>Created by: {{ booking.user }}</p>
+<p>Guest Name: {{ booking.guest_name }}</p>
+<p>Guest Email: {{ booking.guest_email }}</p>
+<p>Guest Phone: {{ booking.guest_mobile }}</p>
+<p>Guest Email: {{ booking.guest_email }}</p>
+ </div>
+ <div> 
+  {% load static  %}
+
+</div>
+</div>
+</div>  
+
+</div>
+{% endfor %}
+{% else %}
+<h2> {{user}} have no Booking!</h2>
+{% endif%}
+{% endblock %}

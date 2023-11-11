@@ -12,10 +12,7 @@ urlpatterns = [
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('accounts/signup/', views.signup, name='signup'),
   
-  path('rooms/', views.getRooms, name='index'),
-  path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
-  path('booking/<int:room_id><int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
-  path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
+ 
   
   path('accounts/profile/', views.profile, name='profile'),
   path('password-change/', ChangePasswordView.as_view(), name='password_change'),
@@ -32,4 +29,13 @@ urlpatterns = [
   path('facilities/<int:pk>/update/', views.FacilityUpdate.as_view(), name='facilities_update'),
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
 
+
+  #Booking
+  path('rooms/', views.getRooms, name='index'),
+  path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
+  path('booking/<int:room_id><int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
+  path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
+  path('booking/user_booking/',views.user_Booking, name='user_booking') ,
+  path('booking/<int:room_id>/',views.checkAvailability,name='check_availability'),
+  
 ]
