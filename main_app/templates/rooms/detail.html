@@ -23,6 +23,8 @@
       <div class="card-action">
         <a href="{% url 'rooms_update' room.id %}">Edit</a>
         <a href="{% url 'rooms_delete' room.id %}">Delete</a>
+        
+        <a href="{% url 'booking_create' room.id %}">Book the Room</a>
           </div>
         </div>
       </div>

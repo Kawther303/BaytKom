@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-
+import cgi
+form = cgi.FieldStorage()
+import datetime
 from .models import Room, Booking,  Facility
 
 from django.contrib.auth.forms import UserCreationForm
@@ -18,7 +20,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import UpdateUserForm,UpdateProfileForm
+from .forms import UpdateUserForm,UpdateProfileForm,BookingForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -58,7 +60,6 @@ class BookCreate(CreateView):
 
 
 @login_required
-
 def rooms_detail(request, room_id):
   room = Room.objects.get(id=room_id)
   return render(request, 'rooms/detail.html', {'room': room})
@@ -119,4 +120,72 @@ class FacilityUpdate(LoginRequiredMixin, UpdateView):
 class FacilityDelete(LoginRequiredMixin, DeleteView):
   model = Facility
   success_url = '/facilities/'
-  
+
+@login_required
+def booking_create(request, room_id):
+  user_id = 1
+  # select * from main_app_book where id = book_id
+  room = Room.objects.get(id=room_id)
+  booking_form = BookingForm()
+  user = Profile.objects.get(id=user_id)
+
+  # reward_book_doesnot_have= Reward.objects.exclude(id__in= book.rewards.all().values_list('id'))
+  # room_available = Room.objects.exclude(id__in = room.booking.all())
+  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user})
+
+@login_required
+def add_booking(request, room_id, user_id):
+  # user_id = user.id
+  booking_price = 50
+  form = BookingForm(request.POST)
+  if form.is_valid():
+    new_booking = form.save(commit = False)
+    new_booking.room_id = room_id
+    new_booking.user_id = user_id
+    new_booking.price= booking_price
+    new_booking.save()
+  return redirect(to='home') 
+
+@login_required
+def booking_confirmation(request):
+  user_id = 1 
+  # booking_price = 50
+  # form = BookingForm(request.POST)
+  # if form.is_valid():
+  #   new_booking = form.save(commit = False)
+  #   new_booking.room_id = room_id
+  #   new_booking.user_id = user_id
+  #   new_booking.price= booking_price
+  #   new_booking.save()
+  return redirect(to='home') 
+
+# to check if the room is available
+def checkAvailable(room,check_in,check_out):
+   the_list = []
+   
+   the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
+   the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
+   booking_list = Booking.objects.filter(room=room)
+   for booking in booking_list:
+      if booking.from_date > the_check_out or booking.to_date <the_check_in:
+         the_list.append(True)
+      else:
+         the_list.append(False)
+   
+   return all(the_list)
+
+def getRooms(request):
+  # form = BookingForm(request.POST)
+
+  country = request.POST['country_search']
+  from_date = request.POST['check_in']
+  to_date = request.POST['check_out']
+  the_available_rooms= []
+
+  rooms = Room.objects.filter(country=country)
+  for room in rooms:
+     if checkAvailable(room.id,from_date,to_date):
+        the_available_rooms.append(room)
+  return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
+  # return HttpResponse(country)
+   

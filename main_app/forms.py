@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+
+from .models import Booking
+
 from .models import Room, Profile 
 
 
@@ -13,6 +16,7 @@ class UpdateProfileForm(forms.ModelForm):
     user_type = forms.ChoiceField(choices=[('admin', 'Admin'), ('customer', 'Customer')], required=True)
 
 # from .models import Room
+
 
 
 
@@ -36,4 +40,12 @@ class UpdateUserForm(forms.ModelForm):
 
 
 
+class BookingForm(ModelForm):
+  class Meta: #addional functionalty to access and use CBV
+    model = Booking
+    fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile']
 
+# class SearchForm(ModelForm):
+#   class Meta: #addional functionalty to access and use CBV
+#     model = Room
+#     fields = __all__
