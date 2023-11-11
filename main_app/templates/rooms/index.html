@@ -12,12 +12,12 @@
       <div class="card-content white">
       <div>
     {% load static %}
-    <img width="350px" height='250px'src="{% static room.image|cut:'main_app/static' %}"/>
+    <img width="360px" height='250px'src="{% static room.image|cut:'main_app/static' %}"/>
   </div>
       <a href="{% url 'detail' room.id %}">
       <span class="card-title">{{ room.name }}</span>
     </a>
-      <p>address: {{ room.address }}</p>
+      <p>Address: {{ room.address }}</p>
       <p>Description: {{ room.description }}</p>
 
     

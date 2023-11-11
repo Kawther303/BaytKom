@@ -74,7 +74,7 @@ def rooms_detail(request, room_id):
 
 @login_required
 def add_facility(request, room_id):
-  form = FacilityForm(request.POST)
+  form = FacilityForm(request.POST, request.FILES)
   if form.is_valid():
     new_facility = form.save(commit = False)
     new_facility.room_id = room_id
