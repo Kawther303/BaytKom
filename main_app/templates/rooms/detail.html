@@ -3,58 +3,113 @@
 {% block content %}
 
 <h1> Room Details </h1>
-
-  <div class="card">
+<div>
+  <div>
       {% load static %}
-      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize"/>
-      <div class="flex-container"></div>
-    <div class="card-content">
-      <span class="card-title">{{ room.name }}</span>
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>      
+      {% for roompic in room.roompic_set.all %}
+        {% load static %}
+        <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
+        {% endfor %}
+    <div>
+      <h3>{{ room.name }}</h3>
       <p>Description: {{ room.description }}</p>
-      <p>roomType:  {{room.roomType}}</p>
-      <p>size:  {{room.size}}</p>
+      <p>Room Type:  {{room.get_roomType_display}}</p>
+      <p>Size:  {{room.size}}</p>
       <p>Price: {{room.price}}</p>
-      <p>country:  {{room.country}}</p>
-      <p>city:  {{room.city}}</p>
-      <p>street:  {{room.street}}</p>
-      <p>address:  {{room.address}}</p>
-      <p>location:  {{room.location}}</p>
+      <p>Country:  {{room.country}}</p>
+      <p>City:  {{room.city}}</p>
+      <p>Street:  {{room.street}}</p>
+      <p>Address:  {{room.address}}</p>
+      <p>Location:  {{room.location}}</p>
       <div>
       <div class="card-action">
-        <a href="{% url 'rooms_update' room.id %}">Edit</a>
-        <a href="{% url 'rooms_delete' room.id %}">Delete</a>
-        
+
+        <a href="{% url 'rooms_update' room.id %}"> <img src="\static\image\edit.png" alt="edit" width="40px" height="40px"></a>
+        <a href="{% url 'rooms_delete' room.id %}"><img src="\static\image\icons8-delete-30 (1).png" alt="delete" width="40px" height="40px"></a>
         <a href="{% url 'booking_create' room.id %}">Book the Room</a>
-        
+
           </div>
         </div>
       </div>
     </div>
+    </div>
+      <div class="row">
+        <div class="col s6 ">
+          <h3> {{ room.name }}'s Facilities</h3>
+          {% if room.facilities.count  %}
+            {% for facility in room.facilities.all  %}
+            <div class="card">
+              <div class="card-content">
+                <span>
+                  {{ facility.name }}               
+                  <div>
+                    {% load static %}
+                    <img width="40px" height="40px" src="{% static facility.icon|cut:'main_app/static/' %}"class="imgsize right"/>
+                  </div>
+                </span>
 
-    <div class="row">
-    <div class="col s6 ">
-      <h3> {{ room.name }}'s Facility</h3>
-      {% if room.facilities.count  %}
-        {% for facility in room.facilities.all  %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              <div>
-                {% load static %}
-                <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="right"/>
-              </div>
-              A <span > {{facility.name}} </span>
               <div class="card-action">
-                <a href="{% url 'facilities_update' facility.id %}">Edit</a>
-                <a href="{% url 'facilities_delete' facility.id %}">Delete</a>
+                <form action="{% url 'unassoc_facility' room.id facility.id%}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn grey darken-1 f-btn">Remove</button>
+                </form>
+            </div>
+            </div>
+          </div>
+            {% endfor %}
+            {% else %}
+            <h5>No Facility</h5>
+            {% endif %}
+          </div>
+          <div class="row">
+        <div class="col s6">
+          <h3>Facility</h3>
+          {% for facility in facilities.all %}
+          <div class="card">
+            <div class="card-content">
+              <span>
+                {{ facility.name }}
+                <div>
+                  {% load static %}
+                  <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="imgsize right"/>
                 </div>
+              </span>
+            <div class="card-action">
+              <form action="{% url 'assoc_facility' room.id facility.id%}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn grey darken-1 f-btn">Add</button>
+              </form>
+              </div>
           </div>
         </div>
-        {% endfor %}
-        {% else %}
-        <h5></h5>
-        {% endif %}
+          {% endfor %}
       </div>
-  </div>
+      <div>
+      <form action="{% url 'add_facility' room.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        {{ facility_form.as_table }}
+      </table>
+        <input type="submit" class="btn grey darken-4" value="Add facility">
+      </form>
+      </div>
+      <hr>      
 
-{% endblock %}
+
+      
+    
+  <div>
+    <form action="{% url 'add_roompic' room.id %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table>
+        {{ roompic_form.as_table }}
+      </table>
+      <input type="submit" value="Add Room Picture!" class="btn grey darken-4">
+    </form>
+        </div>
+      </div>
+    </div>
+
+        {% endblock %}
+

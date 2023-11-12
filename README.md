@@ -11,18 +11,18 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 ***
 ## Getting Started
 #### Task Tracking
-[Trello board](https://i.imgur.com/ZiSreP5.png)
+[Trello board](https://trello.com/b/eqmUkVsq/baytkom)
 
 #### Entity Relationship Diagram
 [ERD]() 
 
-<img width="344" alt="Screenshot 2023-10-02 225831" src="https://i.imgur.com/ZiSreP5.png">
+<img width="344" alt="ERD" src="https://i.imgur.com/PsXbCon_d.jpg?maxwidth=520&shape=thumb&fidelity=high">
 
 
 #### WireFrame
-[Figma]()
+[WireFrame](https://i.imgur.com/AIX3xJe.png)
 
-<img width="517" alt="Screenshot 2023-09-28 025951" src="">
+<img width="517" alt="WIREFRAME" src="https://i.imgur.com/AIX3xJe_d.jpg?maxwidth=520&shape=thumb&fidelity=high">
 
 
 ***

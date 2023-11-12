@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Love+Light&display=swap');
 body{
   background-color: #e9f4f9;
   display: flex;
@@ -8,6 +9,13 @@ body{
   /* font-family: 'Dancing Script', cursive; */
   /* color: black; */
   /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
+}
+.BaytKom-footer{
+  font-family: 'Love Light', cursive;
+}
+.Baytkom-Logo{
+  font-family: 'Love Light', cursive;
+  margin: 12px;
 }
 main{
   flex: 1 0 auto;
@@ -22,8 +30,35 @@ text-align: right;
   align-content: center;
 }
 
-nav,footer ,.page-footer{
-  background-color: #1F4172;
+button{
+  margin: 10px;
+}
+.submitbtn{
+  margin: 10px;
+}
+.main-page{
+  /* background-: url(''); */
+}
+.imgsize{
+  margin-top: 0;
+}
+/* .main-section{ 
+  background: #000;
+  overflow: hidden;
+  background-image: url('image/house.mp4');
+} */
+
+/* #background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  overflow: hidden;
+} */
+.f-btn{
+  size: small;
 }
 
 nav,footer ,.page-footer{
@@ -32,4 +67,5 @@ nav,footer ,.page-footer{
 
 nav,footer ,.page-footer{
   background-color: #1F4172;
+
 }
