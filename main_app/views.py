@@ -118,7 +118,6 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
     model = Facility
 
 
-
 # room will display all the facility and have the form for adding new facility for specific image 
 @login_required
 def rooms_detail(request, room_id):
@@ -164,8 +163,6 @@ def add_roompic(request, room_id):
         form = RoomPicForm()
     
     return render(request, 'add_roompic.html', {'form': form})
-
-
 
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
