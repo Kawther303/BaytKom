@@ -26,6 +26,8 @@ urlpatterns = [
     path('booking/<int:room_id><int:user_id>/add_booking/', views.add_booking, name='add_booking'),
     path('booking/<int:room_id>/add_booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
 
+# Admin
+    path('rooms/<int:user_id>/adminIndex',views.adminIndex,name='adminIndex'),
 
 
 # room
