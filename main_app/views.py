@@ -39,6 +39,10 @@ def rooms_index(request):
 class RoomCreate(LoginRequiredMixin, CreateView):
     model = Room
     fields = ['name', 'roomType', 'description', 'price', 'image', 'size', 'country', 'city', 'street', 'address','location']
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class RoomUpdate(LoginRequiredMixin, UpdateView):
