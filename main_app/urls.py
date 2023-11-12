@@ -5,8 +5,14 @@ from .views import profile
 from .views import ChangePasswordView
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('about/', views.about, name='about'),
+
+  path('', views.home, name='home'),
+  path('about/',views.about,name='about'),
+
+  path('rooms_list/', views.rooms_index, name='index_list'),
+  path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
+  path('accounts/signup/', views.signup, name='signup'),
+
   
 #     profile
     path('accounts/signup/', views.signup, name='signup'),    
@@ -39,8 +45,21 @@ urlpatterns = [
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
   path('facilities/create/', views.FacilityCreate.as_view(), name='facilities_create'),
 
+
+
+  #Booking
+  path('rooms/', views.getRooms, name='index'),
+  path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
+  path('booking/<int:room_id>/<int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
+  path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
+  path('booking/user_booking/',views.user_Booking, name='user_booking') ,
+    # path('booking/<int:user_id>/user_booking/',views.user_Booking, name='user_booking') ,
+  path('booking/check/',views.checkAvailability,name='check_availability'),
+  #  path('booking/<int:room_id>/check/',views.checkAvailability,name='check_availability'),
+
     # assosiate a facility with a room
   path('rooms/<int:room_id>/assoc_facility/<int:facility_id>/', views.assoc_facility, name='assoc_facility'),
     # unassosiate a facility with a room
   path('rooms/<int:room_id>/unassoc_facility/<int:facility_id>/', views.unassoc_facility, name='unassoc_facility'),
 ]
+

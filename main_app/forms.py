@@ -33,7 +33,13 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['username', 'email']
 
 class BookingForm(ModelForm):
-    class Meta:
-        model = Booking
-        fields = ['from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile']
+
+  class Meta: #addional functionalty to access and use CBV
+    model = Booking
+    fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile','comment']
+
+# class SearchForm(ModelForm):
+#   class Meta: #addional functionalty to access and use CBV
+#     model = Room
+#     fields = __all__
 

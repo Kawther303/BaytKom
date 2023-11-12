@@ -13,7 +13,7 @@
       <p>Description: {{ room.description }}</p>
       <p>roomType:  {{room.roomType}}</p>
       <p>size:  {{room.size}}</p>
-      <p>Price: BD <span id=room_price>{{room.price}}</span></p>
+      <p>Price per night: BD <span><input id="room_price" value="{{room.price}}"></input></span></p>
       <!-- <p>country:  {{room.country}}</p>
       <p>city:  {{room.city}}</p>
       <p>street:  {{room.street}}</p>
@@ -27,19 +27,21 @@
         </div>
       </div>
     </div>
-    <div>  <form method="post" action="{% url 'add_booking' room.id user.id %}">
+    <div>  <form method="post" action="{% url 'add_booking' room.id user.user_id %}">
       {% csrf_token %}
-      {{ booking_form.as_p }}
+     
+      {{ booking_form.as_table }}
       {% if booking_form.from_date  %}
       <p id="date_note" class="red-text"></p>
       <p id="result"></p>
 
-     <p> No of nights: <span id="n_result"></span></p>
- 
-      <p>Price : <span id="p_result"> </span></p>
+      <h5>No of nights: <span id="night_result"></span></h5><br>
+      <h5>Total Price : BD <span id="price_result" class="red-text"></span></h5> <br>
+       <input  type="hidden" id="theprice" name="theprice">
       <br>
       <hr>
       {% endif %}
+      <input type="hidden" id="price" name="price">
       <input id="book_btn" type="submit" class="btn" value="Place Booking">
         </form></div>
        
@@ -71,9 +73,9 @@
     const booking_btn = document.getElementById('book_btn');
     let priceEle = document.getElementById('id_price');
     let note = document.getElementById("date_note"); 
-    let n_resultElement = document.getElementById('n_result');
-    let p_resultElement = document.getElementById('p_result');
-    let room_p = document.getElementById('room_price');
+    let n_resultElement = document.getElementById('night_result');
+    let p_resultElement = document.getElementById('price_result');
+    let room_p = document.getElementById('room_price').value;
     console.log('pp:',room_p);
     console.log('dd1:',fromDateEle.value);
 
@@ -100,14 +102,17 @@
          differenceInDays = differenceInTime / (1000 * 3600 * 24);
         n_resultElement.textContent = ` ${differenceInDays} nights.`;
         p_resultElement.textContent = differenceInDays * room_p;
+        the_price = differenceInDays * room_p;
+        p_resultElement.textContent = the_price;
+        document.getElementById('theprice').value = the_price;
       } else {
         n_resultElement.textContent = '';
         p_resultElement.textContent = '';
       }
     }
   
-    fromDateEle.addEventListener('click', calculateDifference);
-    toDateEle.addEventListener('mouseover', calculateDifference);
+    fromDateEle.addEventListener('change', calculateDifference);
+    toDateEle.addEventListener('change', calculateDifference);
 
     </script>
 {% endblock %}
