@@ -71,6 +71,7 @@ class Room(models.Model):
   address = models.CharField(max_length=255)
   location = models.CharField(max_length=100)
   facilities = models.ManyToManyField(Facility)
+  user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
 
   def book_for_today(self, f_date, t_date):
       return self.booking_set.filter(date__range=(f_date, t_date)).count() >= 1

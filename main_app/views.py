@@ -136,6 +136,7 @@ def room_detail_alt(request, room_id):
      }
     return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
 
+
 @login_required
 def add_facility(request, room_id):
     form = FacilityForm(request.POST, request.FILES)
