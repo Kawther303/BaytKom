@@ -82,7 +82,7 @@ class Booking(models.Model):
   guest_name = models.CharField(max_length=100,default="")
   guest_email = models.EmailField(default="")
   guest_mobile = models.CharField(max_length=25,default="")
-  # comment = models.CharField(max_length=250,default="")
+  comment = models.CharField(max_length=250,default="")
   price =  models.FloatField( default=0.00)
 
 

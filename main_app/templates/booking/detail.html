@@ -27,8 +27,9 @@
         </div>
       </div>
     </div>
-    <div>  <form method="post" action="{% url 'add_booking' room.id user.id %}">
+    <div>  <form method="post" action="{% url 'add_booking' room.id user.user_id %}">
       {% csrf_token %}
+     
       {{ booking_form.as_table }}
       {% if booking_form.from_date  %}
       <p id="date_note" class="red-text"></p>
@@ -110,8 +111,8 @@
       }
     }
   
-    fromDateEle.addEventListener('click', calculateDifference);
-    toDateEle.addEventListener('mouseover', calculateDifference);
+    fromDateEle.addEventListener('change', calculateDifference);
+    toDateEle.addEventListener('change', calculateDifference);
 
     </script>
 {% endblock %}

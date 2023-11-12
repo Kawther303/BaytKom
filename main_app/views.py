@@ -127,6 +127,7 @@ def booking_create(request, room_id):
   users = User.objects.get(username=request.user)
   room = Room.objects.get(id=room_id)
   booking_form = BookingForm()
+  print('B_users:',users.id)
   user = Profile.objects.get(user_id=users.id)
   return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user} )
 
@@ -142,6 +143,7 @@ def booking_create(request, room_id):
 #   return render(request, 'booking/confirmation.html', {'booking' : form} )
 def add_booking(request, room_id, user_id):
   # user_id = user.id
+ 
   booking_price = request.POST['theprice']
   form = BookingForm(request.POST)
   if form.is_valid():
@@ -187,22 +189,39 @@ def getRooms(request):
   return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
   # return HttpResponse(country)
    
-
-
-def checkAvailability(request,room_id):
+def checkAvailability(request):
+  print('okayyyy')
+  context:[]
+  room_id = request.GET['room_id_c']
   check_in = request.GET['check_in']
   check_out = request.GET['check_out']
   check = checkAvailable(room_id,check_in,check_out)
-  print('1111:',check)
+  context = {
+     'check':check,
+     'check_in' :check_in,
+     'check_out' :check_out  
+  }
+  print('type: ', type(check))
   print('1111:',check_in)
   print('1111:',check_out)
-  return ({'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
+  return render(request, 'booking/detail.html' )
+  # return redirect(request,{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
 @login_required
 def user_Booking(request):
-  bookings = Booking.objects.filter(user=request.user)
+
+  context =[] 
+
+  bookings = Booking.objects.all().filter(user=request.user)
+  for book in bookings:
+    room = Room.objects.filter(id=book.room.id)
+    context.append({
+      "booking" : book,
+      "room": room[0]
+    })    
   room = Room.objects.all()
-  return render(request, 'booking/user_booking.html', {'bookings': bookings , 'room':room})
+  return render(request, 'booking/user_booking.html',{'context' : context})
+  # return render(request, 'booking/user_booking.html', {'bookings': bookings , 'room':room})
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
   # bookings = Booking.objects.all()
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
