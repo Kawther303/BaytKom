@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Room Details </h1>
+<div>
+      {% load static %}
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>      
+      {% for roompic in room.roompic_set.all %}
+        {% load static %}
+        <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
+        {% endfor %}
+</div>
+    <div>
+      <h3>{{ room.name }}</h3>
+      <p>Description: {{ room.description }}</p>
+      <p>Room Type:  {{room.get_roomType_display}}</p>
+      <p>Size:  {{room.size}}</p>
+      <p>Price: {{room.price}}</p>
+      <p>Country:  {{room.country}}</p>
+      <p>City:  {{room.city}}</p>
+      <p>Street:  {{room.street}}</p>
+      <p>Address:  {{room.address}}</p>
+      <p>Location:  {{room.location}}</p>
+    </div>
+    <div class="card-action">
+        <a href="{% url 'booking_create' room.id %}">Book the Room</a>
+</div>
+      <div class="row">
+        <div class="col s6 ">
+          <h3> {{ room.name }}'s Facilities</h3>
+          {% if room.facilities.count  %}
+            {% for facility in room.facilities.all  %}
+            <div class="card">
+              <div class="card-content">
+                <span>
+                  {{ facility.name }}               
+                  <div>
+                    {% load static %}
+                    <img width="40px" height="40px" src="{% static facility.icon|cut:'main_app/static/' %}"class="imgsize right"/>
+                  </div>
+                </span>
+            </div>
+          </div>
+            {% endfor %}
+            {% else %}
+            <h5>No Facility</h5>
+            {% endif %}
+          </div>
+        </div>
+          
+
+          {% endblock %}

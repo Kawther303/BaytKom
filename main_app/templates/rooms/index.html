@@ -25,7 +25,9 @@
     {% load static %}
     <img width="360px" height='250px'src="{% static room.image|cut:'main_app/static' %}"/>
   </div>
-      <a href="{% url 'detail' room.id %}">
+  <!-- room_detail_alt
+      <a href="{% url 'detail' room.id %}"> -->
+        <a href="{% url 'room_detail_alt' room.id %}">
       <span class="card-title">{{ room.name }}</span>
     </a>
     <p>Price: {{ room.price }}</p>

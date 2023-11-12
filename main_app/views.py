@@ -52,11 +52,11 @@ class BookCreate(CreateView):
     success_url = '/rooms/'
 
 
-@login_required
-def rooms_detail(request, room_id):
-    room = Room.objects.get(id=room_id)
-    return render(request, 'rooms/detail.html', {'room': room})
-
+# @login_required
+# def rooms_showdetail(request, room_id):
+#     room = Room.objects.get(id=room_id)
+#     booking_form = BookingForm()
+#     return render(request, 'rooms/showDetail.html', {'room': room, 'booking_form': booking_form})
 
 
 def signup(request):
@@ -110,7 +110,6 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
 
 
 
-
 # room will display all the facility and have the form for adding new facility for specific image 
 @login_required
 def rooms_detail(request, room_id):
@@ -119,6 +118,15 @@ def rooms_detail(request, room_id):
     roompic_form = RoomPicForm()
     facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
     return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have })
+
+
+def room_detail_alt(request, room_id):
+    room = Room.objects.get(id=room_id)
+    booking_form = BookingForm()
+    context = {
+        'room': room
+    }
+    return render(request, 'detail_alt.html', {'room':room, 'booking_form': booking_form})
 
 @login_required
 def add_facility(request, room_id):
