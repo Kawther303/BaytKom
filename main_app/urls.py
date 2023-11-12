@@ -37,6 +37,8 @@ urlpatterns = [
   path('facilities/<int:room_id>/add_facility', views.add_facility, name='add_facility'),
   path('facilities/<int:pk>/update/', views.FacilityUpdate.as_view(), name='facilities_update'),
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
+  path('facilities/create/', views.FacilityCreate.as_view(), name='facilities_create'),
+
     # assosiate a facility with a room
   path('rooms/<int:room_id>/assoc_facility/<int:facility_id>/', views.assoc_facility, name='assoc_facility'),
     # unassosiate a facility with a room
