@@ -39,19 +39,18 @@
             {% for facility in room.facilities.all  %}
             <div class="card">
               <div class="card-content">
-                <span class="card-title">
-                  {{ facility.name }}
-                </span>
+                <span>
+                  {{ facility.name }}               
                   <div>
                     {% load static %}
                     <img width="40px" height="40px" src="{% static facility.icon|cut:'main_app/static/' %}"class="imgsize right"/>
                   </div>
-                  
-              
+                </span>
+
               <div class="card-action">
                 <form action="{% url 'unassoc_facility' room.id facility.id%}" method="POST">
                   {% csrf_token %}
-                  <button type="submit" class="btn grey darken-1">Remove</button>
+                  <button type="submit" class="btn grey darken-1 f-btn">Remove</button>
                 </form>
             </div>
             </div>
@@ -67,18 +66,17 @@
           {% for facility in facilities.all %}
           <div class="card">
             <div class="card-content">
-              <span class="card-title">
+              <span>
                 {{ facility.name }}
-              </span>
                 <div>
                   {% load static %}
                   <img width="60px" height="60px" src="{% static facility.icon|cut:'main_app/static/' %}" class="imgsize right"/>
                 </div>
+              </span>
             <div class="card-action">
-              
               <form action="{% url 'assoc_facility' room.id facility.id%}" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="btn grey darken-1">Add</button>
+                <button type="submit" class="btn grey darken-1 f-btn">Add</button>
               </form>
               </div>
           </div>

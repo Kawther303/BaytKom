@@ -11,6 +11,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.db.models import Q
 
 # Define the home view
 def home(request):
@@ -120,3 +121,4 @@ def unassoc_facility(request, room_id, facility_id):
   # remove this facility_id with the room selected (room_id)
   Room.objects.get(id=room_id).facilities.remove(facility_id)
   return redirect('detail', room_id=room_id)
+
