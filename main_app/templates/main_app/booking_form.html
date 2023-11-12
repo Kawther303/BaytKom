@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>Booking of {{object.name}}</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit" value="Book!" class="btn">
+
+</form>
+<script>
+  
+  let fromDateEle = document.getElementById('id_from_date');
+  M.Datepicker.init(fromDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  })  
+  let toDateEle = document.getElementById('id_to_date');
+  M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    setDefaultDate: true,
+    autoClose: true
+  })  
+  
+  </script>
+
+
+{% endblock %}

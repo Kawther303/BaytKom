@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Love+Light&display=swap');
 body{
-  background-color: aliceblue;
+  background-color: #9baab1;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  font-family: 'Times New Roman', Times, serif;
+  /* font-family: 'Times New Roman', Times, serif; */
   /* font-family: 'Dancing Script', cursive; */
   /* color: black; */
   /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
@@ -29,6 +29,7 @@ text-align: right;
   justify-content: space-between;
   align-content: center;
 }
+
 button{
   margin: 10px;
 }
@@ -58,4 +59,13 @@ button{
 } */
 .f-btn{
   size: small;
+=======
+
+nav,footer ,.page-footer{
+  background-color: #1F4172;
+}
+
+nav,footer ,.page-footer{
+  background-color: #1F4172;
+
 }

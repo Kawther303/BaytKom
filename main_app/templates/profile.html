@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+<div class="row my-3 p-3">
+  {% if user.profile.image %}
+  <img src="{{ user.profile.image.url }}" />
+  {% else %}
+  <p>No profile image available.</p>
+  {% endif %}
+</div>
+{% if user_form.errors %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <div id="form_errors">
+    {% for key, value in user_form.errors.items %}
+    <strong>{{ value }}</strong>
+    {% endfor %}
+  </div>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+<div class="form-content">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label class="small mb-1">Username:</label>
+          {{ user.username }}
+        </div>
+        <div class="form-group">
+          <label class="small mb-1">Email:</label>
+          {{ user_form.email }}
+        </div>
+        <div class="form-group">
+          <a href="{% url 'password_change' %}">Change Password FOR {{ user.username}}</a>
+          <hr>
+          <label class="small mb-1">Change full_name:</label>
+          {{ profile_form.full_name }}
+        </div>
+        <div class="form-group">
+          <label class="small mb-1">User Type:</label>
+          {{ profile_form.user_type }}
+        </div>
+        <div class="form-group">
+          <label class="small mb-1">address:</label>
+          {{ profile_form.address }}
+        </div>
+        <div class="form-group">
+          <label class="small mb-1">phone_number:</label>
+          {{ profile_form.phone_number }}
+        </div>
+        <div class="form-group">
+          <label class="small mb-1">Profile Image:</label>
+          {{ profile_form.image }}
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+    <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+  </form>
+</div>
+{% endblock content %}

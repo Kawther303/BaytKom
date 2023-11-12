@@ -24,9 +24,11 @@
       <p>Location:  {{room.location}}</p>
       <div>
       <div class="card-action">
+
         <a href="{% url 'rooms_update' room.id %}"> <img src="\static\image\edit.png" alt="edit" width="40px" height="40px"></a>
         <a href="{% url 'rooms_delete' room.id %}"><img src="\static\image\icons8-delete-30 (1).png" alt="delete" width="40px" height="40px"></a>
-        
+        <a href="{% url 'booking_create' room.id %}">Book the Room</a>
+
           </div>
         </div>
       </div>
