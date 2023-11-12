@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1> Booking is Confirmed </h1>
-
+<div class="card">
+<h1> Booking details Confirmation </h1>
+<h4>book#:{{ booking.id }} </h4><br>
+<h4>Guest:{{booking.guest_name}} </h4><br>
+<h4>email:{{booking.guest_email}} </h4><br>
+<h4>Price:{{booking.Price}} </h4><br>
+<h4>check-in-check-out: {{booking.from_date}}-{{booking.to_date}}</h4>
+</div>
+<a href
 {% endblock %}

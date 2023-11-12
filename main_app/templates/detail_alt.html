@@ -23,12 +23,10 @@
       <p>Address:  {{room.address}}</p>
       <p>Location:  {{room.location}}</p>
     </div>
-    <div class="card-action">
-        <a href="{% url 'booking_create' room.id %}">Book the Room</a>
-</div>
+
       <div class="row">
         <div class="col s6 ">
-          <h3> {{ room.name }}'s Facilities</h3>
+          <h6> {{ room.name }}'s Facilities</h6>
           {% if room.facilities.count  %}
             {% for facility in room.facilities.all  %}
             <div class="card">
@@ -48,6 +46,48 @@
             {% endif %}
           </div>
         </div>
+        <div class="card-action">
           
 
-          {% endblock %}
+
+       </div>
+
+        <form method="GET" action="{% url 'check_availability' %}">
+          {% csrf_token %}
+          
+         <input type='hidden'  name='s_room_id' id='s_room_id' value='{{ room.id }}'>
+          <p>Check-in:<input type='text'   id='check_in' name='check_in' value="{{ context.check_in }}"></p>
+          <p>Check-Out:<input type='text'  id='check_out' name='check_out' value="{{ context.check_out }}"></p>
+          <input type="submit" value="Check Availability">
+        </form>
+        <div class="card">
+   
+          {% if context.check > 0  %}
+          <p class="teal-text"><h5> Dates are available  </h5></p> 
+          <a href="{% url 'booking_create' room.id %}"> <button>Book the Room</button></a>
+          {% elif context.check < 0  %}
+          <p class="red-text"></p>><h5> Dates are not available  </h5></p> 
+          {% else %}
+          <p><h5> Check if Dates are available  </h5></p> 
+
+          {% endif %}
+
+        </div>
+
+
+      <script>
+          let fromDateEle = document.getElementById('check_in');
+          let toDateEle = document.getElementById('check_out');
+    
+          M.Datepicker.init(fromDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
+            setDefaultDate: false,
+            autoClose: true
+          })  
+      
+          M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+            setDefaultDate: false,
+            autoClose: true
+          })  
+
+      </script>
+{% endblock %}

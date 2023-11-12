@@ -15,6 +15,8 @@ RoomType = (
   ('7', 'Duplex')
 )
 
+#  user_type = models.CharField(choices=UserType, default=UserType[1][0], max_length=10)
+
 class Facility(models.Model):
 
   name = models.CharField(max_length=100, default="")
@@ -95,9 +97,10 @@ class Booking(models.Model):
   to_date = models.DateField('to date')
   guest_name = models.CharField(max_length=100, default="")
   guest_email = models.EmailField(default="")
-  guest_mobile = models.CharField(max_length=25, default="")
-  price = models.FloatField(default=0.00)
-
+  guest_mobile = models.CharField(max_length=25,default="")
+  comment = models.CharField(max_length=250,default="")
+  price =  models.FloatField( default=0.00)
+  
   def _str_(self):
     return self.guest_name
 
@@ -105,10 +108,8 @@ class RoomPic(models.Model):
   roomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
   room = models.ForeignKey(Room, on_delete=models.CASCADE, default="")
 
-
   def __str__(self):
     return f"{self.room.name} {self.roomImages}"
-
 
   def get_absolute_url(self):
     return reverse('detail', kwargs={'pk': self.id})
