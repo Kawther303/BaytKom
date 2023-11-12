@@ -1,7 +1,21 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from .models import Facility, RoomPic
 from .models import Booking, Room, Profile
+
+class FacilityForm(ModelForm):
+  # it needed for custome model form (to not provide fields like CBV)
+  class Meta:
+    model = Facility
+    fields = ['name', 'icon', 'description']
+
+class RoomPicForm(ModelForm):
+  # it needed for custome model form (to not provide fields like CBV)
+  class Meta:
+    model = RoomPic
+    fields = ['roomImages']
+
 
 class UpdateProfileForm(forms.ModelForm):
     user_type = forms.ChoiceField(choices=[('admin', 'Admin'), ('customer', 'Customer')])
@@ -22,3 +36,4 @@ class BookingForm(ModelForm):
     class Meta:
         model = Booking
         fields = ['from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile']
+

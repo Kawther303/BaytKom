@@ -16,15 +16,20 @@ RoomType = (
 )
 
 class Facility(models.Model):
-    name = models.CharField(max_length=100, default="")
-    description = models.TextField(max_length=250, blank=True)
-    icon = models.ImageField(upload_to="main_app/static/facilityImg", blank=True, null=True)
 
-    def _str_(self):
-        return self.name
+  name = models.CharField(max_length=100, default="")
+  description = models.TextField(max_length=250, blank=True)
+  icon = models.ImageField(upload_to = "main_app/static/facilityImg", blank=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse('facilities_detail', kwargs={'pk': self.id})
+
+  def __str__(self):
+    return self.name
+
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'pk': self.id})
+
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -49,19 +54,21 @@ def save_user_profile(sender, instance, **kwargs):
     except Profile.DoesNotExist:
         Profile.objects.create(user=instance)
 
+
 class Room(models.Model):
-    name = models.CharField(max_length=100)
-    roomType = models.CharField(max_length=1, choices=RoomType, default=RoomType[0][0])
-    image = models.ImageField(upload_to="main_app/static/uploads", default="")
-    size = models.CharField(max_length=100)
-    price = models.DecimalField(decimal_places=2, max_digits=5, default=0.00)
-    description = models.TextField(max_length=250)
-    country = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    street = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    location = models.CharField(max_length=100)
-    facilities = models.ManyToManyField(Facility)
+
+  name = models.CharField(max_length=100)
+  roomType = models.CharField(max_length=1, choices=RoomType, default=RoomType[0][0])
+  image = models.ImageField(upload_to = "main_app/static/uploads", default="")
+  size = models.CharField(max_length=100)
+  price = models.DecimalField(decimal_places= 2, max_digits= 5, default=0.00)
+  description = models.TextField(max_length=250)
+  country = models.CharField(max_length=100)    
+  city = models.CharField(max_length=100)
+  street = models.CharField(max_length=255)
+  address = models.CharField(max_length=255)
+  location = models.CharField(max_length=100)
+  facilities = models.ManyToManyField(Facility)
 
     def book_for_today(self, f_date, t_date):
         return self.booking_set.filter(date__range=(f_date, t_date)).count() >= 1
@@ -72,11 +79,13 @@ class Room(models.Model):
     def booking_price(self, f_date, t_date):
         return self.price * (t_date - f_date)
 
-    def _str_(self):
-        return f"{self.name}"
+  def __str__(self):
+    return f"{self.name}"
+    return f"{self.room.name} {self.get_roomType_display()}"
 
-    def get_absolute_url(self):
-        return reverse('detail', kwargs={'room_id': self.id})
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'room_id': self.id}) 
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -90,3 +99,16 @@ class Booking(models.Model):
 
     def _str_(self):
         return self.guest_name
+
+class RoomPic(models.Model):
+  roomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
+  room = models.ForeignKey(Room, on_delete=models.CASCADE, default="")
+
+
+
+  def __str__(self):
+    return f"{self.room.name} {self.roomImages}"
+
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'pk': self.id})

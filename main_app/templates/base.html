@@ -20,19 +20,23 @@
       <div class="nav-wrapper blue-grey darken-4">
         <ul>
 
-          <li> <a href="{% url 'home' %}" class='left brand-logo'><img src="\static\uploads\Baytkom logo.png" alt="Baytkom"width="100px" height="65"></a></li>
+          <li> <a href="{% url 'home' %}" class='left brand-logo'>
+            <!-- <img src="\static\uploads\Baytkom logo.png" alt="Baytkom"width="100px" height="65"> -->
+            <h4 class="Baytkom-Logo">B</h4>
+          </a></li>
         </ul>
+
         <ul class="right">
+          
           <li> <a href="{% url 'about' %}"> About</a></li>
           
           {% if user.is_authenticated %}
-          
           <li><a href="{% url 'logout' %}">Logout</a></li>
           <li><a href="{% url 'profile' %}">Profile</a></li>
           <li> <a href="{% url 'facilities_create' %}">Add a Facility</a></li>
           <li> <a href="{% url 'index_list' %}"> Rooms</a></li>
           <li> <a href="{% url 'room_create' %}"> Add Room</a></li>
-
+          <li> <a href="{% url 'facilities_index' %}">Facilities</a></li>
           <li> <a href="{% url 'book_create' %}">Book Room</a></li>
           
           {% else %}
@@ -40,7 +44,12 @@
           <li><a href="{% url 'signup' %}">Signup</a></li>
 
           {% endif %}
+          
+        </ul>
+
+
         
+
 
       </div>
     </nav>
@@ -51,11 +60,23 @@
     {% endblock %}
   </main>
 
-  <footer class="page-footer blue-grey darken-4"> 
+  <footer class="page-footer black"> 
 
-    <div class="right">
-      All Rights Reserved, &copy; 2023 BaytKom </div>
+    <div class="center">
+      <h3 class="BaytKom-footer">Baytkom</h3> 
+      All Rights Reserved, &copy; 2023 BaytKom 
+      <p>888 Mannama Way, Bahrain ML 12345</p> 
+      <p>(+973) 654-3210888 </p> 
+      <img src="\static\image\icons8-twitter-50.png
+      " alt="insta"width="20px" height="20px">
+      <img src="\static\image\icons8-instagram-50.png
+      " alt="insta"width="20px" height="20px">
+      <img src="\static\image\icons8-facebook-50.png
+      " alt="insta"width="20px" height="20px">
+    </div>
+    
   </footer>
-</body>
+  
+  </body>
 
 </html>
