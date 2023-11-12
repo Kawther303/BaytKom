@@ -107,10 +107,8 @@ class RoomPic(models.Model):
   roomImages = models.ImageField(upload_to = "main_app/static/roomImg", default="")
   room = models.ForeignKey(Room, on_delete=models.CASCADE, default="")
 
-
   def __str__(self):
     return f"{self.room.name} {self.roomImages}"
-
 
   def get_absolute_url(self):
     return reverse('detail', kwargs={'pk': self.id})
