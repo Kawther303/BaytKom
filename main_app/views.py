@@ -122,11 +122,12 @@ def rooms_detail(request, room_id):
 
 def room_detail_alt(request, room_id):
     room = Room.objects.get(id=room_id)
+    room_pic = RoomPic.objects.filter(room=room_id)
     booking_form = BookingForm()
     context = {
         'room': room
     }
-    return render(request, 'detail_alt.html', {'room':room, 'booking_form': booking_form})
+    return render(request, 'detail_alt.html', {'room':room, 'booking_form': booking_form, 'room_pic':room_pic})
 
 @login_required
 def add_facility(request, room_id):
