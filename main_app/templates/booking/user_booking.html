@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ context }}
+
 {% if context %}
 <h2>Booking List:</h2>
 {% for r in context %}
 
 <div class="card">
 
-
 <div class="card-content">
 
 <div class="flex-container"> 
 
-  <div>
+  
+<div>
 
- 
 <span class="card-title">{{ r.booking.room }}</span>
+<a href="{% url 'room_detail_alt' r.room.id %}">
 <p>Booking#: {{ r.booking.id }}</p>
 <p>check-in: {{ r.booking.from_date }}</p>
 <p>check-out: {{ r.booking.to_date }}</p>
@@ -29,7 +29,7 @@
  </div>
  <div> 
   {% load static  %}
-  <img width="350px" height="350px" src="{% static r.room.image|cut:'main_app/static/' %}" class="imgsize"/>
+  <img width="350px" height="350px" src="{% static r.room.image|cut:'main_app/static/' %}" class="imgsize"/></a>
 </div>
 </div>
 </div>  

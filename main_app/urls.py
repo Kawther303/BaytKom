@@ -58,7 +58,7 @@ urlpatterns = [
   path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
   path('booking/user_booking/',views.user_Booking, name='user_booking') ,
     # path('booking/<int:user_id>/user_booking/',views.user_Booking, name='user_booking') ,
-  path('booking/check/',views.checkAvailability,name='check_availability'),
+  path('room/check/',views.checkAvailability,name='check_availability'),
   #  path('booking/<int:room_id>/check/',views.checkAvailability,name='check_availability'),
 
     # assosiate a facility with a room

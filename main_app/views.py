@@ -127,11 +127,14 @@ def rooms_detail(request, room_id):
 
 def room_detail_alt(request, room_id):
     room = Room.objects.get(id=room_id)
-    booking_form = BookingForm()
-    context = {
-        'room': room
-    }
-    return render(request, 'detail_alt.html', {'room':room, 'booking_form': booking_form})
+    room_pic = RoomPic.objects.filter(room=room_id)
+    # booking_form = BookingForm()
+    context = {    
+     'check': 0, 
+     'check_in' :'',
+     'check_out' :'' 
+     }
+    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
 
 @login_required
 def add_facility(request, room_id):
@@ -267,21 +270,26 @@ def getRooms(request):
   # return HttpResponse(country)
    
 def checkAvailability(request):
-  print('okayyyy')
   context:[]
-  room_id = request.GET['room_id_c']
+  room_id = request.GET['s_room_id']
   check_in = request.GET['check_in']
   check_out = request.GET['check_out']
   check = checkAvailable(room_id,check_in,check_out)
+  if (check == True):
+    ch = 1
+  else:
+      ch = -1
   context = {
-     'check':check,
+     'check':ch,
      'check_in' :check_in,
      'check_out' :check_out  
   }
-  print('type: ', type(check))
-  print('1111:',check_in)
-  print('1111:',check_out)
-  return render(request, 'booking/detail.html' )
+  room = Room.objects.get(id=room_id)
+  room_pic = RoomPic.objects.filter(room=room_id)
+  return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
+#   return render(request,'detail_alt.html',{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
+
+# render(request,'detail_alt.html',{'context':context} )
   # return redirect(request,{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
 @login_required
