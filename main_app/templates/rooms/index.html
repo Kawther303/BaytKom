@@ -4,7 +4,6 @@
 
 {% if country %}
   <h2> Search Result </h2>
-  <div class="row">
   <p> Country: {{ country }}</p>
   <p> Check-in: {{ from_date }}</p>
   <p> Check-out: {{ to_date }}</p>
@@ -21,9 +20,9 @@
       <div class="card blue-grey darken-1 card-body">
         
       <div class="card-content white">
-      <div>
+      <div class="center">
     {% load static %}
-    <img width="360px" height='250px'src="{% static room.image|cut:'main_app/static' %}"/>
+    <img width="450px" height='350px'src="{% static room.image|cut:'main_app/static' %}"/>
   </div>
 
       {% if user.user_type == 'ADMIN' %}
@@ -34,6 +33,7 @@
         </a>
       {% endif %}    
   
+
     <p>Price: {{ room.price }}</p>
       <p>Address: {{ room.address }}</p>
       <p>Description: {{ room.description }}</p>
@@ -41,10 +41,7 @@
             </div>
           </div>
         </div>
-      
 
 {% endfor %}
 </div>
-
-
 {% endblock %}

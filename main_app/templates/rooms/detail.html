@@ -3,15 +3,43 @@
 {% block content %}
 
 <h1> Room Details </h1>
-<div>
-  <div>
-      {% load static %}
-      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>      
+
+<div class="container">
+  <!-- Slider main container -->
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+
+    <div class="swiper-wrapper">
+      <!-- Slides -->    
+      <div class="swiper-slide">
+        
+          {% load static %}
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+    </div>
       {% for roompic in room_pic %}
-        {% load static %}
-        <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
-        {% endfor %}
-    <div>
+      <div class="swiper-slide">
+        
+          {% load static %}
+          <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
+          
+    </div>
+    {% endfor %}
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+  
+  </div>
+  </div>
+  </div>
+    
+
+    
+    <div class="card">
+      <div class="card-content">
       <h3>{{ room.name }}</h3>
       <p>Description: {{ room.description }}</p>
       <p>Room Type:  {{room.get_roomType_display}}</p>
@@ -22,12 +50,12 @@
       <p>Street:  {{room.street}}</p>
       <p>Address:  {{room.address}}</p>
       <p>Location:  {{room.location}}</p>
-      <div>
+    </div></div>
       <div class="card-action">
 
         <a href="{% url 'rooms_update' room.id %}"> <img src="\static\image\edit.png" alt="edit" width="40px" height="40px"></a>
         <a href="{% url 'rooms_delete' room.id %}"><img src="\static\image\icons8-delete-30 (1).png" alt="delete" width="40px" height="40px"></a>
-        <a href="{% url 'booking_create' room.id %}">Book the Room</a>
+        
 
           </div>
         </div>
@@ -96,9 +124,6 @@
       </div>
       <hr>      
 
-
-      
-    
   <div>
     <form action="{% url 'add_roompic' room.id %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -110,6 +135,30 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper('.swiper', {
+          autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+          },
+  loop: true,
 
-        {% endblock %}
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+
+
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
+    </script>
+  {% endblock %}
 

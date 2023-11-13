@@ -36,9 +36,7 @@ button{
 .submitbtn{
   margin: 10px;
 }
-.main-page{
-  /* background-: url(''); */
-}
+
 .imgsize{
   margin-top: 0;
 }
@@ -68,4 +66,45 @@ nav,footer ,.page-footer{
 nav,footer ,.page-footer{
   background-color: #1F4172;
 
+}
+
+
+.container{
+width:100%;
+height: 100vh;
+background: #e9f4f9;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.swiper{
+  width: 50%;
+  height: fit-content;
+}
+.swiper-slide img{
+  width: 100%;
+
+}
+
+.sidebar {
+  padding: 0px;
+}
+
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 5px 0;
+}
+
+.sidebar-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.sidebar-menu li a:hover {
+  color: #000;
 }

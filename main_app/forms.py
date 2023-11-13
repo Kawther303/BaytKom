@@ -16,6 +16,11 @@ class RoomPicForm(ModelForm):
     model = RoomPic
     fields = ['roomImages']
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['full_name', 'user_type', 'address', 'phone_number', 'image']
+
 
 class UpdateProfileForm(forms.ModelForm):
     user_type = forms.ChoiceField(choices=[('admin', 'Admin'), ('customer', 'Customer')])
