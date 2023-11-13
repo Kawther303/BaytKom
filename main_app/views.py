@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from .models import Room, Facility, RoomPic
 from .forms import FacilityForm
 from .forms import RoomPicForm
+from .forms import *
 import datetime
 
 
@@ -21,6 +22,9 @@ from .forms import UpdateUserForm, UpdateProfileForm, BookingForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.conf import settings
+from django.core.mail import send_mail, BadHeaderError
+from django.template.loader import render_to_string
 
 
 def home(request):
@@ -71,14 +75,14 @@ class BookCreate(CreateView):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')
         else:
             error_message = 'Invalid User already available - please try another username'
-    form = UserCreationForm()
+    form = CreateUserForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
@@ -226,18 +230,48 @@ def booking_create(request, room_id):
 #     new_booking.price = request.POST['price']
 #     new_booking.save()
 #   return render(request, 'booking/confirmation.html', {'booking' : form} )
+
+
+@login_required
+def booking_confirmation(request):
+    return render(request, 'booking/booking_confirmation_email.html')
+
+@login_required
 def add_booking(request, room_id, user_id):
-  # user_id = user.id
- 
-  booking_price = request.POST['theprice']
-  form = BookingForm(request.POST)
-  if form.is_valid():
-    new_booking = form.save(commit = False)
-    new_booking.room_id = room_id
-    new_booking.user_id = user_id
-    new_booking.price= booking_price
-    new_booking.save()
-  return redirect(to='home') 
+    users = User.objects.get(username=request.user)
+    user = Profile.objects.get(user_id=users.id)
+
+    room = Room.objects.get(id=room_id)
+    booking_price = request.POST['theprice']
+    form = BookingForm(request.POST)
+
+    if form.is_valid():
+        new_booking = form.save(commit=False)
+        new_booking.room_id = room_id
+        new_booking.user_id = user_id
+        new_booking.price = booking_price
+        new_booking.save()
+
+        # Send confirmation email to the user
+        
+        subject = 'Booking Confirmation'
+        message = render_to_string('booking/booking_confirmation_email.html', {
+            'user': user,
+            'room': room,
+            'booking': new_booking,
+        })
+        from_email = 'djangoemail2002@gmail.com'
+        to_email = [user.user.email]  # Assuming user has an email field
+    
+        print(to_email)
+
+        try:
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+            print("Email sent successfully")
+        except BadHeaderError as e:
+            print(f"Invalid header found. Email not sent. Error: {e}")
+
+    return redirect(to='home')
 
 @login_required
 def booking_confirmation(request):
