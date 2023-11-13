@@ -269,8 +269,6 @@ def add_booking(request, room_id, user_id):
 
  users = User.objects.get(username=request.user)
  user = Profile.objects.get(user_id=users.id)
- print('user',user)
- 
  form = BookingForm(request.POST)
  
  if form.is_valid():
@@ -283,7 +281,9 @@ def add_booking(request, room_id, user_id):
          "new_booking":new_booking,
          "room" : the_room
      }
-   
+
+        # Send confirmation email to the user
+
     subject = 'Booking Confirmation'
     message = render_to_string('booking/booking_confirmation_email.html', {
             'user': user,
@@ -291,7 +291,9 @@ def add_booking(request, room_id, user_id):
             'booking': new_booking,
         })
     from_email = 'djangoemail2002@gmail.com'
-    to_email = [user.user.email] 
+
+    to_email = [user.user.email]  # Assuming user has an email field
+
     
     print(to_email)
 
@@ -324,19 +326,16 @@ def checkAvailable(room,check_in,check_out):
     print('roommmmmmmmmmmmmmmmm:',room)
     the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
     the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
-    booking_list = Booking.objects.filter(room=room)
-    result = True
+
+    booking_list = Booking.objects.filter(room_id=room)
+    print ('booking_list',booking_list)
+
     for booking in booking_list:
         if booking.from_date > the_check_out or booking.to_date <the_check_in:
             the_list.append(True)
-    else:
+        else:
             the_list.append(False)
-            result = False
-    
-    print('result',result)        
-    print('the_list:' ,the_list)        
-    # return all(the_list)
-    return result
+    return all(the_list)
 
 
 def getRooms(request):
