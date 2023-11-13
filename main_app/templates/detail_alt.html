@@ -3,14 +3,37 @@
 {% block content %}
 
 <h1> Room Details </h1>
-<div>
-      {% load static %}
-      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>      
+<div class="container">
+  <!-- Slider main container -->
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+
+    <div class="swiper-wrapper">
+      <!-- Slides -->    
+      <div class="swiper-slide">
+        
+          {% load static %}
+      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+    </div>
       {% for roompic in room_pic %}
-        {% load static %}
-        <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
-        {% endfor %}
-</div>
+      <div class="swiper-slide">
+        
+          {% load static %}
+          <img width="300px" height="300px" src="{% static roompic.roomImages|cut:'main_app/static/' %}"  class="imgsize"/>
+          
+    </div>
+    {% endfor %}
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+  
+  </div>
+  </div>
+  </div>
     <div>
       <h3>{{ room.name }}</h3>
       <p>Description: {{ room.description }}</p>
@@ -90,4 +113,30 @@
           })  
 
       </script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.swiper', {
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+loop: true,
+
+pagination: {
+el: '.swiper-pagination',
+clickable: true,
+},
+
+
+navigation: {
+nextEl: '.swiper-button-next',
+prevEl: '.swiper-button-prev',
+},
+
+scrollbar: {
+el: '.swiper-scrollbar',
+},
+});
+</script>
 {% endblock %}

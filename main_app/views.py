@@ -31,9 +31,14 @@ def about(request):
     return render(request, 'about.html')
 
 
+
+@login_required
 def rooms_index(request):
     rooms = Room.objects.all()
-    return render(request, 'rooms/index.html', {'rooms': rooms})
+    profile = Profile.objects.filter(user_id=request.user.id)
+    user = profile[0] 
+    return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
+
 
 def adminIndex(request, user_id):
     user = User.objects.get(id=user_id)
@@ -129,9 +134,11 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
 def rooms_detail(request, room_id):
     room = Room.objects.get(id=room_id)
     facility_form = FacilityForm()
+
     roompic_form = RoomPicForm()
+    room_pic = RoomPic.objects.filter(room=room_id)
     facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
-    return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have })
+    return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have, 'room_pic':room_pic })
 
 
 def room_detail_alt(request, room_id):
@@ -143,7 +150,7 @@ def room_detail_alt(request, room_id):
     'check_in' :'',
     'check_out' :'' 
     }
-    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
+    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pic':room_pic})
 
 
 @login_required
@@ -170,7 +177,10 @@ def add_roompic(request, room_id):
     
     return render(request, 'add_roompic.html', {'form': form})
 
+# class RoomPicDetail(LoginRequiredMixin, DetailView):
 
+#     model = RoomPic
+#     fields = ['RoomPic']
 
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
