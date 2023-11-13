@@ -41,8 +41,12 @@ class Profile(models.Model):
   phone_number = models.IntegerField(default=0)
   image = models.ImageField(upload_to='main_app/static/uploads', default='')
 
-  def _str_(self):
+  
+  def __str__(self):
     return self.user.username
+  def get_absolute_url(self):
+      return reverse('home')
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -58,7 +62,6 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Room(models.Model):
-
   name = models.CharField(max_length=100)
   roomType = models.CharField(max_length=1, choices=RoomType, default=RoomType[0][0])
   image = models.ImageField(upload_to = "main_app/static/uploads", default="")
@@ -98,7 +101,7 @@ class Booking(models.Model):
   guest_name = models.CharField(max_length=100, default="")
   guest_email = models.EmailField(default="")
   guest_mobile = models.CharField(max_length=25,default="")
-  comment = models.CharField(max_length=250,default="")
+  comment = models.CharField(max_length=250,default="",blank=True)
   price =  models.FloatField( default=0.00)
   
   def _str_(self):

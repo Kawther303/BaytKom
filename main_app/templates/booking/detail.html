@@ -13,106 +13,31 @@
       <p>Description: {{ room.description }}</p>
       <p>roomType:  {{room.roomType}}</p>
       <p>size:  {{room.size}}</p>
-      <p>Price per night: BD <span><input id="room_price" value="{{room.price}}"></input></span></p>
-      <!-- <p>country:  {{room.country}}</p>
-      <p>city:  {{room.city}}</p>
-      <p>street:  {{room.street}}</p>
-      <p>address:  {{room.address}}</p>
-      <p>location:  {{room.location}}</p> -->
+      <span>Price per night: BD <input id="room_price" value="{{room.price}}"></input></p>
+      <span>Check-in: <input value="{{context.check_in}}"></input></p>
+      <span>Check-out <input value="{{context.check_out}}"></input></p>
+
+      <label>Number of nights:</label><input value="{{context.nights}}">
+      <span>Total Price: BD <input  value="{{context.price}}"></span>
+
       <div>
-      <!-- <div class="card-action">
-        <a href="{% url 'rooms_update' room.id %}">Edit</a>
-        <a href="{% url 'rooms_delete' room.id %}">Delete</a>
-          </div> -->
-        </div>
+      </div>
       </div>
     </div>
+    <h5>Guest Details:</h5>
     <div>  <form method="post" action="{% url 'add_booking' room.id user.user_id %}">
       {% csrf_token %}
-     
-      {{ booking_form.as_table }}
-      {% if booking_form.from_date  %}
-      <p id="date_note" class="red-text"></p>
-      <p id="result"></p>
 
-      <h5>No of nights: <span id="night_result"></span></h5><br>
-      <h5>Total Price : BD <span id="price_result" class="red-text"></span></h5> <br>
-       <input  type="hidden" id="theprice" name="theprice">
-      <br>
-      <hr>
-      {% endif %}
-      <input type="hidden" id="price" name="price">
-      <input id="book_btn" type="submit" class="btn" value="Place Booking">
-        </form></div>
-       
-      {% if room.book_for_today %}
-      <div class="card-panel red-text center-align">
-        {{room.name}} has already booked for today! 
-        </div>
-      {% else %}
-      <div class="card-panel teal-text center-align" > 
-         {{ room.name }} is available for today!
-       </div>
-        {% endif %}
-      </div>
-  <script>
-   
-    let differenceInDays
-    let fromDateEle = document.getElementById('id_from_date');
-    let toDateEle = document.getElementById('id_to_date');
-   
-    M.Datepicker.init(fromDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
-      setDefaultDate: false,
-      autoClose: true
-    })  
+     <input type="hidden" id="id_from_date" name="from_date" value="{{context.check_in}}" >
+    <input type="hidden" id="id_to_date" name="to_date" value ="{{context.check_out}}">
+    Guest Name: <input type="text" id="id_gues_name" name="guest_name" value="{{user.full_name}}"><br>
+    Guest Email:   <input type="email" id="id_guest_email" name="guest_email" value="{{email.email}}"><br>
+    Guest Phone:   <input type="text" id="id_guest_mobile" name="guest_mobile" value="{{user.phone_number}}"><br>
+    Additional request:<input type="text" id="id_comment" name="comment"><br>
 
-    M.Datepicker.init(toDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-      setDefaultDate: false,
-      autoClose: true
-    })  
-    const booking_btn = document.getElementById('book_btn');
-    let priceEle = document.getElementById('id_price');
-    let note = document.getElementById("date_note"); 
-    let n_resultElement = document.getElementById('night_result');
-    let p_resultElement = document.getElementById('price_result');
-    let room_p = document.getElementById('room_price').value;
-    console.log('pp:',room_p);
-    console.log('dd1:',fromDateEle.value);
+    <input type="text" id="id_price" name="price" value="{{context.price}}">
 
-    const calculateDifference=()=> {
-      console.log('dd1x:',fromDateEle.value);
-      const date1 = new Date(fromDateEle.value);
-      const date2 = new Date(toDateEle.value);
-      const today = new Date();
-      if (date1 >= date2 || date1 < today-1){
-        fromDateEle.innerText = '';
-        toDateEle.innerText = '';
-        note.innerText = 'Invalid Dates';
-        booking_btn.disabled = true; 
+    <input id="book_btn" type="submit" class="btn" value="Place Booking">
+    </form></div>
 
-      } else {
-        note.innerText = '';
-        booking_btn.disabled = false; 
-      }
-
-      console.log('dd1:',date1);
-      console.log('dd2:',date2);
-      if (date1 && date2) {
-        const differenceInTime = date2.getTime() - date1.getTime();
-         differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        n_resultElement.textContent = ` ${differenceInDays} nights.`;
-        p_resultElement.textContent = differenceInDays * room_p;
-        the_price = differenceInDays * room_p;
-        p_resultElement.textContent = the_price;
-        document.getElementById('theprice').value = the_price;
-      } else {
-        n_resultElement.textContent = '';
-        p_resultElement.textContent = '';
-      }
-    }
-  
-    fromDateEle.addEventListener('change', calculateDifference);
-    toDateEle.addEventListener('change', calculateDifference);
-
-    </script>
 {% endblock %}

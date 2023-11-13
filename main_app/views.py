@@ -35,15 +35,29 @@ def about(request):
     return render(request, 'about.html')
 
 
+
+@login_required
 def rooms_index(request):
     rooms = Room.objects.all()
-    return render(request, 'rooms/index.html', {'rooms': rooms})
+    profile = Profile.objects.filter(user_id=request.user.id)
+    if (profile):
+        user = profile[0]
+    else:
+        user=''
+    return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
+
+
+def adminIndex(request, user_id):
+    user = User.objects.get(id=user_id)
+    print(user_id)
+    return render(request, 'adminIndex.html', {'user': user})
+
 
 
 class RoomCreate(LoginRequiredMixin, CreateView):
     model = Room
     fields = ['name', 'roomType', 'description', 'price', 'image', 'size', 'country', 'city', 'street', 'address','location']
-    
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -122,15 +136,16 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
     model = Facility
 
 
-
 # room will display all the facility and have the form for adding new facility for specific image 
 @login_required
 def rooms_detail(request, room_id):
     room = Room.objects.get(id=room_id)
     facility_form = FacilityForm()
+
     roompic_form = RoomPicForm()
+    room_pic = RoomPic.objects.filter(room=room_id)
     facilities_room_dosent_have = Facility.objects.exclude(id__in = room.facilities.all().values_list('id'))
-    return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have })
+    return render(request, 'rooms/detail.html', {'room':room, 'facility_form': facility_form, 'roompic_form': roompic_form, 'facilities': facilities_room_dosent_have, 'room_pic':room_pic })
 
 
 def room_detail_alt(request, room_id):
@@ -138,11 +153,11 @@ def room_detail_alt(request, room_id):
     room_pic = RoomPic.objects.filter(room=room_id)
     # booking_form = BookingForm()
     context = {    
-     'check': 0, 
-     'check_in' :'',
-     'check_out' :'' 
-     }
-    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
+    'check': 0, 
+    'check_in' :'',
+    'check_out' :'' 
+    }
+    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pic':room_pic})
 
 
 @login_required
@@ -169,8 +184,11 @@ def add_roompic(request, room_id):
     
     return render(request, 'add_roompic.html', {'form': form})
 
+# class RoomPicDetail(LoginRequiredMixin, DetailView):
 
 
+#     model = RoomPic
+#     fields = ['RoomPic']
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
     model = Facility
@@ -212,13 +230,21 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def booking_create(request, room_id):
-
-  users = User.objects.get(username=request.user)
+  context = {
+    'check_in' : request.GET['book_check_in'],
+    'check_out' : request.GET['book_check_out'],
+    'nights': request.GET['nights'],
+    'price' : request.GET['price_id'] 
+  }
+  email = User.objects.get(username=request.user)
   room = Room.objects.get(id=room_id)
   booking_form = BookingForm()
-  print('B_users:',users.id)
-  user = Profile.objects.get(user_id=users.id)
-  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user} )
+  
+  user = Profile.objects.get(user_id=email.id)
+
+ return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
+
+
 
 # @login_required
 # def add_booking(request, room_id, user_id):
@@ -238,19 +264,22 @@ def booking_confirmation(request):
 
 @login_required
 def add_booking(request, room_id, user_id):
-    users = User.objects.get(username=request.user)
-    user = Profile.objects.get(user_id=users.id)
+ room = Room.objects.filter(id=room_id)
+  the_room = room[0]
 
-    room = Room.objects.get(id=room_id)
-    booking_price = request.POST['theprice']
-    form = BookingForm(request.POST)
+  form = BookingForm(request.POST)
+ 
+  if form.is_valid():
+    new_booking = form.save(commit = False)
+    new_booking.room_id = room_id
+    new_booking.user_id = user_id
+    new_booking.save()
+    
+    booking = {
+         "new_booking":new_booking,
+         "room" : the_room
+     }
 
-    if form.is_valid():
-        new_booking = form.save(commit=False)
-        new_booking.room_id = room_id
-        new_booking.user_id = user_id
-        new_booking.price = booking_price
-        new_booking.save()
 
         # Send confirmation email to the user
         
@@ -271,81 +300,102 @@ def add_booking(request, room_id, user_id):
         except BadHeaderError as e:
             print(f"Invalid header found. Email not sent. Error: {e}")
 
-    return redirect(to='home')
+#     return redirect(to='home')
+    return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
+  else:
+    return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
+   
+
 
 @login_required
 def booking_confirmation(request):
-  req = request
-  return HttpResponse (f'<h2> confirm booking for {req} </h2>')
+    req = request
+    return HttpResponse (f'<h2> confirm booking for {req} </h2>')
 
 
 
 # to check if the room is available
 def checkAvailable(room,check_in,check_out):
-   the_list = []  
-   the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
-   the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
-   booking_list = Booking.objects.filter(room=room)
-   for booking in booking_list:
-      if booking.from_date > the_check_out or booking.to_date <the_check_in:
-         the_list.append(True)
-      else:
-         the_list.append(False)
-   
-   return all(the_list)
+    the_list = []  
+    the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
+    the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
+    booking_list = Booking.objects.filter(room=room)
+    for booking in booking_list:
+        if booking.from_date > the_check_out or booking.to_date <the_check_in:
+            the_list.append(True)
+    else:
+            the_list.append(False)
+    return all(the_list)
 
 
 def getRooms(request):
-  country = request.POST['country_search']
-  from_date = request.POST['check_in']
-  to_date = request.POST['check_out']
-  the_available_rooms= []
+    country = request.POST['country_search']
+    from_date = request.POST['check_in']
+    to_date = request.POST['check_out']
+    the_available_rooms= []
 
-  rooms = Room.objects.filter(country=country)
-  for room in rooms:
-     if checkAvailable(room.id,from_date,to_date):
-        the_available_rooms.append(room)
-  return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
-  # return HttpResponse(country)
-   
+    rooms = Room.objects.filter(country=country)
+    for room in rooms:
+        if checkAvailable(room.id,from_date,to_date):
+            the_available_rooms.append(room)
+    return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
+    # return HttpResponse(country)
 def checkAvailability(request):
-  context:[]
-  room_id = request.GET['s_room_id']
-  check_in = request.GET['check_in']
-  check_out = request.GET['check_out']
-  check = checkAvailable(room_id,check_in,check_out)
-  if (check == True):
-    ch = 1
-  else:
-      ch = -1
-  context = {
-     'check':ch,
-     'check_in' :check_in,
-     'check_out' :check_out  
-  }
-  room = Room.objects.get(id=room_id)
-  room_pic = RoomPic.objects.filter(room=room_id)
-  return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
+    context:[]
+    room_id = request.GET['s_room_id']
+    check_in = request.GET['check_in']
+    check_out = request.GET['check_out']
+    check = checkAvailable(room_id,check_in,check_out)
+    if (check == True):
+        ch = 1
+    else:
+        ch = -1
+    context = {
+        'check':ch,
+        'check_in' :check_in,
+        'check_out' :check_out  
+        }
+    room = Room.objects.get(id=room_id)
+    room_pic = RoomPic.objects.filter(room=room_id)
+    return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
 #   return render(request,'detail_alt.html',{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
 # render(request,'detail_alt.html',{'context':context} )
-  # return redirect(request,{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
+# return redirect(request,{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
 @login_required
 def user_Booking(request):
 
-  context =[] 
+    context =[] 
 
-  bookings = Booking.objects.all().filter(user=request.user)
-  for book in bookings:
-    room = Room.objects.filter(id=book.room.id)
-    context.append({
-      "booking" : book,
-      "room": room[0]
+    bookings = Booking.objects.all().filter(user=request.user)
+    for book in bookings:
+        room = Room.objects.filter(id=book.room.id)
+        context.append({
+        "booking" : book,
+        "room": room[0]
     })    
-  room = Room.objects.all()
-  return render(request, 'booking/user_booking.html',{'context' : context})
+    room = Room.objects.all()
+    return render(request, 'booking/user_booking.html',{'context' : context})
   # return render(request, 'booking/user_booking.html', {'bookings': bookings , 'room':room})
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
   # bookings = Booking.objects.all()
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
+
+# Update profile information
+from .forms import ProfileForm
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'profile_update.html'
+    success_url = ''
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        profile.image = self.request.FILES.get('image')  
+        profile.save()
+        return super().form_valid(form)
