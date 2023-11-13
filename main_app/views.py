@@ -213,38 +213,40 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 def booking_create(request, room_id):
   context = {
     'check_in' : request.GET['book_check_in'],
-    'check_out' : request.GET['book_check_out']
+    'check_out' : request.GET['book_check_out'],
+    'nights': request.GET['nights'],
+    'price' : request.GET['price_id'] 
   }
-
-  users = User.objects.get(username=request.user)
+  email = User.objects.get(username=request.user)
   room = Room.objects.get(id=room_id)
   booking_form = BookingForm()
+  
+  user = Profile.objects.get(user_id=email.id)
 
-  user = Profile.objects.get(user_id=users.id)
-  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context } )
+  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
 
-# @login_required
-# def add_booking(request, room_id, user_id):
-#   form = BookingForm(request.POST)
-#   if form.is_valid():
-#     new_booking = form.save(commit = False)
-#     new_booking.room = room_id
-#     new_booking.user = user_id
-#     new_booking.price = request.POST['price']
-#     new_booking.save()
-#   return render(request, 'booking/confirmation.html', {'booking' : form} )
+@login_required
 def add_booking(request, room_id, user_id):
-  # user_id = user.id
- 
-  booking_price = request.POST['theprice']
+  room = Room.objects.filter(id=room_id)
+  the_room = room[0]
+
   form = BookingForm(request.POST)
+ 
   if form.is_valid():
     new_booking = form.save(commit = False)
     new_booking.room_id = room_id
     new_booking.user_id = user_id
-    new_booking.price= booking_price
     new_booking.save()
-  return redirect(to='home') 
+    
+    booking = {
+         "new_booking":new_booking,
+         "room" : the_room
+     }
+    return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
+  else:
+    return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
+   
+#   return redirect(to='home') 
 
 @login_required
 def booking_confirmation(request):

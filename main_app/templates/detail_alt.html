@@ -52,7 +52,7 @@
 
        </div>
      
-        <form name='check_form' method="GET" action="{% url 'check_availability' %}">
+        <form  method="GET" action="{% url 'check_availability' %}">
           {% csrf_token %}
           
          <input type='hidden'  name='s_room_id' id='s_room_id' value='{{ room.id }}'>
@@ -80,10 +80,12 @@
          
           <br> 
           <form method="GET" action="{% url 'booking_create' room.id %}">
-            <input type="text" name="price_id" id="price_id"> 
-            <input type="text" id="book_check_in" name="book_check_in" value="{{ context.check_in }}">
-            <input type="text" id="book_check_out" name="book_check_out" value="{{ context.check_out }}">
-              <input  type="submit" value="Book the Room">
+            <input type="hidden" name="price_id" id="price_id"> 
+            <input type="hidden" id="book_check_in" name="book_check_in" value="{{ context.check_in }}">
+            <input type="hidden" id="book_check_out" name="book_check_out" value="{{ context.check_out }}">
+            <input type="hidden" id="nights" name="nights">
+
+            <input  type="submit" value="Book the Room">
             </form>
 
            </div>
@@ -144,6 +146,7 @@
         p_resultElement.textContent = the_price;
         console.log("ppppppppp:",the_price)
         document.getElementById('price_id').value = the_price;
+        document.getElementById('nights').value = differenceInDays;
       }}
     }
   

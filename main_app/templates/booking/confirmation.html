@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
-
+{{ booking }}
 {% block content %}
+<div class="teal-text"> <h3>{{booking.new_booking.guest_name}}'s Booking is Confirm! </h3></div>
 <div class="card">
-<h1> Booking details Confirmation </h1>
-<h4>book#:{{ booking.id }} </h4><br>
-<h4>Guest:{{booking.guest_name}} </h4><br>
-<h4>email:{{booking.guest_email}} </h4><br>
-<h4>Price:{{booking.Price}} </h4><br>
-<h4>check-in-check-out: {{booking.from_date}}-{{booking.to_date}}</h4>
+<br>
+<h6>Room Name: {{booking.room.name}}</h6>
+<h6>book#: {{ booking.new_booking.id }} </h6>
+<h6>Guest: {{booking.new_booking.guest_name}} </h6>
+<h6>email: {{booking.new_booking.guest_email}} </h6>
+<h6>Price: {{booking.new_booking.price}} </h6>
+<h6>Check-in: {{booking.new_booking.from_date}}</h6>
+<h6>Check-Out:{{booking.new_booking.to_date}}</h6>
+<br>
+<hr>
+<button> Send Confirmation Email </button> 
+<a href="{% url 'user_booking' %}"><button> view Booking List </button></a> 
 </div>
-<a href
+
 {% endblock %}
