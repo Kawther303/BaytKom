@@ -3,7 +3,7 @@ from . import views
 from django.conf.urls.static import static
 from .views import profile
 from .views import ChangePasswordView
-
+from .views import ProfileUpdateView
 urlpatterns = [
 
   path('', views.home, name='home'),
@@ -16,7 +16,7 @@ urlpatterns = [
   
 #     profile
     path('accounts/signup/', views.signup, name='signup'),    
-    path('accounts/profile/', views.profile, name='profile'),
+    # path('accounts/profile/', views.profile, name='profile'),
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
   
 # booking
@@ -65,5 +65,5 @@ urlpatterns = [
   path('rooms/<int:room_id>/assoc_facility/<int:facility_id>/', views.assoc_facility, name='assoc_facility'),
     # unassosiate a facility with a room
   path('rooms/<int:room_id>/unassoc_facility/<int:facility_id>/', views.unassoc_facility, name='unassoc_facility'),
-]
 
+]

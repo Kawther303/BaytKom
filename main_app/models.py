@@ -41,8 +41,7 @@ class Profile(models.Model):
   phone_number = models.IntegerField(default=0)
   image = models.ImageField(upload_to='main_app/static/uploads', default='')
 
-  def _str_(self):
-    return self.user.username
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
