@@ -2,7 +2,7 @@
 
 {% block content %}
 <body onload="calculateDifference()"></body>
-  
+
 <h1> Room Details </h1>
 <div class="container">
   <!-- Slider main container -->
@@ -58,10 +58,8 @@
               <div class="card-content">
                 <span>
                   {{ facility.name }}               
-                  <div>
                     {% load static %}
                     <img width="40px" height="40px" src="{% static facility.icon|cut:'main_app/static/' %}"class="imgsize right"/>
-                  </div>
                 </span>
             </div>
           </div>
@@ -87,7 +85,7 @@
         <p id="date_note" class="red-text"></p>
         <p id="result"></p>
         <h5> <span id="night_result"></span></h5><br>
-        <h5>Total Price : BD <span id="price_result" class="red-text"></span></h5> <br>
+        <h5><span id="price_result" class="red-text"></span></h5> <br>
     
         <div class="card">
    
@@ -159,24 +157,32 @@
         note.innerText = '';
       
       if (date1 && date2) {
-        
+        console.log('hhhhh')
         const differenceInTime = date2.getTime() - date1.getTime();
         differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        
+        if (differenceInDays > 0 ){
         n_resultElement.textContent = `No of nights: ${differenceInDays} nights.`;
         p_resultElement.textContent = `Total Price : BD ${differenceInDays * room_p}`;
-   
         the_price = differenceInDays * room_p;
         p_resultElement.textContent = the_price;
         console.log("ppppppppp:",the_price)
         document.getElementById('price_id').value = the_price;
         document.getElementById('nights').value = differenceInDays;
-      }}
+       } else {
+        n_resultElement.textContent = '';
+        p_resultElement.textContent = '';
+        }
+      }
+    else{
+      n_resultElement.textContent = '';
+      p_resultElement.textContent = '';
+    }
+    }
     }
   
     fromDateEle.addEventListener('change', calculateDifference);
     toDateEle.addEventListener('change', calculateDifference);
-    form.addEventListener('load', calculateDifference);
+
     toDateEle.addEventListener('open', calculateDifference);
     toDateEle.addEventListener('input', calculateDifference);
 

@@ -16,16 +16,14 @@
 
 <span class="card-title">{{ r.booking.room }}</span>
 <a href="{% url 'room_detail_alt' r.room.id %}">
-<p>Booking#: {{ r.booking.id }}</p>
-<p>check-in: {{ r.booking.from_date }}</p>
-<p>check-out: {{ r.booking.to_date }}</p>
+  <p class="px">Booking#: {{ r.booking.id }}</p>
+  <p class="px">check-in: {{ r.booking.from_date }}</p>
+  <p class="px">check-out: {{ r.booking.to_date }}</p>
 <p>Created by: {{ r.booking.user }}</p>
 <p>Guest Name: {{ r.booking.guest_name }}</p>
 <p>Guest Email: {{ r.booking.guest_email }}</p>
 <p>Guest Phone: {{ r.booking.guest_mobile }}</p>
-<p>Guest Email: {{ r.booking.guest_email }}</p>
-<p>Booking Price: {{ r.booking.price }}</p>
-<p>Room size: {{ r.room.name }}</p>
+<p class="px">Booking Price: {{ r.booking.price }}</p>
  </div>
  <div> 
   {% load static  %}

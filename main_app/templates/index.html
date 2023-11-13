@@ -4,7 +4,20 @@
 
 <form method="POST" action="{% url 'index' %}">
   {% csrf_token %}
-  <p>Country:<input type='text'  name='country_search' value={{country_search}}></p>
+  <fieldset>
+    <legend>Search by:</legend>
+    <div>
+      <input type="radio" id="country" name="search_by" value="country" checked />
+      <label for="country">Country</label>
+    </div>
+      <div><input type="radio" id="city" name="search_by" value="city" />
+      <label for="city">City</label></div>  
+     
+      <div>  <input type="radio" id="rname" name="search_by" value="room_name" />
+      <label for="rname">Room/Hotel Name</label></div> 
+  </fieldset>
+  <input type="hidden" id="searchBy" name="searchBy" > 
+  <span id="sOption"></span><input type='text'  name='country_search' value={{country_search}}></p>
   <p>Check-in:<input type='text'  id='check_in' name='check_in'></p>
   <p>Check-Out:<input type='text'  id='check_out' name='check_out'></p>
   <input type="submit" value="Search">
@@ -23,6 +36,30 @@
       setDefaultDate: true,
       autoClose: true
     })  
+
+const radioButtons = document.querySelectorAll('input[name="search_by"]');
+const sOption = document.getElementById('sOption');
+const changeSearchBy =()=>{
+ 
+  let selectedOption;
+  for (const radioButton of radioButtons) {
+      if (radioButton.checked) {
+        selectedOption = radioButton.value;
+        console.log(selectedOption);
+        break;
+        }
+  }
+
+  sOption.innerHTML= ` ${selectedOption}: ` ;
+  document.getElementById('searchBy').value= selectedOption;
+}
+
+
+document.getElementById('country').addEventListener('click', changeSearchBy);
+document.getElementById('city').addEventListener('click', changeSearchBy);
+document.getElementById('rname').addEventListener('click', changeSearchBy);
+
+
 </script>
 
-{% endblock %}
+{% endblock  %}
