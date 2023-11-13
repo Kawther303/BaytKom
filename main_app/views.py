@@ -36,7 +36,10 @@ def about(request):
 def rooms_index(request):
     rooms = Room.objects.all()
     profile = Profile.objects.filter(user_id=request.user.id)
-    user = profile[0] 
+    if (profile):
+        user = profile[0]
+    else:
+        user=''
     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
 
 
@@ -44,6 +47,7 @@ def adminIndex(request, user_id):
     user = User.objects.get(id=user_id)
     print(user_id)
     return render(request, 'adminIndex.html', {'user': user})
+
 
 
 class RoomCreate(LoginRequiredMixin, CreateView):
@@ -128,7 +132,6 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
     model = Facility
 
 
-
 # room will display all the facility and have the form for adding new facility for specific image 
 @login_required
 def rooms_detail(request, room_id):
@@ -179,9 +182,9 @@ def add_roompic(request, room_id):
 
 # class RoomPicDetail(LoginRequiredMixin, DetailView):
 
+
 #     model = RoomPic
 #     fields = ['RoomPic']
-
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
     model = Facility
@@ -223,35 +226,43 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def booking_create(request, room_id):
+  context = {
+    'check_in' : request.GET['book_check_in'],
+    'check_out' : request.GET['book_check_out'],
+    'nights': request.GET['nights'],
+    'price' : request.GET['price_id'] 
+  }
+  email = User.objects.get(username=request.user)
+  room = Room.objects.get(id=room_id)
+  booking_form = BookingForm()
+  
+  user = Profile.objects.get(user_id=email.id)
 
-    users = User.objects.get(username=request.user)
-    room = Room.objects.get(id=room_id)
-    booking_form = BookingForm()
-    print('B_users:',users.id)
-    user = Profile.objects.get(user_id=users.id)
-    return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user} )
+  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
 
-# @login_required
-# def add_booking(request, room_id, user_id):
-#   form = BookingForm(request.POST)
-#   if form.is_valid():
-#     new_booking = form.save(commit = False)
-#     new_booking.room = room_id
-#     new_booking.user = user_id
-#     new_booking.price = request.POST['price']
-#     new_booking.save()
-#   return render(request, 'booking/confirmation.html', {'booking' : form} )
+@login_required
 def add_booking(request, room_id, user_id):
-    # user_id = user.id
-    booking_price = request.POST['theprice']
-    form = BookingForm(request.POST)
-    if form.is_valid():
-        new_booking = form.save(commit = False)
-        new_booking.room_id = room_id
-        new_booking.user_id = user_id
-        new_booking.price= booking_price
-        new_booking.save()
-    return redirect(to='home') 
+  room = Room.objects.filter(id=room_id)
+  the_room = room[0]
+
+  form = BookingForm(request.POST)
+ 
+  if form.is_valid():
+    new_booking = form.save(commit = False)
+    new_booking.room_id = room_id
+    new_booking.user_id = user_id
+    new_booking.save()
+    
+    booking = {
+         "new_booking":new_booking,
+         "room" : the_room
+     }
+    return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
+  else:
+    return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
+   
+#   return redirect(to='home') 
+
 
 @login_required
 def booking_confirmation(request):

@@ -24,13 +24,16 @@
     {% load static %}
     <img width="450px" height='350px'src="{% static room.image|cut:'main_app/static' %}"/>
   </div>
-  {% if user.user_type == 'ADMIN' %}
-  <a href="{% url 'detail' room.id %}">    <span class="card-title">{{ room.name }}</span>
-  </a>
-  {% else %}
-    <a href="{% url 'room_detail_alt' room.id %}"> <span class="card-title">{{ room.name }}</span>
-    </a>
-  {% endif %}  
+
+      {% if user.user_type == 'ADMIN' %}
+      <a href="{% url 'detail' room.id %}">    <span class="card-title">{{ room.name }}</span>
+      </a>
+      {% else %}
+        <a href="{% url 'room_detail_alt' room.id %}"> <span class="card-title">{{ room.name }}</span>
+        </a>
+      {% endif %}    
+  
+
     <p>Price: {{ room.price }}</p>
       <p>Address: {{ room.address }}</p>
       <p>Description: {{ room.description }}</p>

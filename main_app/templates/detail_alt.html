@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<body onload="calculateDifference()"></body>
+  
 <h1> Room Details </h1>
 <div class="container">
   <!-- Slider main container -->
@@ -40,6 +41,7 @@
       <p>Room Type:  {{room.get_roomType_display}}</p>
       <p>Size:  {{room.size}}</p>
       <p>Price: {{room.price}}</p>
+      <input type="hidden" id="room_price" value="{{ room.price}}">
       <p>Country:  {{room.country}}</p>
       <p>City:  {{room.city}}</p>
       <p>Street:  {{room.street}}</p>
@@ -70,12 +72,10 @@
           </div>
         </div>
         <div class="card-action">
-          
-
 
        </div>
-
-        <form method="GET" action="{% url 'check_availability' %}">
+     
+        <form  method="GET" action="{% url 'check_availability' %}">
           {% csrf_token %}
           
          <input type='hidden'  name='s_room_id' id='s_room_id' value='{{ room.id }}'>
@@ -83,21 +83,43 @@
           <p>Check-Out:<input type='text'  id='check_out' name='check_out' value="{{ context.check_out }}"></p>
           <input type="submit" value="Check Availability">
         </form>
+        
+        <p id="date_note" class="red-text"></p>
+        <p id="result"></p>
+        <h5> <span id="night_result"></span></h5><br>
+        <h5>Total Price : BD <span id="price_result" class="red-text"></span></h5> <br>
+    
         <div class="card">
    
-          {% if context.check > 0  %}
-          <p class="teal-text"><h5> Dates are available  </h5></p> 
-          <a href="{% url 'booking_create' room.id %}"> <button>Book the Room</button></a>
-          {% elif context.check < 0  %}
-          <p class="red-text"></p>><h5> Dates are not available  </h5></p> 
-          {% else %}
-          <p><h5> Check if Dates are available  </h5></p> 
+          {% if context.check < 0  %}
+          <div class="card-panel red-text center-align">
+            {{room.name}} has already booked for selected days! 
+            
+            </div>
+          {% elif context.check > 0  %}
+          <div class="card-panel teal-text center-align" > 
+             {{ room.name }} is available for selected days!
+          <br>
+         
+          <br> 
+          <form method="GET" action="{% url 'booking_create' room.id %}">
+            <input type="hidden" name="price_id" id="price_id"> 
+            <input type="hidden" id="book_check_in" name="book_check_in" value="{{ context.check_in }}">
+            <input type="hidden" id="book_check_out" name="book_check_out" value="{{ context.check_out }}">
+            <input type="hidden" id="nights" name="nights">
 
+            <input  type="submit" value="Book the Room">
+            </form>
+
+           </div>
+           {% else  %}
+           <div class="card-panel teal-text center-align" > 
+              Check if room is available!
+            </div> 
           {% endif %}
 
         </div>
-
-
+</body>
       <script>
           let fromDateEle = document.getElementById('check_in');
           let toDateEle = document.getElementById('check_out');
@@ -111,6 +133,51 @@
             setDefaultDate: false,
             autoClose: true
           })  
+
+    let note = document.getElementById("date_note"); 
+    let n_resultElement = document.getElementById('night_result');
+    let p_resultElement = document.getElementById('price_result');
+    let room_p = document.getElementById('room_price').value;
+  
+
+    const calculateDifference=()=> {
+ 
+      const date1 = new Date(fromDateEle.value);
+      const date2 = new Date(toDateEle.value);
+
+      const today = new Date();
+      console.log("dates:",date1)
+      console.log("dates:",date2)
+      if (date1 >= date2 || date1 < today-1){
+        fromDateEle.innerText = '';
+        toDateEle.innerText = '';
+        note.innerText = 'Invalid Dates';
+  
+
+      } else {
+        note.innerText = '';
+      
+      if (date1 && date2) {
+        
+        const differenceInTime = date2.getTime() - date1.getTime();
+        differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        
+        n_resultElement.textContent = `No of nights: ${differenceInDays} nights.`;
+        p_resultElement.textContent = `Total Price : BD ${differenceInDays * room_p}`;
+   
+        the_price = differenceInDays * room_p;
+        p_resultElement.textContent = the_price;
+        console.log("ppppppppp:",the_price)
+        document.getElementById('price_id').value = the_price;
+        document.getElementById('nights').value = differenceInDays;
+      }}
+    }
+  
+    fromDateEle.addEventListener('change', calculateDifference);
+    toDateEle.addEventListener('change', calculateDifference);
+    form.addEventListener('load', calculateDifference);
+    toDateEle.addEventListener('open', calculateDifference);
+    toDateEle.addEventListener('input', calculateDifference);
 
       </script>
 

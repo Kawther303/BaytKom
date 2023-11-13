@@ -41,7 +41,7 @@ class BookingForm(ModelForm):
 
   class Meta: #addional functionalty to access and use CBV
     model = Booking
-    fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile','comment']
+    fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile','comment','price']
 
 # class SearchForm(ModelForm):
 #   class Meta: #addional functionalty to access and use CBV
