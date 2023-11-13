@@ -116,3 +116,18 @@ class RoomPic(models.Model):
 
   def get_absolute_url(self):
     return reverse('detail', kwargs={'pk': self.id})
+
+class Review(models.Model):
+  date = models.DateField('Review Date')
+  comment = models.TextField(max_length=250)
+  room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+
+# 
+  def __str__(self):
+    return f"{self.Room.name} {self.comment} on {self.date}"
+
+
+  class Meta:
+    # ordering = ['date']  #Date ascending
+    ordering = ['-date'] 

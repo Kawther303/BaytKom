@@ -21,7 +21,6 @@
     <nav>
       <div class="nav-wrapper blue-grey darken-4">
         <ul>
-
           <li> <a href="{% url 'home' %}" class='left brand-logo'>
             <!-- <img src="\static\uploads\Baytkom logo.png" alt="Baytkom"width="100px" height="65"> -->
             <h4 class="Baytkom-Logo">B</h4>
@@ -34,17 +33,20 @@
           <li> <a href="{% url 'index_list' %}"> Rooms</a></li>
 
           {% if user.is_authenticated %}
-
-          Hello {{ user }}!!
-
+          
+          <div class="profile-picture right" style="width: 50px; height: 50px; background-color: #f2f2f2; border-radius: 50%;">
+            <img src="{% static user.profile.image|cut:'main_app/static' %}" style="width: 50px; height: 50px; border-radius: 50%;"/>
+            </div>
+          
+          
           <li><a href="{% url 'logout' %}">Logout</a></li>
           <li><a href="{% url 'profile' %}">Profile</a></li>
           <li> <a href="{% url 'user_booking' %}">User Bookings</a></li>
-
           <li> <a href="{% url 'book_create' %}">Book Room</a></li>
           
-          <li> <a href="{% url 'adminIndex' user.id %}">adminIndex</a></li>
-
+          
+        {% elif user.user_type == 'ADMIN' %}
+          <li> <a href="{% url 'adminIndex' user.id %}">Add Room</a></li>
           
           {% else %}
           <li><a href="{% url 'login' %}">Login</a></li>
@@ -53,11 +55,6 @@
           {% endif %}
           
         </ul>
-
-
-        
-
-
       </div>
     </nav>
 

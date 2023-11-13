@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room, Facility, RoomPic
+from .models import Room, Facility, RoomPic, Review
 from .forms import FacilityForm
 from .forms import RoomPicForm
 from .forms import *
@@ -46,10 +46,24 @@ def rooms_index(request):
         user=''
     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
 
+# @login_required
+# def rooms_adminindex(request):
+#     rooms = Room.objects.all()
+#     profile = Profile.objects.filter(user_id=request.user.id)
+#     if (profile):
+#         user = profile[0]
+#     else:
+#         user=''
+#     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
+
 
 def adminIndex(request, user_id):
-    user = User.objects.get(id=user_id)
-    print(user_id)
+    # user = User.objects.get(id=user_id)
+    profile = Profile.objects.filter(user_id=request.user.id)
+    if (profile):
+        user = profile[0]
+    else:
+        user=''
     return render(request, 'adminIndex.html', {'user': user})
 
 
@@ -230,19 +244,19 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def booking_create(request, room_id):
-  context = {
+    context = {
     'check_in' : request.GET['book_check_in'],
     'check_out' : request.GET['book_check_out'],
     'nights': request.GET['nights'],
     'price' : request.GET['price_id'] 
-  }
-  email = User.objects.get(username=request.user)
-  room = Room.objects.get(id=room_id)
-  booking_form = BookingForm()
-  
-  user = Profile.objects.get(user_id=email.id)
+    }
+    email = User.objects.get(username=request.user)
+    room = Room.objects.get(id=room_id)
+    booking_form = BookingForm()
 
-  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
+    user = Profile.objects.get(user_id=email.id)
+
+    return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
 
 
 
@@ -264,50 +278,43 @@ def booking_confirmation(request):
 
 @login_required
 def add_booking(request, room_id, user_id):
- room = Room.objects.filter(id=room_id)
- the_room = room[0]
+    room = Room.objects.filter(id=room_id)
+    the_room = room[0]
 
- users = User.objects.get(username=request.user)
- user = Profile.objects.get(user_id=users.id)
- form = BookingForm(request.POST)
- 
- if form.is_valid():
-    new_booking = form.save(commit = False)
-    new_booking.room_id = room_id
-    new_booking.user_id = user_id
-    new_booking.save()
-    
-    booking = {
-         "new_booking":new_booking,
-         "room" : the_room
-     }
+    users = User.objects.get(username=request.user)
+    user = Profile.objects.get(user_id=users.id)
+    form = BookingForm(request.POST)
+    if form.is_valid():
+        new_booking = form.save(commit=False)
+        new_booking.room_id = room_id
+        new_booking.user_id = user_id
+        new_booking.save()
+        booking = {
+            "new_booking": new_booking,
+            "room": the_room
+        }
 
         # Send confirmation email to the user
 
-    subject = 'Booking Confirmation'
-    message = render_to_string('booking/booking_confirmation_email.html', {
+        subject = 'Booking Confirmation'
+        message = render_to_string('booking/booking_confirmation_email.html', {
             'user': user,
             'room': room,
             'booking': new_booking,
         })
-    from_email = 'djangoemail2002@gmail.com'
+        from_email = 'djangoemail2002@gmail.com'
+        to_email = [user.user.email]  # Assuming user has an email field
 
-    to_email = [user.user.email]  # Assuming user has an email field
-
-    
-    print(to_email)
-
-    try:
+        print(to_email)
+        try:
             send_mail(subject, message, from_email, to_email, fail_silently=False)
             print("Email sent successfully")
-    except BadHeaderError as e:
+        except BadHeaderError as e:
             print(f"Invalid header found. Email not sent. Error: {e}")
-
-    # return redirect(to='home')
-    return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
- else:
-    return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
-   
+        
+        return render(request, 'booking/confirmation.html', {'booking': booking})
+    else:
+        return HttpResponse('<h3>Booking is having an issue. Please retry again!</h3>')
 
 
 @login_required
@@ -381,18 +388,23 @@ def checkAvailability(request):
 
 @login_required
 def user_Booking(request):
-
     context =[] 
 
     bookings = Booking.objects.all().filter(user=request.user)
+    # room = Room.objects.get(id=Room_id)
     for book in bookings:
         room = Room.objects.filter(id=book.room.id)
+        # review_form = ReviewForm()
         context.append({
         "booking" : book,
-        "room": room[0]
+        "room": room[0],
+        # "review_form": review_form
     })    
     room = Room.objects.all()
     return render(request, 'booking/user_booking.html',{'context' : context})
+
+
+
   # return render(request, 'booking/user_booking.html', {'bookings': bookings , 'room':room})
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
   # bookings = Booking.objects.all()
@@ -415,3 +427,33 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         profile.image = self.request.FILES.get('image')  
         profile.save()
         return super().form_valid(form)
+
+# class ReviewList(LoginRequiredMixin, ListView):
+#     model = Review
+    
+
+
+# class ReviewCreate(LoginRequiredMixin, CreateView):
+#     model = Review
+#     fields = ['comment', 'date']
+
+#     def form_valid(self, form):
+#         form.instance.room_id = self.request.room_id
+#         return super().form_valid(form)
+
+
+
+@login_required
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.room = form.cleaned_data['room']
+            new_review.save()
+            return redirect('user_booking')
+    else:
+        form = ReviewForm()
+    
+    return render(request, 'booking/add_review.html', {'form': form})
+

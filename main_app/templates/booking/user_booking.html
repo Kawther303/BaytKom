@@ -31,13 +31,35 @@
   {% load static  %}
   <img width="350px" height="350px" src="{% static r.room.image|cut:'main_app/static/' %}" class="imgsize"/></a>
 </div>
-</div>
-</div>  
 
 </div>
+
+</div>
+
+<div>
+  <form method="POST" action="{% url 'add_review' %}">
+    <!-- {% csrf_token %}
+    {{ review_form.as_p }}
+    <input type="hidden" name="room_id" value="{{ r.room.id }}"> -->
+    {% csrf_token %}
+    <button type="submit">Add Review</button>
+  </form>
+
 {% endfor %}
 
 {% else %}
 <h2> {{user}} have no Booking!</h2>
 {% endif%}
+
+
+<!-- <script>
+  let dateEle = document.getElementById('id_date');
+  M.Datepicker.init(dateEle, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoclose: true
+  })
+</script> -->
+
 {% endblock %}

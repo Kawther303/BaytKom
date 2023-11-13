@@ -108,3 +108,12 @@ justify-content: center;
 .sidebar-menu li a:hover {
   color: #000;
 }
+
+.profile-picture{
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
