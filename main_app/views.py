@@ -33,7 +33,13 @@ def about(request):
 
 def rooms_index(request):
     rooms = Room.objects.all()
-    return render(request, 'rooms/index.html', {'rooms': rooms})
+    profile = Profile.objects.filter(user_id=request.user.id)
+    if (profile):
+        user = profile[0]
+    else:
+        user=''
+
+    return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
 
 
 class RoomCreate(LoginRequiredMixin, CreateView):
@@ -205,13 +211,17 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def booking_create(request, room_id):
+  context = {
+    'check_in' : request.GET['book_check_in'],
+    'check_out' : request.GET['book_check_out']
+  }
 
   users = User.objects.get(username=request.user)
   room = Room.objects.get(id=room_id)
   booking_form = BookingForm()
-  print('B_users:',users.id)
+
   user = Profile.objects.get(user_id=users.id)
-  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user} )
+  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context } )
 
 # @login_required
 # def add_booking(request, room_id, user_id):

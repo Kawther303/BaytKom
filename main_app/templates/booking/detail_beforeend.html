@@ -43,8 +43,18 @@
       {% endif %}
       <input type="hidden" id="price" name="price">
       <input id="book_btn" type="submit" class="btn" value="Place Booking">
-      </form></div>
-
+        </form></div>
+       
+      {% if room.book_for_today %}
+      <div class="card-panel red-text center-align">
+        {{room.name}} has already booked for today! 
+        </div>
+      {% else %}
+      <div class="card-panel teal-text center-align" > 
+         {{ room.name }} is available for today!
+       </div>
+        {% endif %}
+      </div>
   <script>
    
     let differenceInDays
