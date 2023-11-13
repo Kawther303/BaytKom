@@ -140,6 +140,7 @@ LOGIN_REDIRECT_URL = '/'
 SIGNUP_REDIRECT_URL = '/accounts/profile/update'
 # LOGIN_REDIRECT_URL = '/accounts/profile'
 
+
 LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type

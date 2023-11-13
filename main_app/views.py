@@ -315,6 +315,7 @@ def booking_confirmation(request):
 
 
 
+
 # to check if the room is available
 def checkAvailable(room,check_in,check_out):
     the_list = []  
