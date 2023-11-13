@@ -315,3 +315,21 @@ def user_Booking(request):
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
   # bookings = Booking.objects.all()
   # return render(request, 'booking/user_booking.html', {'bookings': bookings})
+
+# Update profile information
+from .forms import ProfileForm
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'profile_update.html'
+    success_url = ''
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        profile.image = self.request.FILES.get('image')  
+        profile.save()
+        return super().form_valid(form)
