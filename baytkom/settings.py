@@ -136,7 +136,10 @@ STATIC_URL = 'static/'
 
 # LOGIN_REDIRECT_URL = '/rooms/'
 
-LOGIN_REDIRECT_URL = '/accounts/profile'
+LOGIN_REDIRECT_URL = '/'
+SIGNUP_REDIRECT_URL = '/accounts/profile/update'
+# LOGIN_REDIRECT_URL = '/accounts/profile'
+
 
 LOGOUT_REDIRECT_URL = '/'
 
