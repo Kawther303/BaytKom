@@ -26,6 +26,8 @@ urlpatterns = [
     path('booking/<int:room_id><int:user_id>/add_booking/', views.add_booking, name='add_booking'),
     path('booking/<int:room_id>/add_booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
 
+# Admin
+    path('rooms/<int:user_id>/adminIndex',views.adminIndex,name='adminIndex'),
 
 
 # room
@@ -33,10 +35,7 @@ urlpatterns = [
   path('rooms_list/', views.rooms_index, name='index_list'),
   path('rooms/create/', views.RoomCreate.as_view(), name='room_create'),
   path('rooms/<int:room_id>/', views.rooms_detail, name='detail'),
-
   path('rooms/<int:room_id>/alt/', views.room_detail_alt, name='room_detail_alt'),
-
-
   path('rooms/<int:pk>/update/', views.RoomUpdate.as_view(), name='rooms_update'),
   path('rooms/<int:pk>/delete/', views.RoomDelete.as_view(), name='rooms_delete'),
   path('rooms/<int:room_id>/add_roompic', views.add_roompic, name='add_roompic'),
@@ -49,6 +48,7 @@ urlpatterns = [
   path('facilities/<int:pk>/delete/', views.FacilityDelete.as_view(), name='facilities_delete'),
   path('facilities/create/', views.FacilityCreate.as_view(), name='facilities_create'),
 
+  # path('rooms/roompic/', views.RoomPicDetail.as_view(), name='roompic_detail'),
 
 
   #Booking
