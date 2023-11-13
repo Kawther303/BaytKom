@@ -65,5 +65,6 @@ urlpatterns = [
   path('rooms/<int:room_id>/assoc_facility/<int:facility_id>/', views.assoc_facility, name='assoc_facility'),
     # unassosiate a facility with a room
   path('rooms/<int:room_id>/unassoc_facility/<int:facility_id>/', views.unassoc_facility, name='unassoc_facility'),
-
+  
+  path('accounts/profile/update/', ProfileUpdateView.as_view(), name='profile'),
 ]
