@@ -242,7 +242,7 @@ def booking_create(request, room_id):
   
   user = Profile.objects.get(user_id=email.id)
 
- return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
+  return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
 
 
 
@@ -265,11 +265,15 @@ def booking_confirmation(request):
 @login_required
 def add_booking(request, room_id, user_id):
  room = Room.objects.filter(id=room_id)
-  the_room = room[0]
+ the_room = room[0]
 
-  form = BookingForm(request.POST)
+ users = User.objects.get(username=request.user)
+ user = Profile.objects.get(user_id=users.id)
+ print('user',user)
  
-  if form.is_valid():
+ form = BookingForm(request.POST)
+ 
+ if form.is_valid():
     new_booking = form.save(commit = False)
     new_booking.room_id = room_id
     new_booking.user_id = user_id
@@ -279,30 +283,27 @@ def add_booking(request, room_id, user_id):
          "new_booking":new_booking,
          "room" : the_room
      }
-
-
-        # Send confirmation email to the user
-        
-        subject = 'Booking Confirmation'
-        message = render_to_string('booking/booking_confirmation_email.html', {
+   
+    subject = 'Booking Confirmation'
+    message = render_to_string('booking/booking_confirmation_email.html', {
             'user': user,
             'room': room,
             'booking': new_booking,
         })
-        from_email = 'djangoemail2002@gmail.com'
-        to_email = [user.user.email]  # Assuming user has an email field
+    from_email = 'djangoemail2002@gmail.com'
+    to_email = [user.user.email] 
     
-        print(to_email)
+    print(to_email)
 
-        try:
+    try:
             send_mail(subject, message, from_email, to_email, fail_silently=False)
             print("Email sent successfully")
-        except BadHeaderError as e:
+    except BadHeaderError as e:
             print(f"Invalid header found. Email not sent. Error: {e}")
 
-#     return redirect(to='home')
+    # return redirect(to='home')
     return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
-  else:
+ else:
     return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
    
 
@@ -317,15 +318,24 @@ def booking_confirmation(request):
 # to check if the room is available
 def checkAvailable(room,check_in,check_out):
     the_list = []  
+    print('check_in:',check_in )
+    print('check_out:',check_out )
+    print('roommmmmmmmmmmmmmmmm:',room)
     the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
     the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
     booking_list = Booking.objects.filter(room=room)
+    result = True
     for booking in booking_list:
         if booking.from_date > the_check_out or booking.to_date <the_check_in:
             the_list.append(True)
     else:
             the_list.append(False)
-    return all(the_list)
+            result = False
+    
+    print('result',result)        
+    print('the_list:' ,the_list)        
+    # return all(the_list)
+    return result
 
 
 def getRooms(request):
@@ -345,7 +355,13 @@ def checkAvailability(request):
     room_id = request.GET['s_room_id']
     check_in = request.GET['check_in']
     check_out = request.GET['check_out']
-    check = checkAvailable(room_id,check_in,check_out)
+
+    print('room_id',room_id)
+    print('check_in',check_in)
+    print('check_out',check_out)
+
+    check = checkAvailable(room_id,check_in,check_out) 
+    print('check', check )
     if (check == True):
         ch = 1
     else:
