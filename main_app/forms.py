@@ -6,6 +6,10 @@ from .models import Facility, RoomPic
 from .models import Booking, Room, Profile
 
 
+class CreateUserForm(UserCreationForm):
+   class Meta:
+      model= User
+      fields = ['username','email','password1','password2']
 
 
 
