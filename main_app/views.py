@@ -58,14 +58,14 @@ def rooms_index(request):
 #     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
 
 
-def adminIndex(request, user_id):
+def admin_dashboard(request, user_id):
     # user = User.objects.get(id=user_id)
     profile = Profile.objects.filter(user_id=request.user.id)
     if (profile):
         user = profile[0]
     else:
         user=''
-    return render(request, 'adminIndex.html', {'user': user})
+    return render(request, 'admin_dashboard.html', {'user': user})
 
 
 
@@ -85,7 +85,7 @@ class RoomUpdate(LoginRequiredMixin, UpdateView):
 
 class RoomDelete(LoginRequiredMixin, DeleteView):
     model = Room
-    success_url = '/rooms/'
+    success_url = '/rooms/adminindex'
 
 
 class BookCreate(CreateView):
@@ -320,7 +320,7 @@ def add_booking(request, room_id, user_id):
   else:
     return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
  else:
-    return HttpResponse ('<h3>looks that the room is already booked check other days !!</h3>')   
+    return HttpResponse ('<h3>looks that the room is already booked check other days !!</h3>')
 
 
 
@@ -352,22 +352,23 @@ def checkAvailable(room,check_in,check_out):
 
 
 def getRooms(request):
-    search= request.POST["searchBy"] 
-    country = request.POST['country_search']
-    from_date = request.POST['check_in']
-    to_date = request.POST['check_out']
-    the_available_rooms= []
-    if search == 'country':
-        rooms = Room.objects.filter(country__icontains=country)
-    elif search == 'city':
-        rooms = Room.objects.filter(city__icontains=country)
-    else:
-        rooms = Room.objects.filter(name__icontains=country) 
+    if request.method == 'POST':
+        search= request.POST["searchBy"] 
+        country = request.POST['country_search']
+        from_date = request.POST['check_in']
+        to_date = request.POST['check_out']
+        the_available_rooms= []
+        if search == 'country':
+            rooms = Room.objects.filter(country__icontains=country)
+        elif search == 'city':
+            rooms = Room.objects.filter(city__icontains=country)
+        else:
+            rooms = Room.objects.filter(name__icontains=country) 
 
-    for room in rooms:
-        if checkAvailable(room.id,from_date,to_date):
-            the_available_rooms.append(room)
-    return render(request, 'rooms/index.html', {'rooms': the_available_rooms ,'search':search ,'country':country ,'from_date': from_date, 'to_date':to_date   })
+        for room in rooms:
+            if checkAvailable(room.id,from_date,to_date):
+                the_available_rooms.append(room)
+        return render(request, 'rooms/index.html', {'rooms': the_available_rooms ,'search':search ,'country':country ,'from_date': from_date, 'to_date':to_date   })
 
 
 def checkAvailability(request):
@@ -527,3 +528,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('home')
 
+
+@login_required
+def adminRoom_index(request):
+    rooms = Room.objects.filter(user=request.user)
+    print("ussser:",request.user.id)
+    print("roooms:",rooms)
+    return render(request, 'rooms/adminindex.html', {'rooms': rooms })

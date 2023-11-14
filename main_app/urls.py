@@ -43,7 +43,7 @@ urlpatterns = [
 
 
 # Admin
-    path('rooms/<int:user_id>/adminIndex',views.adminIndex,name='adminIndex'),
+    path('rooms/<int:user_id>/admin_dashboard',views.admin_dashboard,name='admin_dashboard'),
 
 
 # room
@@ -55,7 +55,7 @@ urlpatterns = [
   path('rooms/<int:pk>/update/', views.RoomUpdate.as_view(), name='rooms_update'),
   path('rooms/<int:pk>/delete/', views.RoomDelete.as_view(), name='rooms_delete'),
   path('rooms/<int:room_id>/add_roompic', views.add_roompic, name='add_roompic'),
-
+  path('rooms/adminindex', views.adminRoom_index, name='adminRoom_index'),
     # Facility
   path('facilities/', views.FacilityList.as_view(), name='facilities_index'),
   path('facilities/<int:pk>/', views.FacilityDetail.as_view(), name='facilities_detail'),
