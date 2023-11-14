@@ -23,6 +23,7 @@ urlpatterns = [
     path('rooms/', views.getRooms, name='index'),
     path('book/create/', views.BookCreate.as_view(), name='book_create'),
     path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
+     path('booking/cancel/<int:booking>/', views.cancel_Booking, name='cancel_booking'),
     path('booking/<int:room_id><int:user_id>/add_booking/', views.add_booking, name='add_booking'),
     path('booking/<int:room_id>/add_booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
 

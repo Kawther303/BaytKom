@@ -24,6 +24,14 @@
 <p>Guest Email: {{ r.booking.guest_email }}</p>
 <p>Guest Phone: {{ r.booking.guest_mobile }}</p>
 <p class="px">Booking Price: {{ r.booking.price }}</p>
+{% if r.booking.comment %}
+<p class="px">Additional Request: {{ r.booking.comment }}</p>
+{% endif %}
+{% if r.booking.status == 'A' %}
+<p class="px">Status :<span class="teal-text">Confirm</span>  </p>
+{% else %}
+<p class="px">Status :<span class="red-text">Canceled</span>  </p>
+{% endif %}
  </div>
  <div> 
   {% load static  %}

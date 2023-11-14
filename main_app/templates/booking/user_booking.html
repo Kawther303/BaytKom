@@ -17,6 +17,7 @@
 <span class="card-title">{{ r.booking.room }}</span>
 <a href="{% url 'room_detail_alt' r.room.id %}">
   <p class="px">Booking#: {{ r.booking.id }}</p>
+  <input type="text" id="check_date" value="{{r.booking.from_date}}">
   <p class="px">check-in: {{ r.booking.from_date }}</p>
   <p class="px">check-out: {{ r.booking.to_date }}</p>
 <p>Created by: {{ r.booking.user }}</p>
@@ -24,6 +25,14 @@
 <p>Guest Email: {{ r.booking.guest_email }}</p>
 <p>Guest Phone: {{ r.booking.guest_mobile }}</p>
 <p class="px">Booking Price: {{ r.booking.price }}</p>
+ {% if r.booking.status == 'A' %}
+<p class="px">Status :<span class="teal-text">Confirm</span>  </p>
+
+<a href="{% url 'cancel_booking' r.booking.id %}"> <button id="btn_cancel" class="red-text">Cancel</button> </a> 
+{% else %}
+<p class="px">Status :<span class="red-text">Canceled</span>  </p>
+{% endif %}
+
  </div>
  <div> 
   {% load static  %}
@@ -38,4 +47,18 @@
 {% else %}
 <h2> {{user}} have no Booking!</h2>
 {% endif%}
+
+<script>
+ const check_in = document.getElementById('check_date').value;
+ const today = new Date();
+
+ if (check_in < today ){
+  document.getElementById('btn_cancel').disabled = true; 
+ }else {
+  document.getElementById('btn_cancel').disabled = false; 
+ }
+
+
+</script>
+
 {% endblock %}
