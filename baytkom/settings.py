@@ -132,14 +132,10 @@ STATIC_URL = 'static/'
 
 # LOGIN_REDIRECT_URL = '/rooms/'
 
-<<<<<<< HEAD
 LOGIN_REDIRECT_URL = '/'
 SIGNUP_REDIRECT_URL = '/accounts/profile/update'
 # LOGIN_REDIRECT_URL = '/accounts/profile'
 
-=======
-LOGIN_REDIRECT_URL = '/accounts/profile/update'
->>>>>>> ad98faa (additional fix for search)
 
 LOGOUT_REDIRECT_URL = '/'
 
