@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
-from .models import Room, Facility, RoomPic, Review
+from .models import Room, Facility, RoomPic
 from .forms import FacilityForm
 from .forms import RoomPicForm
+from .forms import ReviewForm
 from .forms import *
 import datetime
 
@@ -391,7 +392,7 @@ def user_Booking(request):
     context =[] 
 
     bookings = Booking.objects.all().filter(user=request.user)
-    # room = Room.objects.get(id=Room_id)
+    
     for book in bookings:
         room = Room.objects.filter(id=book.room.id)
         # review_form = ReviewForm()
@@ -443,17 +444,45 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
-@login_required
-def add_review(request):
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            new_review = form.save(commit=False)
-            new_review.room = form.cleaned_data['room']
-            new_review.save()
-            return redirect('user_booking')
-    else:
-        form = ReviewForm()
-    
-    return render(request, 'booking/add_review.html', {'form': form})
+# @login_required
+# def add_review(request, room_id):
+#     print('room_id', room_id)
+#     room = Room.objects.get(id=room_id)
+#     print('fff', room)
+#     # room = rooms[0]
 
+#     if request.method == 'POST':
+#         form = ReviewForm(request.POST)
+#         if form.is_valid():
+#             print('userrrrrrrrrrr', request.user.id)
+#             new_review = form.save(commit=False)
+#             new_review.room_id = room_id
+#             new_review.user_id = request.user.id
+#             new_review.save()
+#             return render('add_review', {'room' : room, 'form': form})
+#     else:
+#         form = ReviewForm()
+    
+#         return render(request, 'add_review.html', {'room' : room, 'form': form})
+
+
+@login_required
+def room_review(request, room_id):
+    room = Room.objects.get(id=room_id)
+    reviews = Review.objects.filter(room_id=room_id)
+
+    review_form = ReviewForm()
+    return render(request, 'rooms/room_review.html', {'room':room, 'review_form': review_form, 'reviews': reviews})
+
+
+
+@login_required
+def add_review(request, room_id):
+    form = ReviewForm(request.POST)
+
+    if form.is_valid():
+        new_review = form.save(commit = False)
+        new_review.room_id = room_id
+        new_review.user_id = request.user.id
+        new_review.save()
+    return redirect('room_review', room_id= room_id) 

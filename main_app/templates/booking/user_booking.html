@@ -35,15 +35,8 @@
 </div>
 
 </div>
-
+<a href="{% url 'room_review' r.room.id%}">Add Review</a>
 <div>
-  <form method="POST" action="{% url 'add_review' %}">
-    <!-- {% csrf_token %}
-    {{ review_form.as_p }}
-    <input type="hidden" name="room_id" value="{{ r.room.id }}"> -->
-    {% csrf_token %}
-    <button type="submit">Add Review</button>
-  </form>
 
 {% endfor %}
 

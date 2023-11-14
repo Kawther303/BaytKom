@@ -60,9 +60,10 @@ urlpatterns = [
   path('booking/<int:room_id>/<int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
   path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
   path('booking/user_booking/',views.user_Booking, name='user_booking') ,
-  path('review/add/', views.add_review, name='add_review'),
+  # path('review/add/', views.add_review, name='add_review'),
+  path('rooms/<int:room_id>/add_review', views.add_review, name='add_review'),
+  path('rooms/<int:room_id>/room_review', views.room_review, name='room_review'),
 
-  path('review/<int:room_id>/add_review', views.add_review, name='add_review'),
     # path('booking/<int:user_id>/user_booking/',views.user_Booking, name='user_booking') ,
   path('room/check/',views.checkAvailability,name='check_availability'),
   #  path('booking/<int:room_id>/check/',views.checkAvailability,name='check_availability'),

@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from .models import Facility, RoomPic, Review
-from .models import Booking, Room, Profile
+from .models import Facility, RoomPic
+from .models import Booking, Room, Profile, Review
 
 
 class CreateUserForm(UserCreationForm):
@@ -60,4 +60,4 @@ class BookingForm(ModelForm):
 class ReviewForm(ModelForm):
   class Meta:
       model= Review
-      fields = ['comment','date', 'room']
+      fields = ['comment','date', 'rating']
