@@ -305,14 +305,14 @@ def add_booking(request, room_id, user_id):
             'room': room,
             'booking': new_booking,
         })
-        from_email = 'djangoemail2002@gmail.com'
-        to_email = [user.user.email]  # Assuming user has an email field
+    from_email = 'djangoemail2002@gmail.com'
+    to_email = [user.user.email]  # Assuming user has an email field
 
-        print(to_email)
-        try:
-            send_mail(subject, message, from_email, to_email, fail_silently=False)
-            print("Email sent successfully")
-        except BadHeaderError as e:
+    print(to_email)
+    try:
+          send_mail(subject, message, from_email, to_email, fail_silently=False)
+          print("Email sent successfully")
+    except BadHeaderError as e:
             print(f"Invalid header found. Email not sent. Error: {e}")
 
     # return redirect(to='home')
@@ -515,7 +515,7 @@ def add_review(request, room_id):
         new_review.user_id = request.user.id
         new_review.save()
     return redirect('room_review', room_id= room_id) 
-=======
+
     
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'password_reset.html'
