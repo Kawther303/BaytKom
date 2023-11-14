@@ -1,31 +1,79 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>BaytKom!!</h1>
 
-<form method="POST" action="{% url 'index' %}">
-  {% csrf_token %}
-  <fieldset>
-    <legend>Search by:</legend>
-    <div>
-      <input type="radio" id="country" name="search_by" value="country" checked />
-      <label for="country">Country</label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="../static/css/home.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <title>BaytKom</title>
+</head>
+<body>
+<div class="home-container">
+  <div>
+  <div class="ved">
+    <video className="vd" autoPlay loop muted>
+      <source src="../static/css/backgrounds/wwww.mp4" type="video/mp4" />
+    </video>
+    <video className="vd" autoPlay loop muted>
+      <source src="../static/css/backgrounds/vvv.mp4" type="video/mp4" />
+    </video>
+    <video className="vd" autoPlay loop muted>
+      <source src="../static/css/backgrounds/rr.mp4" type="video/mp4" />
+    </video>
+  </div>
+<div>
+
+  <div class="nav_list">
+    <div class="h_logo">
+    <img src="../static/css/backgrounds/logo.jpg" class="b_logo">aytkom</div>
+ 
+  <div class="n"><a href="#">Home</a></div>
+  <div class="n"><a href="#">Signin</a></div>
+  <div class="n"><a href="#">Login</a></div>
+  <div class="n"><a href="#">Rooms</a></div>
+  <div class="n"><a href="#">User Bookings</a></div>
+  <div class="n"><a href="#">Admin Dashboard </a></div>
+ </div></div>
+</div>
+
+
+ <div class="form_area"> 
+  <form method="POST" action="{% url 'index' %}">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Search by:</legend>
+      <div class="home_radio">
+        <input type="radio" id="country" class="search_by" name="search_by" value="country" checked />
+        <label class="search_by" for="country">Country</label>
+        <input type="radio" id="city"  name="search_by" value="city" />
+        <label class="search_by" for="city">City</label>
+        <input type="radio" id="rname" class="search_by" name="search_by" value="room_name" />
+        <label class="search_by" for="rname">Room/Hotel Name</label></div> 
+        <br>
+        <span id="sOption"></span>
+        <input type='text'  name='country_search' value={{country_search}}></p>
+    </fieldset>
+    <div class="home_form"> 
+    <input type="hidden" id="searchBy" name="searchBy" > 
+   
+    <p>Check-in:<input type='text' id='check_in' name='check_in'>
+    Check-Out:<input type='text'  id='check_out' name='check_out'></p>
+    
+    <span id="note_space" class="red-text"></span>
     </div>
-      <div><input type="radio" id="city" name="search_by" value="city" />
-      <label for="city">City</label></div>  
-     
-      <div>  <input type="radio" id="rname" name="search_by" value="room_name" />
-      <label for="rname">Room/Hotel Name</label></div> 
-  </fieldset>
-  <input type="hidden" id="searchBy" name="searchBy" > 
-  <span id="sOption"></span><input type='text'  name='country_search' value={{country_search}}></p>
-  <p>Check-in:<input type='text'  id='check_in' name='check_in'></p>
-  <p>Check-Out:<input type='text'  id='check_out' name='check_out'></p>
-  <br>
-  <span id="note_space" class="red-text"></span>
-  <br>
-  <input type="submit" id="btn_search" value="Search">
-</form>
-
+    <input type="submit"  class="s_btn" id="btn_search" value="Search">
+  </form>
+</div></div>
+<footer class="page-footer "> 
+  <div class="center">
+    <h3 class="BaytKom-footer">Baytkom</h3> 
+    All Rights Reserved, &copy; 2023 BaytKom   
+  </div>
+  
+</footer>
+</body>
 <script>
     let fromDateEle = document.getElementById('check_in');
     let toDateEle = document.getElementById('check_out');
@@ -48,12 +96,11 @@ const changeSearchBy =()=>{
   for (const radioButton of radioButtons) {
       if (radioButton.checked) {
         selectedOption = radioButton.value;
-        console.log(selectedOption);
         break;
         }
   }
 
-  sOption.innerHTML= ` ${selectedOption}: ` ;
+   sOption.innerHTML= ` ${selectedOption}: ` ;
   document.getElementById('searchBy').value= selectedOption;
 } 
   
@@ -81,10 +128,13 @@ document.getElementById('country').addEventListener('click', changeSearchBy);
 document.getElementById('city').addEventListener('click', changeSearchBy);
 document.getElementById('rname').addEventListener('click', changeSearchBy);
 
-
-
-
-
 </script>
 
-{% endblock  %}
+
+
+</html>
+
+
+
+
+

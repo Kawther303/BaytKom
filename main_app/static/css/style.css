@@ -7,9 +7,16 @@ z-index: -1;
 size: cover;
 
 }
+.contain{
+ 
+  
+  filter: grayscale(100%);
+  z-index: -1;
 
+}
 body{
-  background-image: url('./backgrounds/white.jpeg') ;
+  background-image: url('./backgrounds/whitesideboar.jpg') ;
+  background-color: gray;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -17,11 +24,11 @@ body{
   /* font-family: 'Dancing Script', cursive; */
   /* color: black; */
   /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
-z-index: 2;
+/* z-index: 2; */
 
   background-size: cover;
   background-color: #fffefe5e;
-  z-index: -1;
+
 }
 img {
   z-index: 2;
@@ -72,7 +79,7 @@ button{
 }
 
 nav,footer ,.page-footer{
-  background-color: #e1eaf8;
+  background-color: #3f3c3c9c;
   z-index: -1;
 }
 
@@ -142,3 +149,21 @@ font-weight: bold;
 
 }
 
+.b_logo{
+  width: 110px;
+  height: auto;
+  z-index: -1;
+}
+.h_logo{
+  display: flex;
+  font-size: 140px;
+  color: #ffff;
+  font-weight: 550;
+  margin-left: 0;
+  margin-top: 0;
+  background-color: #3f3c3c9c;
+
+}
+.nav-wrapper,.navbar-fixed{
+  height: 200px;
+}
