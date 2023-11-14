@@ -16,16 +16,23 @@
 
 <span class="card-title">{{ r.booking.room }}</span>
 <a href="{% url 'room_detail_alt' r.room.id %}">
-<p>Booking#: {{ r.booking.id }}</p>
-<p>check-in: {{ r.booking.from_date }}</p>
-<p>check-out: {{ r.booking.to_date }}</p>
+  <p class="px">Booking#: {{ r.booking.id }}</p>
+  <input type="text" id="check_date" value="{{r.booking.from_date}}">
+  <p class="px">check-in: {{ r.booking.from_date }}</p>
+  <p class="px">check-out: {{ r.booking.to_date }}</p>
 <p>Created by: {{ r.booking.user }}</p>
 <p>Guest Name: {{ r.booking.guest_name }}</p>
 <p>Guest Email: {{ r.booking.guest_email }}</p>
 <p>Guest Phone: {{ r.booking.guest_mobile }}</p>
-<p>Guest Email: {{ r.booking.guest_email }}</p>
-<p>Booking Price: {{ r.booking.price }}</p>
-<p>Room size: {{ r.room.name }}</p>
+<p class="px">Booking Price: {{ r.booking.price }}</p>
+ {% if r.booking.status == 'A' %}
+<p class="px">Status :<span class="teal-text">Confirm</span>  </p>
+
+<a href="{% url 'cancel_booking' r.booking.id %}"> <button id="btn_cancel" class="red-text">Cancel</button> </a> 
+{% else %}
+<p class="px">Status :<span class="red-text">Canceled</span>  </p>
+{% endif %}
+
  </div>
  <div> 
   {% load static  %}
@@ -45,14 +52,18 @@
 {% endif%}
 
 
-<!-- <script>
-  let dateEle = document.getElementById('id_date');
-  M.Datepicker.init(dateEle, {
-    format: 'yyyy-mm-dd',
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoclose: true
-  })
-</script> -->
+<script>
+ const check_in = document.getElementById('check_date').value;
+ const today = new Date();
+
+ if (check_in < today ){
+  document.getElementById('btn_cancel').disabled = true; 
+ }else {
+  document.getElementById('btn_cancel').disabled = false; 
+ }
+
+
+</script>
+
 
 {% endblock %}

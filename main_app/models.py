@@ -110,6 +110,7 @@ class Booking(models.Model):
   guest_mobile = models.CharField(max_length=25,default="")
   comment = models.CharField(max_length=250,default="",blank=True)
   price =  models.FloatField( default=0.00)
+  status = models.CharField(max_length=1, default='A')
   
   def _str_(self):
     return self.guest_name

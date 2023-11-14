@@ -17,6 +17,7 @@
 </head>
 
 <body>
+
   <header class="navbar-fixed">
     <nav>
       <div class="nav-wrapper blue-grey darken-4">
@@ -42,7 +43,8 @@
           <li><a href="{% url 'logout' %}">Logout</a></li>
           <li><a href="{% url 'profile' %}">Profile</a></li>
           <li> <a href="{% url 'user_booking' %}">User Bookings</a></li>
-          <li> <a href="{% url 'book_create' %}">Book Room</a></li>
+          <li> <a href="{% url 'room_booking' %}">Book Room</a></li>
+
           
           
         {% elif user.user_type == 'ADMIN' %}
