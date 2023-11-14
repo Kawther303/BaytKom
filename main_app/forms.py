@@ -3,11 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import Facility, RoomPic
-from .models import Booking, Room, Profile
+from .models import Booking, Room, Profile, Review
 
 
 class CreateUserForm(UserCreationForm):
-   class Meta:
+  class Meta:
       model= User
       fields = ['username','email','password1','password2']
 
@@ -57,3 +57,7 @@ class BookingForm(ModelForm):
 #     model = Room
 #     fields = __all__
 
+class ReviewForm(ModelForm):
+  class Meta:
+      model= Review
+      fields = ['comment','date', 'rating']

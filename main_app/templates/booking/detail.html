@@ -11,7 +11,7 @@
     <div class="card-content">
       <span class="card-title">{{ room.name }}</span>
       <p>Description: {{ room.description }}</p>
-      <p>roomType:  {{room.roomType}}</p>
+      <p>roomType:  {{room.get_roomType_display}}</p>
       <p>size:  {{room.size}}</p>
       <span>Price per night: BD <input id="room_price" value="{{room.price}}"></input></p>
       <span>Check-in: <input value="{{context.check_in}}"></input></p>

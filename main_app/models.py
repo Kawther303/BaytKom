@@ -15,6 +15,13 @@ RoomType = (
   ('7', 'Duplex')
 )
 
+
+RATING=(
+  ('A', 'Excellent'),
+  ('B', 'Good'),
+  ('C', 'Average'),
+  ('D', 'Poor')
+)
 #  user_type = models.CharField(choices=UserType, default=UserType[1][0], max_length=10)
 
 class Facility(models.Model):
@@ -117,3 +124,19 @@ class RoomPic(models.Model):
 
   def get_absolute_url(self):
     return reverse('detail', kwargs={'pk': self.id})
+
+class Review(models.Model):
+  date = models.DateField('Review Date')
+  comment = models.TextField(max_length=250)
+  rating = models.CharField(max_length=1, choices=RATING, default=RATING[0][0])
+  room = models.ForeignKey(Room, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
+
+# 
+  def __str__(self):
+    return f"{self.room.name} {self.get_rating_display()} on {self.date}"
+
+
+  class Meta:
+    # ordering = ['date']  #Date ascending
+    ordering = ['-date'] 

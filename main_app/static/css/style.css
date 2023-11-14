@@ -122,9 +122,23 @@ justify-content: center;
   color: #fff7f7c1;
 } */
 
+
+.sidebar-menu li a:hover {
+  color: #000;
+}
+
+.profile-picture{
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 .px{
 font-size: 14pt;
 color: darkslateblue;
 font-weight: bold;
 
 }
+

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% load static %}
+<img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+</div>
+
+<div class="card">
+  <div class="card-content">
+  <h3>{{ room.name }}</h3>
+  <p>Description: {{ room.description }}</p>
+  <p>Room Type:  {{room.get_roomType_display}}</p>
+  <p>Size:  {{room.size}}</p>
+  <p>Price: {{room.price}}</p>
+  <p>Country:  {{room.country}}</p>
+  <p>City:  {{room.city}}</p>
+  <p>Street:  {{room.street}}</p>
+  <p>Address:  {{room.address}}</p>
+  <p>Location:  {{room.location}}</p>
+</div>
+
+<form method="POST" action="{% url 'add_review' room.id %}">
+  {% csrf_token %}
+  {{ review_form.as_p }}
+  <!-- <input type="hidden" name="room_id" value="{{ room.id }}"> -->
+  <button type="submit">Submit Review</button>
+</form>
+</div>  
+<table class="striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Comment</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in reviews %}
+    <tr>
+      <td>{{review.date}}</td>
+      <td>{{review.comment}}</td>
+      <td>{{review.get_rating_display}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  let dateEle = document.getElementById('id_date');
+  M.Datepicker.init(dateEle, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoclose: true
+  })
+
+  let RatinglEle = document.getElementById('id_rating');
+  M.FormSelect.init(RatinglEle);
+</script>
+
+
+{% endblock %}

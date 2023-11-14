@@ -38,15 +38,19 @@
   {% load static  %}
   <img width="350px" height="350px" src="{% static r.room.image|cut:'main_app/static/' %}" class="imgsize"/></a>
 </div>
-</div>
-</div>  
 
 </div>
+
+</div>
+<a href="{% url 'room_review' r.room.id%}">Add Review</a>
+<div>
+
 {% endfor %}
 
 {% else %}
 <h2> {{user}} have no Booking!</h2>
 {% endif%}
+
 
 <script>
  const check_in = document.getElementById('check_date').value;
@@ -60,5 +64,6 @@
 
 
 </script>
+
 
 {% endblock %}
