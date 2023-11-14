@@ -1,2 +1,13 @@
+Booking Confirmation
 
-  <p>Your booking for the room {{ room.name }} has been confirmed.</p>
+your booking for room {{ booking.room }} has been confirmed
+
+Details
+
+Guest Name: {{ booking.guest_name }}
+Guest Email: {{ booking.guest_email }}
+Phone: {{ booking.guest_mobile }}
+Book number: {{ booking.id }}
+Check-in: {{ booking.from_date }}
+Check-out: {{ booking.to_date }}
+Price: {{ booking.price }}
