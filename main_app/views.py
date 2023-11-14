@@ -7,7 +7,7 @@ from .forms import RoomPicForm
 from .forms import ReviewForm
 from .forms import *
 import datetime
-
+from django.contrib.auth.views import PasswordResetView
 
 from django.contrib.auth.models import User
 from .models import Room, Booking, Facility, Profile
@@ -515,3 +515,15 @@ def add_review(request, room_id):
         new_review.user_id = request.user.id
         new_review.save()
     return redirect('room_review', room_id= room_id) 
+=======
+    
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'password_reset.html'
+    email_template_name = 'password_reset_email.html'
+    subject_template_name = 'password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('home')
+
