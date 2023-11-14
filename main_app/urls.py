@@ -23,6 +23,7 @@ urlpatterns = [
     path('rooms/', views.getRooms, name='index'),
     path('book/create/', views.BookCreate.as_view(), name='book_create'),
     path('booking/<int:room_id>/', views.booking_create, name='booking_create'),
+     path('booking/cancel/<int:booking>/', views.cancel_Booking, name='cancel_booking'),
     path('booking/<int:room_id><int:user_id>/add_booking/', views.add_booking, name='add_booking'),
     path('booking/<int:room_id>/add_booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
 
@@ -57,6 +58,7 @@ urlpatterns = [
   path('booking/<int:room_id>/<int:user_id>/add_booking/',views.add_booking, name='add_booking') ,
   path('booking/<int:room_id>/add_booking/confirmation',views.booking_confirmation, name='booking_confirmation') ,
   path('booking/user_booking/',views.user_Booking, name='user_booking') ,
+  path('booking/room_booking/',views.room_Booking, name='room_booking') ,
     # path('booking/<int:user_id>/user_booking/',views.user_Booking, name='user_booking') ,
   path('room/check/',views.checkAvailability,name='check_availability'),
   #  path('booking/<int:room_id>/check/',views.checkAvailability,name='check_availability'),

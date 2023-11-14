@@ -151,7 +151,6 @@ def rooms_detail(request, room_id):
 def room_detail_alt(request, room_id):
     room = Room.objects.get(id=room_id)
     room_pic = RoomPic.objects.filter(room=room_id)
-    # booking_form = BookingForm()
     context = {    
     'check': 0, 
     'check_in' :'',
@@ -270,8 +269,9 @@ def add_booking(request, room_id, user_id):
  users = User.objects.get(username=request.user)
  user = Profile.objects.get(user_id=users.id)
  form = BookingForm(request.POST)
- 
- if form.is_valid():
+ check_room = checkAvailable(room_id,request.POST['from_date'],request.POST['to_date']);
+ if check_room == True:
+  if form.is_valid():
     new_booking = form.save(commit = False)
     new_booking.room_id = room_id
     new_booking.user_id = user_id
@@ -282,8 +282,7 @@ def add_booking(request, room_id, user_id):
          "room" : the_room
      }
 
-        # Send confirmation email to the user
-
+        # Send confirmation email to the user       
     subject = 'Booking Confirmation'
     message = render_to_string('booking/booking_confirmation_email.html', {
             'user': user,
@@ -305,9 +304,10 @@ def add_booking(request, room_id, user_id):
 
     # return redirect(to='home')
     return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
- else:
+  else:
     return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
-   
+ else:
+    return HttpResponse ('<h3>looks that the room is already booked check other days !!</h3>')   
 
 
 @login_required
@@ -326,8 +326,7 @@ def checkAvailable(room,check_in,check_out):
     print('roommmmmmmmmmmmmmmmm:',room)
     the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
     the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
-
-    booking_list = Booking.objects.filter(room_id=room)
+    booking_list = Booking.objects.filter(room_id=room,status='A')
     print ('booking_list',booking_list)
 
     for booking in booking_list:
@@ -339,17 +338,24 @@ def checkAvailable(room,check_in,check_out):
 
 
 def getRooms(request):
+    search= request.POST["searchBy"] 
     country = request.POST['country_search']
     from_date = request.POST['check_in']
     to_date = request.POST['check_out']
     the_available_rooms= []
+    if search == 'country':
+        rooms = Room.objects.filter(country__icontains=country)
+    elif search == 'city':
+        rooms = Room.objects.filter(city__icontains=country)
+    else:
+        rooms = Room.objects.filter(name__icontains=country) 
 
-    rooms = Room.objects.filter(country=country)
     for room in rooms:
         if checkAvailable(room.id,from_date,to_date):
             the_available_rooms.append(room)
-    return render(request, 'rooms/index.html', {'rooms': the_available_rooms , 'country':country ,'from_date': from_date, 'to_date':to_date   })
-    # return HttpResponse(country)
+    return render(request, 'rooms/index.html', {'rooms': the_available_rooms ,'search':search ,'country':country ,'from_date': from_date, 'to_date':to_date   })
+
+
 def checkAvailability(request):
     context:[]
     room_id = request.GET['s_room_id']
@@ -374,16 +380,11 @@ def checkAvailability(request):
     room = Room.objects.get(id=room_id)
     room_pic = RoomPic.objects.filter(room=room_id)
     return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pics':room_pic})
-#   return render(request,'detail_alt.html',{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
-# render(request,'detail_alt.html',{'context':context} )
-# return redirect(request,{'R_check':check , 'R_check_in':check_in,'R_check_out':check_out  })
 
 @login_required
 def user_Booking(request):
-
     context =[] 
-
     bookings = Booking.objects.all().filter(user=request.user)
     for book in bookings:
         room = Room.objects.filter(id=book.room.id)
@@ -393,10 +394,32 @@ def user_Booking(request):
     })    
     room = Room.objects.all()
     return render(request, 'booking/user_booking.html',{'context' : context})
-  # return render(request, 'booking/user_booking.html', {'bookings': bookings , 'room':room})
-  # return render(request, 'booking/user_booking.html', {'bookings': bookings})
-  # bookings = Booking.objects.all()
-  # return render(request, 'booking/user_booking.html', {'bookings': bookings})
+
+@login_required
+def cancel_Booking(request,booking):
+    Booking.objects.filter(id=booking).update(status='C')
+    return redirect(to='user_booking')
+
+@login_required
+def room_Booking(request):
+
+    context =[] 
+    rooms = Room.objects.filter(user=request.user.id)
+    print("ussser:",request.user.id)
+    print("roooms:",rooms)
+    r = 0
+    b = 0
+    for room in rooms:   
+        bookings = Booking.objects.all().filter(room=room.id)
+        print("boook:",bookings)
+        for booking in bookings:
+            context.append({  
+            "booking" : booking,
+            "room": room
+            })  
+
+
+    return render(request, 'booking/room_booking.html',{'context' : context})
 
 # Update profile information
 from .forms import ProfileForm
