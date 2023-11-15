@@ -46,7 +46,6 @@ def rooms_index(request):
     # else:
     #     user=''
     return render(request, 'rooms/index.html', {'rooms': rooms})
-add .
 
 
 def admin_dashboard(request, user_id):

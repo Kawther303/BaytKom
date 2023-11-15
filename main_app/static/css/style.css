@@ -15,7 +15,7 @@ size: cover;
 
 }
 body{
-  background-image: url('./backgrounds/living3.jpg') ;
+  background-image: url('./backgrounds/living2.jpg') ;
   background-color: gray;
   display: flex;
   min-height: 100vh;
