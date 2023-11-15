@@ -14,13 +14,13 @@ class CreateUserForm(UserCreationForm):
 
 
 class FacilityForm(ModelForm):
-  # it needed for custome model form (to not provide fields like CBV)
+
   class Meta:
     model = Facility
     fields = ['name', 'icon', 'description']
 
 class RoomPicForm(ModelForm):
-  # it needed for custome model form (to not provide fields like CBV)
+
   class Meta:
     model = RoomPic
     fields = ['roomImages']
@@ -52,10 +52,6 @@ class BookingForm(ModelForm):
     model = Booking
     fields = ['from_date', 'to_date', 'guest_name','guest_email','guest_mobile','comment','price']
 
-# class SearchForm(ModelForm):
-#   class Meta: #addional functionalty to access and use CBV
-#     model = Room
-#     fields = __all__
 
 class ReviewForm(ModelForm):
   class Meta:
