@@ -71,7 +71,7 @@
          <input type='hidden'  name='s_room_id' id='s_room_id' value='{{ room.id }}'>
           <p>Check-in:<input type='text'   id='check_in' name='check_in' value="{{ context.check_in }}"></p>
           <p>Check-Out:<input type='text'  id='check_out' name='check_out' value="{{ context.check_out }}"></p>
-          <input type="submit" id="btn_availability" value="Check Availability">
+          <input type="submit" id="btn_availability" value="Check Availability" class="all_btn" >
         </form>
         
         <p id="date_note" class="red-text"></p>
@@ -98,7 +98,7 @@
             <input type="hidden" id="book_check_out" name="book_check_out" value="{{ context.check_out }}">
             <input type="hidden" id="nights" name="nights">
 
-            <input  type="submit" value="Book the Room">
+            <input  type="submit" value="Book the Room" class="all_btn">
             </form>
 
            </div>
