@@ -37,17 +37,23 @@ def about(request):
 
 
 
-@login_required
 def rooms_index(request):
     rooms = Room.objects.all()
-    profile = Profile.objects.filter(user_id=request.user.id)
-    # if (profile):
-    #     user = profile[0]
-    # else:
-    #     user=''
+
     return render(request, 'rooms/index.html', {'rooms': rooms})
 
+# @login_required
+# def rooms_adminindex(request):
+#     rooms = Room.objects.all()
+#     profile = Profile.objects.filter(user_id=request.user.id)
+#     if (profile):
+#         user = profile[0]
+#     else:
+#         user=''
+#     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
 
+
+@login_required
 def admin_dashboard(request, user_id):
     # user = User.objects.get(id=user_id)
     profile = Profile.objects.filter(user_id=request.user.id)
