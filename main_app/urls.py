@@ -9,6 +9,7 @@ urlpatterns = [
 
   path('', views.home, name='home'),
   path('about/',views.about,name='about'),
+  path('other/',views.about,name='other'),
 
   path('rooms_list/', views.rooms_index, name='index_list'),
   # path('rooms_adminlist/<int:room_id><int:user_id>/rooms_adminindex', views.rooms_adminindex, name='rooms_adminindex'),
