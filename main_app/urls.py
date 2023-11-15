@@ -27,11 +27,8 @@ urlpatterns = [
   # path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 
   path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
-  path('password-reset-confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
-         name='password_reset_confirm'),
-  path('password-reset-complete/',
-         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
+  path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),name='password_reset_confirm'),
+  path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
   
 # booking
@@ -42,6 +39,7 @@ urlpatterns = [
      path('booking/cancel/<int:booking>/', views.cancel_Booking, name='cancel_booking'),
     path('booking/<int:room_id><int:user_id>/add_booking/', views.add_booking, name='add_booking'),
     path('booking/<int:room_id>/add_booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
+
 
 
 # Admin
@@ -78,6 +76,7 @@ urlpatterns = [
 
   path('rooms/<int:room_id>/add_review', views.add_review, name='add_review'),
   path('rooms/<int:room_id>/room_review', views.room_review, name='room_review'),
+  path('rooms/<int:room_id>/room_review_list', views.room_review_list, name='room_review_list'),
 
   path('booking/room_booking/',views.room_Booking, name='room_booking') ,
 

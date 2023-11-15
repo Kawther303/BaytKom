@@ -16,7 +16,7 @@ size: cover;
 
 }
 body{
-  background-image: url('./backgrounds/living2.jpg') ;
+  background-image: url('./backgrounds/white22.jpeg') ;
   background-color: gray;
   display: flex;
   min-height: 100vh;
@@ -83,6 +83,8 @@ button{
 nav,footer ,.page-footer{
   /* background-color: #3f3c3c9c; */
   background-color: #c6bdbda3;
+  /* 000000000000000000000000 */
+  height: 175px;
   font-size: 14px;
   z-index: -1;
   text-decoration-color: #3f3c3c;
@@ -187,9 +189,10 @@ font-weight: bold;
   margin: 50px;
 }
 .b_logo{
-  width: 110px;
+  width: 100px;
   height: auto;
   z-index: -1;
+  
 }
 .h_logo{
   display: flex;
@@ -197,8 +200,8 @@ font-weight: bold;
   color: #ffff;
   font-weight: 550;
   margin-left: 0;
-  margin-top: 0;
-  background-color: #3f3c3c9c;
+  margin-top: 3px;
+  /* background-color: #3f3c3c9c; */
 
 }
 .nav-wrapper,.navbar-fixed{
@@ -236,8 +239,8 @@ background-color: #f9f4f4c9;
 
 }
 
-.b_logo{
-  width: 110px;
+/* .b_logo{
+  width: 100px;
   height: auto;
   z-index: -1;
 }
@@ -247,10 +250,9 @@ background-color: #f9f4f4c9;
   color: #ffff;
   font-weight: 550;
   margin-left: 0;
-  margin-top: 0;
-  background-color: #3f3c3c9c;
+  padding-top: 5px;
+  background-color: #3f3c3c9c;} */
 
-}
 .nav-wrapper,.navbar-fixed{
   height: 200px;
   color: #3f3c3c; 
@@ -285,9 +287,10 @@ a{
 background-color: #f9f4f4c9; 
 }
 .b_logo {
-  width: 110px;
+  width: 100px;
   height: auto;
   z-index: -1;
+  
 }
 
 .h_logo {
@@ -297,7 +300,9 @@ background-color: #f9f4f4c9;
   font-weight: 550;
   margin-left: 0;
   margin-top: 0;
-  background-color: #3f3c3c9c;
+  padding-top: 5px;
+  background-color: #c6bdbda3;
+   /* #3f3c3c9c; */
 
 }
 
@@ -338,4 +343,12 @@ a {
 
 .r:hover {
   background-color: #f9f4f4c9;
+}
+
+h1{
+  margin-top: -110px;
+  text-align: right;
+  margin-bottom: 100px;
+  margin-right: 20px;
+
 }

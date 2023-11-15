@@ -7,6 +7,7 @@ from .forms import RoomPicForm
 from .forms import ReviewForm
 from .forms import *
 import datetime
+from datetime import date
 from django.contrib.auth.views import PasswordResetView
 
 from django.contrib.auth.models import User
@@ -89,13 +90,11 @@ class BookCreate(CreateView):
     fields = ['room', 'from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile', 'price']
     success_url = '/rooms/'
 
-
 # @login_required
 # def rooms_showdetail(request, room_id):
 #     room = Room.objects.get(id=room_id)
 #     booking_form = BookingForm()
 #     return render(request, 'rooms/showDetail.html', {'room': room, 'booking_form': booking_form})
-
 
 def signup(request):
     error_message = ''
@@ -169,7 +168,6 @@ def room_detail_alt(request, room_id):
     }
     return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pic':room_pic})
 
-
 @login_required
 def add_facility(request, room_id):
     form = FacilityForm(request.POST, request.FILES)
@@ -178,7 +176,6 @@ def add_facility(request, room_id):
         new_facility.room_id = room_id
         new_facility.save()
     return redirect('detail', room_id =room_id) 
-
 
 @login_required
 def add_roompic(request, room_id):
@@ -318,26 +315,19 @@ def add_booking(request, room_id, user_id):
  else:
     return HttpResponse ('<h3>looks that the room is already booked check other days !!</h3>')
 
-
-
 @login_required
 def booking_confirmation(request):
     req = request
     return HttpResponse (f'<h2> confirm booking for {req} </h2>')
 
 
-
-
 # to check if the room is available
 def checkAvailable(room,check_in,check_out):
     the_list = []  
-    print('check_in:',check_in )
-    print('check_out:',check_out )
-    print('roommmmmmmmmmmmmmmmm:',room)
+ 
     the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
     the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
     booking_list = Booking.objects.filter(room_id=room,status='A')
-    print ('booking_list',booking_list)
 
     for booking in booking_list:
         if booking.from_date > the_check_out or booking.to_date <the_check_in:
@@ -345,7 +335,6 @@ def checkAvailable(room,check_in,check_out):
         else:
             the_list.append(False)
     return all(the_list)
-
 
 def getRooms(request):
     if request.method == 'POST':
@@ -365,7 +354,6 @@ def getRooms(request):
             if checkAvailable(room.id,from_date,to_date):
                 the_available_rooms.append(room)
         return render(request, 'rooms/index.html', {'rooms': the_available_rooms ,'search':search ,'country':country ,'from_date': from_date, 'to_date':to_date   })
-
 
 def checkAvailability(request):
     context:[]
@@ -397,17 +385,16 @@ def checkAvailability(request):
 def user_Booking(request):
     context =[] 
     bookings = Booking.objects.all().filter(user=request.user)
-    
+    today = date.today()
     for book in bookings:
         room = Room.objects.filter(id=book.room.id)
-        # review_form = ReviewForm()
         context.append({
         "booking" : book,
         "room": room[0],
-        # "review_form": review_form
+
     })    
     room = Room.objects.all()
-    return render(request, 'booking/user_booking.html',{'context' : context})
+    return render(request, 'booking/user_booking.html',{'context' : context, 'today':today})
 
 
 @login_required
@@ -483,16 +470,19 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     
 #         return render(request, 'add_review.html', {'room' : room, 'form': form})
 
+def room_review_list(request, room_id):
+    room = Room.objects.get(id=room_id)
+    reviews = Review.objects.filter(room_id=room_id)
+    review_form = ReviewForm()
+    return render(request, 'rooms/room_review_list.html', {'room':room, 'review_form': review_form, 'reviews': reviews})
+
 
 @login_required
 def room_review(request, room_id):
     room = Room.objects.get(id=room_id)
     reviews = Review.objects.filter(room_id=room_id)
-
     review_form = ReviewForm()
     return render(request, 'rooms/room_review.html', {'room':room, 'review_form': review_form, 'reviews': reviews})
-
-
 
 @login_required
 def add_review(request, room_id):

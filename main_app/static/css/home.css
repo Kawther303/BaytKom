@@ -1,11 +1,188 @@
 
+  
+  nav  ul li{
+    list-style: none;
+    display: inline-block;
+    margin-left: 20px;
+  
+  }
+  
+  .b_logo{
+    width: 110px;
+    height: auto;
+    z-index: -1;
+  }
+  .h_logo{
+    display: flex;
+    font-size: 140px;
+    color: #ffff;
+    font-weight: 550;
+    margin-left: 10px;
+
+  }
+  
+  nav{
+    width: 100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    margin-bottom: 40;
+  }
+  
+  .first{
+    width: 20%;
+  }
+   .logo{
+    font-weight: 700;
+    transition: 0.5s;
+    text-align: center;
+  
+  } 
+  
+
+nav ul li{
+text-decoration: none;
+color: #ffff;
+font-size: 17px;
+}
+.f_content{
+  text-align: center;
+}
+
+.f_content h1{
+  font-size: 160px;
+  color: #ffff;
+  font-weight: 600;
+
+}
+
+.f_content a{
+  text-decoration: none;
+  display: inline-block;
+  color: #000;
+  font-size: 24px;
+  border:2px solid #ffff;
+  padding: 14px;
+  border-radius: 50px;
+}
+
+.vd, .ved{
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+
+  }
+
+
+  .s_btn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+  .s_btn:hover {
+    background: #ddd;
+    color: black;
+  }
+
+  .nav_list{
+    margin: 10px;
+    display: flex;
+    justify-content: flex-start;
+    color: aliceblue;
+  }
+
+  .n{
+    font-size: 25px;
+    margin: 80px 10px;
+  }
+
+
+
+  .form_area{
+    margin-top: 10px;
+    margin-left: 3px;
+    font-size: 25px;
+  }
+  fieldset, label{
+    font-size: 20px;
+    margin: 10px;
+    color: #000;
+  }
+
+  .radio{
+    box-decoration-break: clone;
+    user-select: contain;
+  }
+
+  .search_by:hover{
+    background: #ddd;
+    color: black;
+  }
+
+  a {
+    /* check */
+   color: #ffff;
+   /* color: #3f3c3c;  */
+  }
+  .n:hover {
+    color: #ffff;
+    background: #494545da;
+  }
+footer, .page-footer{
+  background-color:#c6bdbda3;
+   /* #989898ab; */
+  z-index: -1;
+  /* #231f1f6d; */
+  margin: 0 auto;
+  padding-top: 0;
+}
+
+input[type=text] {
+  width: 60%;
+  padding: 12px 20px; 
+  margin: 8px 0;
+  box-sizing: border-box; 
+  background-color: #fff;
+}
+
+.nav, .nav_list{
+  /* background-color: #3f3c3c9c; */
+  width: 100%;
+  margin: 0 0 0 0;
+  
+  background-color: #c6bdbda3;
+  /* 000000000000000000000000 */
+  height: 175px;
+  font-size: 14px;
+  z-index: -1;
+  text-decoration-color: #3f3c3c;
+  color: #3f3c3c;
+
+}
+.BaytKom-footer{
+  font-family: 'Love Light', cursive;
+
+}
+/* ___________------------------------ */
+
+
+
 .home-container {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 0 5%;
-  background-image: linear-gradient(rgba(12,3,51,0.3),rgba(12,3,51,0.3)); 
+  padding: 0;
+  background-image: linear-gradient(#c6bdbd3b,#fffdfd80);
+    /* rgba(12,3,51,0.3),rgba(12,3,51,0.3));  */
   position: relative;
   justify-content:  left;
   /* flex-direction:initial; */
@@ -14,7 +191,7 @@
   nav  ul li{
     list-style: none;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 0px;
   
   }
   
@@ -102,9 +279,9 @@ font-size: 17px;
   }
 
   .nav_list{
-    margin: 10px;
+    /* margin: 10px; */
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     color: aliceblue;
   }
 
@@ -113,16 +290,15 @@ font-size: 17px;
     margin: 80px 10px;
   }
 
-
-
   .form_area{
     margin-top: 10px;
-    margin-left: 3px;
+    margin-left: 12px;
+    padding-top: 80px;
     font-size: 25px;
   }
   fieldset, label{
     font-size: 20px;
-    margin: 10px;
+    margin: 12px;
     color: #000;
   }
 
@@ -144,6 +320,7 @@ font-size: 17px;
   .n:hover {
     color: #ffff;
     background: #494545da;
+    height: 60px;
   }
 footer, .page-footer{
   background-color: #989898ab;
@@ -159,4 +336,8 @@ input[type=text] {
   margin: 8px 0;
   /* box-sizing: border-box; */
   background-color: #fff;
+}
+
+.ved, .vd{
+  padding-top: 200px;
 }
