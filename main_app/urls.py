@@ -23,13 +23,14 @@ urlpatterns = [
   path('accounts/signup/', views.signup, name='signup'),    
     # path('accounts/profile/', views.profile, name='profile'),
 
-  path('password-change/', ChangePasswordView.as_view(), name='password_change'),
-    path('password-change/', ChangePasswordView.as_view(), name='password_change'),
-    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
-    path('password-reset-confirm/<uidb64>/<token>/',
+  path('accounts/password_change/', ChangePasswordView.as_view(), name='password_change'),
+  # path('password-change/', ChangePasswordView.as_view(), name='password_change'),
+
+  path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+  path('password-reset-confirm/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
          name='password_reset_confirm'),
-    path('password-reset-complete/',
+  path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
   
