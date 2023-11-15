@@ -5,16 +5,11 @@
 
 <h1> Room Details </h1>
 <div class="container">
-  <!-- Slider main container -->
   <div class="swiper">
-    <!-- Additional required wrapper -->
-
-    <div class="swiper-wrapper">
-      <!-- Slides -->    
+    <div class="swiper-wrapper"> 
       <div class="swiper-slide">
-        
           {% load static %}
-      <img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+      <img width="250px" height="250px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
     </div>
       {% for roompic in room_pic %}
       <div class="swiper-slide">
