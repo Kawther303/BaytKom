@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
-<h2>Update Profile</h2>
+<div class="profileupdateform">
+  <h2 class="username-head">Update Profile</h2>
 
 
-{{user.username}}
+<div class="profilepicture">
 {% load static %}
-<img src="{% static user.profile.image|cut:'main_app/static' %}">
-
-
-<form method="post" enctype="multipart/form-data">
+<img src="{% static user.profile.image|cut:'main_app/static' %}" class="profilepicture">
+</div>
+<h4 class="username-head">{{user.username}}</h4>
+<form method="post" enctype="multipart/form-data" class="form-margin">
   {% csrf_token %}
   <a href="{% url 'password_change' %}">Change Password FOR {{ user.username}}</a>
   {{ form.as_p }}
   <button type="submit">Update</button>
 </form>
-
+</div>
 
 <script>
   let selectEl = document.getElementById('id_user_type');

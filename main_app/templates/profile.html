@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row my-3 p-3">
   {% if user.profile.image %}
-  <img src="{{ user.profile.image.url }}" />
+  <img src="{{ user.profile.image.url }}" class="profilepicture"/>
   {% else %}
   <p>No profile image available.</p>
   {% endif %}
