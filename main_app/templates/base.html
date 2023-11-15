@@ -50,7 +50,8 @@
           <li><a href="{% url 'login' %}">Login</a></li>
           <li><a href="{% url 'signup' %}">Signup</a></li>
           {% endif %}
-          {% if user.is_superuser %}
+
+          {% if user.profile.user_type == "ADMIN" %}
           <li> <a href="{% url 'admin_dashboard' user.id %}">Admin dashboard</a></li>
           
           {% endif %}
