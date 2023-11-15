@@ -20,11 +20,13 @@
 
   <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper blue-grey darken-4">
+      <div class="nav-wrapper">
         <ul>
+
           <li> <a href="{% url 'home' %}" class='left brand-logo'>
-            <!-- <img src="\static\uploads\Baytkom logo.png" alt="Baytkom"width="100px" height="65"> -->
-            <h4 class="Baytkom-Logo">B</h4>
+            <div class="h_logo">
+              <img src="{% static 'css/backgrounds/logo.jpg' %}" class="b_logo">aytkom</div>
+       
           </a></li>
         </ul>
 
@@ -41,7 +43,6 @@
           <li><a href="{% url 'profile' %}">Profile</a></li>
           
           <li> <a href="{% url 'user_booking' %}">User Bookings</a></li>
-
 
           <li> <a href="{% url 'room_booking' %}">Room Booking</a></li>
           <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -63,19 +64,10 @@
     {% endblock %}
   </main>
 
-  <footer class="page-footer black"> 
-
+  <footer class="page-footer "> 
     <div class="center">
       <h3 class="BaytKom-footer">Baytkom</h3> 
-      All Rights Reserved, &copy; 2023 BaytKom 
-      <p>888 Mannama Way, Bahrain ML 12345</p> 
-      <p>(+973) 654-3210888 </p> 
-      <img src="\static\image\icons8-twitter-50.png
-      " alt="insta"width="20px" height="20px">
-      <img src="\static\image\icons8-instagram-50.png
-      " alt="insta"width="20px" height="20px">
-      <img src="\static\image\icons8-facebook-50.png
-      " alt="insta"width="20px" height="20px">
+      All Rights Reserved, &copy; 2023 BaytKom   
     </div>
     
   </footer>

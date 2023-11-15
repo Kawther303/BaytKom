@@ -40,7 +40,6 @@ def about(request):
 def rooms_index(request):
     rooms = Room.objects.all()
 
-
     return render(request, 'rooms/index.html', {'rooms': rooms})
 
 # @login_required
@@ -52,6 +51,7 @@ def rooms_index(request):
 #     else:
 #         user=''
 #     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
+
 
 @login_required
 def admin_dashboard(request, user_id):
@@ -417,23 +417,15 @@ def cancel_Booking(request,booking):
 
 @login_required
 def room_Booking(request):
-
     context =[] 
     rooms = Room.objects.filter(user=request.user.id)
-    print("ussser:",request.user.id)
-    print("roooms:",rooms)
-    r = 0
-    b = 0
     for room in rooms:   
         bookings = Booking.objects.all().filter(room=room.id)
-        print("boook:",bookings)
         for booking in bookings:
             context.append({  
             "booking" : booking,
             "room": room
             })  
-
-
     return render(request, 'booking/room_booking.html',{'context' : context})
 
 
