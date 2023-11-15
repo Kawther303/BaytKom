@@ -116,7 +116,7 @@ font-size: 17px;
 
 
   .form_area{
-    margin-top: 30px;
+    margin-top: 10px;
     margin-left: 3px;
     font-size: 25px;
   }
@@ -137,17 +137,26 @@ font-size: 17px;
   }
 
   a {
+    /* check */
    color: #ffff;
+   /* color: #3f3c3c;  */
   }
   .n:hover {
     color: #ffff;
     background: #494545da;
   }
 footer, .page-footer{
-  background-color:#3f3c3c9c;
-   /* #989898ab; */
+  background-color: #989898ab;
   z-index: -1;
   /* #231f1f6d; */
   margin: 0 auto;
   padding-top: 0;
+}
+
+input[type=text] {
+  width: 60%;
+  /* padding: 12px 20px; */
+  margin: 8px 0;
+  /* box-sizing: border-box; */
+  background-color: #fff;
 }

@@ -1,24 +1,32 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<div class="row">
+<div class="row_admin">
 
-  <div class="col s12 m4 l3"> 
-    <div class="sidebar">
-      <ul class="sidebar-menu">
-        <li><a href="{% url 'facilities_index' %}" class="admin-nav">add facility</a></li>
-        
-        <li><a href="{% url 'room_create' %}">Add Room</a></li>
-        
-        <li><a href="{% url 'facilities_create' %}"> Facilities</a></li>
-      </ul>
+    <a href="{% url 'room_create' %}"> <div class="r"> <img src="{% static  'css/icons/addroom2.png' %}" width="50px" height="50px" ><br> Add Room  </div></a>
+
+
+    <a href="{% url 'facilities_create' %}">  <div class="r"> <img src="{% static  'css/icons/facility.png' %}" width="50px" height="50px"> <br>Add facility   </div></a>
+
+ 
+    <a href="{% url 'facilities_index' %}"> <div class="r"> <img src="{% static  'css/icons/fac_list.png' %}" width="50px" height="50px"> <br>Facility list  </div></a>
+
+  </div>
+  <!-- //////////////////// -->
+  <div class="row_admin">
+   
+      <a href="{% url 'facilities_index' %}"> <div class="r"> <img src="{% static  'css/icons/website.png' %}" width="50px" height="50px"> <br>Room Administration</div></a>
+    
+    
+      <a href="{% url 'room_booking' %}"><div class="r"> <img src="{% static  'css/icons/listing.png' %}"width="50px" height="50px" ><br>Booked Rooms  </div></a>
+  
+   
+      <a href="{% url 'other' %}"> <div class="r"> <img src="{% static  'css/icons/settings.png' %}"width="50px" height="50px"> <br>Others</div></a>
+    
     </div>
-  </div>
+  
 
-  <div class="col s12 m8 l9"> 
-    <h1>BaytKom</h1>
-  </div>
 
-</div>
 {% endblock %}

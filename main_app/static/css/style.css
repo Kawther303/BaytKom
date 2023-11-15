@@ -15,7 +15,7 @@ size: cover;
 
 }
 body{
-  background-image: url('./backgrounds/whitesideboar.jpg') ;
+  background-image: url('./backgrounds/living3.jpg') ;
   background-color: gray;
   display: flex;
   min-height: 100vh;
@@ -79,8 +79,13 @@ button{
 }
 
 nav,footer ,.page-footer{
-  background-color: #3f3c3c9c;
+  /* background-color: #3f3c3c9c; */
+  background-color: #c6bdbda3;
+  font-size: 14px;
   z-index: -1;
+  text-decoration-color: #3f3c3c;
+  color: #3f3c3c;
+
 }
 
 .container{
@@ -166,4 +171,34 @@ font-weight: bold;
 }
 .nav-wrapper,.navbar-fixed{
   height: 200px;
+  color: #3f3c3c; 
+}
+
+.right,.nav-wrapper{
+  color: black;
+  /* color: #3f3c3c;  */
+}
+a{
+  color:#000;
+}
+
+.row_admin{
+  display: flex;
+  justify-content: space-around;
+}
+.r{
+  margin-top: 50px;
+  padding-top: 15px;
+  width: 200px;
+  height: 150px;
+  font-size: 20px;
+  background-color: rgb(102, 102, 102);
+  border-radius: 20%;
+  color: #ffff;
+  font-weight: bold;
+  text-align: center;
+
+}
+.r:hover{
+background-color: #f9f4f4c9; 
 }
