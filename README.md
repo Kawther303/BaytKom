@@ -57,7 +57,7 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 - [ ] Adding Google Map Api's
 - [ ] Online Payment
 - [ ] Adding additional Booking Service
-
+- [ ] css styling
 
 
 
