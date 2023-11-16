@@ -328,6 +328,7 @@ footer, .page-footer{
   /* #231f1f6d; */
   margin: 0 auto;
   padding-top: 0;
+  width: 100%;
 }
 
 input[type=text] {
@@ -338,6 +339,24 @@ input[type=text] {
   background-color: #fff;
 }
 
+
 .ved, .vd{
   padding-top: 200px;
+}
+
+.space{
+  height: 200px;
+}
+.profile-picture{
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.right,
+.nav-wrapper {
+  color: black;
 }
