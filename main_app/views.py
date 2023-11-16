@@ -7,6 +7,7 @@ from .forms import RoomPicForm
 from .forms import ReviewForm
 from .forms import *
 import datetime
+from datetime import date
 from django.contrib.auth.views import PasswordResetView
 
 from django.contrib.auth.models import User
@@ -154,7 +155,6 @@ def room_detail_alt(request, room_id):
     }
     return render(request, 'detail_alt.html', {'room':room, 'context': context, 'room_pic':room_pic})
 
-
 @login_required
 def add_facility(request, room_id):
     form = FacilityForm(request.POST, request.FILES)
@@ -163,7 +163,6 @@ def add_facility(request, room_id):
         new_facility.room_id = room_id
         new_facility.save()
     return redirect('detail', room_id =room_id) 
-
 
 @login_required
 def add_roompic(request, room_id):
@@ -283,14 +282,10 @@ def add_booking(request, room_id, user_id):
  else:
     return HttpResponse ('<h3>looks that the room is already booked check other days !!</h3>')
 
-
-
 @login_required
 def booking_confirmation(request):
     req = request
     return HttpResponse (f'<h2> confirm booking for {req} </h2>')
-
-
 
 
 # to check if the room is available
@@ -301,13 +296,13 @@ def checkAvailable(room,check_in,check_out):
     booking_list = Booking.objects.filter(room_id=room,status='A')
 
 
+
     for booking in booking_list:
         if booking.from_date > the_check_out or booking.to_date <the_check_in:
             the_list.append(True)
         else:
             the_list.append(False)
     return all(the_list)
-
 
 def getRooms(request):
     if request.method == 'POST':
@@ -327,7 +322,6 @@ def getRooms(request):
             if checkAvailable(room.id,from_date,to_date):
                 the_available_rooms.append(room)
         return render(request, 'rooms/index.html', {'rooms': the_available_rooms ,'search':search ,'country':country ,'from_date': from_date, 'to_date':to_date   })
-
 
 def checkAvailability(request):
     context:[]
@@ -355,15 +349,16 @@ def checkAvailability(request):
 def user_Booking(request):
     context =[] 
     bookings = Booking.objects.all().filter(user=request.user)
-    
+    today = date.today()
     for book in bookings:
         room = Room.objects.filter(id=book.room.id)
         context.append({
         "booking" : book,
         "room": room[0],
+
     })    
     room = Room.objects.all()
-    return render(request, 'booking/user_booking.html',{'context' : context})
+    return render(request, 'booking/user_booking.html',{'context' : context, 'today':today})
 
 
 @login_required
@@ -404,16 +399,19 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+def room_review_list(request, room_id):
+    room = Room.objects.get(id=room_id)
+    reviews = Review.objects.filter(room_id=room_id)
+    review_form = ReviewForm()
+    return render(request, 'rooms/room_review_list.html', {'room':room, 'review_form': review_form, 'reviews': reviews})
+
 
 @login_required
 def room_review(request, room_id):
     room = Room.objects.get(id=room_id)
     reviews = Review.objects.filter(room_id=room_id)
-
     review_form = ReviewForm()
     return render(request, 'rooms/room_review.html', {'room':room, 'review_form': review_form, 'reviews': reviews})
-
-
 
 @login_required
 def add_review(request, room_id):
@@ -441,4 +439,6 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 @login_required
 def adminRoom_index(request):
     rooms = Room.objects.filter(user=request.user)
+
     return render(request, 'rooms/adminindex.html', {'rooms': rooms })
+

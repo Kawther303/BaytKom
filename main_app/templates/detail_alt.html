@@ -25,8 +25,7 @@
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-  
-  
+
   </div>
   </div>
   </div>
@@ -43,6 +42,7 @@
       <h6>Address:  {{room.address}}</h6>
       <h6>Location:  {{room.location}}</h6>
     </div>
+    <a href="{% url 'room_review_list' room.id %}"> <button id="btn_review" class="reviewBtn">Customer Reviews</button> </a>
       <div class="row">
         <div class="col s6 ">
           {% if room.facilities.count  %}
@@ -76,21 +76,21 @@
         
         <p id="date_note" class="red-text"></p>
         <p id="result"></p>
-        <h5> <span id="night_result"></span></h5><br>
-        <h5><span id="price_result" class="red-text"></span></h5> <br>
+        <div class="margin"><h5> <span id="night_result"></span></h5></div><br>
+        <div class="margin"><span id="price_result" class="red-text"></span></h5></div><h5> <br>
     
-        <div class="card check-margin">
+        <div  class="card check-margin">
    
           {% if context.check < 0  %}
-          <div class="card-panel red-text center-align">
+          <div class="card-panel red-text center-align" id="check_show1">
             {{room.name}} has already booked for selected days! 
             
             </div>
           {% elif context.check > 0  %}
-          <div class="card-panel teal-text center-align" > 
+          <div class="card-panel teal-text center-align text_show" id="check_show3"> 
              {{ room.name }} is available for selected days!
           <br>
-         
+
           <br> 
           <form method="GET" action="{% url 'booking_create' room.id %}">
             <input type="hidden" name="price_id" id="price_id"> 
@@ -103,7 +103,7 @@
 
            </div>
            {% else  %}
-           <div class="card-panel teal-text center-align" > 
+           <div class="card-panel teal-text center-align text_show"  id="check_show3"> 
               Check if room is available!
             </div> 
           {% endif %}
@@ -113,6 +113,9 @@
       <script>
           let fromDateEle = document.getElementById('check_in');
           let toDateEle = document.getElementById('check_out');
+          let showEle1 = document.getElementById('check_show1');
+          let showEle2 = document.getElementById('check_show2');
+          let showEle3 = document.getElementById('check_show3');
     
           M.Datepicker.init(fromDateEle, {format: 'yyyy-mm-dd',   defaultDate: new Date(),
             setDefaultDate: false,
@@ -132,7 +135,10 @@
   
 
     const calculateDifference=()=> {
- 
+      // showEle1.innerHTML='';
+      // showEle2.innerHTML='';
+   
+
       const date1 = new Date(fromDateEle.value);
       const date2 = new Date(toDateEle.value);
 

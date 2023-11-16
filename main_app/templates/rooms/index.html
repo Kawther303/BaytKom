@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<h1> Rooms List </h1>
 {% if country %}
   <h2> Search Result </h2>
-  <p> {{search }}: {{ country }}</p>
-  <p> Check-in: {{ from_date }}</p>
-  <p> Check-out: {{ to_date }}</p>
+  <p class="px"> {{search }}: {{ country }}</p>
+  <p class="px"></p> Check-in: {{ from_date }}</p>
+  <p class="px"> Check-out: {{ to_date }}</p>
   </div>
 
-  {%  else %}
-  <h1> Rooms List </h1>
-
 {% endif  %}
-
+{% if rooms %}
 {% for room in rooms %}
   <div class="row">
     <div class="col s6">
@@ -29,8 +26,6 @@
         <a href="{% url 'room_detail_alt' room.id %}"> <span class="card-title">{{ room.name }}</span>
         
 
-  
-
     <p>Price: {{ room.price }}</p>
       <p>Address: {{ room.address }}</p>
       <p>Description: {{ room.description }}</p>
@@ -40,5 +35,8 @@
         </div>
 
 {% endfor %}
+{% else %}
+<h2> No Rooms Available</h2>
+{% endif %}
 </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block content %}
 
 {% if context %}
-<h2>Booking List:</h2>
+<h1>Booking List</h1>
 {% for r in context %}
 
 <div class="card">
@@ -11,13 +11,14 @@
 
 <div class="flex-container"> 
 
-  
 <div>
 
 <span class="card-title">{{ r.booking.room }}</span>
 <a href="{% url 'room_detail_alt' r.room.id %}">
   <p class="px">Booking#: {{ r.booking.id }}</p>
-  <input type="text" id="check_date" value="{{r.booking.from_date}}">
+ {{today}}
+  <input type="hidden" id="check_date" value="{{r.booking.from_date}}">
+  <input type="hidden" id="check_out" value="{{r.booking.to_date}}">
   <p class="px">check-in: {{ r.booking.from_date }}</p>
   <p class="px">check-out: {{ r.booking.to_date }}</p>
 <p>Created by: {{ r.booking.user }}</p>
@@ -26,11 +27,18 @@
 <p>Guest Phone: {{ r.booking.guest_mobile }}</p>
 <p class="px">Booking Price: {{ r.booking.price }}</p>
  {% if r.booking.status == 'A' %}
-<p class="px">Status :<span class="teal-text">Confirm</span>  </p>
+  <p class="px">Status :<span class="teal-text">Confirm</span>  </p>
+  {% if  r.booking.to_date < today %}
+  <a href="{% url 'room_review' r.room.id%}"> 
+    <button id="btn_review" class="reviewBtn">Add Review</button>
+   </a>
+   {% else %}
+    <a href="{% url 'cancel_booking' r.booking.id %}"> <button id="btn_cancel" class="cancelBtn">Cancel</button> </a> 
+   {% endif %}
+ 
 
-<a href="{% url 'cancel_booking' r.booking.id %}"> <button id="btn_cancel" class="red-text">Cancel</button> </a> 
 {% else %}
-<p class="px">Status :<span class="red-text">Canceled</span>  </p>
+  <p class="px">Status :<span class="red-text">Canceled</span>  </p>
 {% endif %}
 
  </div>
@@ -42,7 +50,8 @@
 </div>
 
 </div>
-<a href="{% url 'room_review' r.room.id%}">Add Review</a>
+
+
 <div>
 
 {% endfor %}
@@ -54,12 +63,18 @@
 
 <script>
  const check_in = document.getElementById('check_date').value;
+ const check_out = document.getElementById('check_out').value;
  const today = new Date();
 
  if (check_in < today ){
   document.getElementById('btn_cancel').disabled = true; 
  }else {
   document.getElementById('btn_cancel').disabled = false; 
+ }
+ if (check_out > today ){
+  document.getElementById('btn_review').disabled = true; 
+ }else {
+  document.getElementById('btn_review').disabled = false; 
  }
 
 

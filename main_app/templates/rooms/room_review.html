@@ -4,7 +4,8 @@
 
 
 {% load static %}
-<img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+<div class="flex"><img width="350px" height="350px" src="{% static room.image|cut:'main_app/static/' %}" class="imgsize center"/>
+
 </div>
 
 <div class="card">
@@ -21,7 +22,7 @@
   <p>Location:  {{room.location}}</p>
 </div>
 
-<form method="POST" action="{% url 'add_review' room.id %}">
+<form method="POST" action="{% url 'add_review' room.id  %}">
   {% csrf_token %}
   {{ review_form.as_p }}
   <!-- <input type="hidden" name="room_id" value="{{ room.id }}"> -->
@@ -38,7 +39,7 @@
   </thead>
   <tbody>
     {% for review in reviews %}
-    <tr>
+    <tr class="card">
       <td>{{review.date}}</td>
       <td>{{review.comment}}</td>
       <td>{{review.get_rating_display}}</td>

@@ -21,10 +21,12 @@
   <header class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
+
         <ul>
           <li> <a href="{% url 'home' %}" class='left brand-logo'>
             <div class="h_logo">
               <img src="{% static 'css/backgrounds/logo.jpg' %}" class="b_logo">aytkom</div>
+
           </a></li>
         </ul>
         <ul class="right">
@@ -43,8 +45,11 @@
           {% endif %}
           {% if user.profile.user_type == "ADMIN" %}
           <li> <a href="{% url 'admin_dashboard' user.id %}">Admin dashboard</a></li>
+
           {% endif %}
+          
         </ul>
+
     </nav>
   </header>
 
