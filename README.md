@@ -28,9 +28,11 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 [ERD](https://i.imgur.com/IuQSRbn_d.jpg?maxwidth=520&shape=thumb&fidelity=high) 
 
 <img width="344" alt="ERD" src="https://i.imgur.com/IuQSRbn_d.jpg?maxwidth=520&shape=thumb&fidelity=high">
+
 ***
+
 #### WireFrame
-[WireFrame](https://www.figma.com/file/TQqDx9sk9tieYWaTXiYDUI/Untitled?type=design&node-id=29-457&mode=design&t=2FQarKHLpTc0bET7-0)
+[WireFrame](https://www.figma.com/file/TQqDx9sk9tieYWaTXiYDUI/Untitled?type=design&node-id=21%3A442&mode=design&t=UZtkJrV2E9PCa5oY-1)
 
 <img width="517" alt="WIREFRAME" src="https://i.imgur.com/axnH5kM_d.jpg?maxwidth=520&shape=thumb&fidelity=high">
 ***
@@ -38,10 +40,10 @@ Baytkom, a sleek and user-friendly web application powered by Python, Django, an
 ### ***Baytkom Screenshoots***
 
 ##### Baytkom HomePage
-![HomePage]()
+![HomePage](https://i.imgur.com/HVGFW5O_d.jpg?maxwidth=520&shape=thumb&fidelity=high)
 
 ##### Baytkom Admin Dashboard
-![Admin Dashboard]()
+![Admin Dashboard](https://i.imgur.com/lpeDHR5_d.jpg?maxwidth=520&shape=thumb&fidelity=high)
 ***
 ### Technologies 
 1. VS Code
