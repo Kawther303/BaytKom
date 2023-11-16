@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'baytkom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': os.getenv('DATABASEUSER'),
-        'HOST':os.getenv('DATABASEHOST'),
-        'PASSWORD': os.getenv('DATABASEPASSWORD'),
-        'NAME': os.getenv('DATABASENAME'),
-        'PORT':os.getenv('DATABASEPORT'), 
+        'NAME': 'fjbrsxqu',
+        'USER': 'fjbrsxqu',
+        'PASSWORD': 'EIaNcVGU23adhi0ZMwxqcJHY4aQCWBSL',
+        'HOST': 'flora.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
         # 'ENGINE': 'django.db.backends.postgresql',
