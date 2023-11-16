@@ -352,3 +352,8 @@ h1{
   margin-right: 20px;
 
 }
+
+#night_result, #price_result, .margin {
+   margin-left: 20px; 
+ font-size: 20px;
+}

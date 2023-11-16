@@ -323,7 +323,7 @@ font-size: 17px;
     height: 60px;
   }
 footer, .page-footer{
-  background-color: #989898ab;
+  background-color: #c6bdbda3;
   z-index: -1;
   /* #231f1f6d; */
   margin: 0 auto;
