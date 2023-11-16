@@ -22,12 +22,6 @@ body{
   min-height: 100vh;
   flex-direction: column;
   font-family: 'Quicksand', sans-serif;
-  /* font-family: 'Times New Roman', Times, serif; */
-  /* font-family: 'Dancing Script', cursive; */
-  /* color: black; */
-  /* background-image: url('main_app\static\uploads\moviebkg.jpg'); */
-/* z-index: 2; */
-
   background-size: cover;
   background-color: #fffefe5e;
 
@@ -67,21 +61,11 @@ button{
   margin-top: 0;
 }
 
-/* #background-video {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -1;
-  overflow: hidden;
-} */
 .f-btn{
   size: small;
 }
 
 nav,footer ,.page-footer{
-  /* background-color: #3f3c3c9c; */
   background-color: #c6bdbda3;
   /* 000000000000000000000000 */
   height: 175px;
@@ -93,8 +77,6 @@ nav,footer ,.page-footer{
 }
 
 .container{
-/* width:100%;
-height: 100vh; */
 width: 1200px;
 height: 750px;
 background: #050404ba;
@@ -108,8 +90,6 @@ justify-content: center;
 
 }
 .swiper-slide img{
-  /* width: 100%;
-  height: 80%; */
   width: 1200px;
   height: 700px;
 
@@ -128,16 +108,6 @@ justify-content: center;
 .sidebar-menu li {
   padding: 5px 0;
 }
-
-/* .sidebar-menu li a {
-  text-decoration: none;
-  color: #ebe2e220;
-} */
-/* 
- .sidebar-menu li a:hover {
-  color: #fff7f7c1;
-} */
-
 
 .sidebar-menu li a:hover {
   color: #000;
@@ -166,7 +136,7 @@ font-weight: bold;
   object-fit: cover;
   display: block;
   align-items: center;
-  
+  margin-left: 350px;
 }
 .username-head{
   text-align: center;
@@ -211,7 +181,6 @@ font-weight: bold;
 
 .right,.nav-wrapper{
   color: black;
-  /* color: #3f3c3c;  */
 }
 a{
   color:#000;
@@ -260,7 +229,6 @@ background-color: #f9f4f4c9;
 
 .right,.nav-wrapper{
   color: black;
-  /* color: #3f3c3c;  */
 }
 a{
   color:#000;
@@ -315,7 +283,6 @@ background-color: #f9f4f4c9;
 .right,
 .nav-wrapper {
   color: black;
-  /* color: #3f3c3c;  */
 }
 
 a {
@@ -345,6 +312,7 @@ a {
   background-color: #f9f4f4c9;
 }
 
+
 h1{
   margin-top: -110px;
   text-align: right;
@@ -357,3 +325,36 @@ h1{
    margin-left: 20px; 
  font-size: 20px;
 }
+
+.flex{
+  display: flex;
+  margin-left:10px ;
+}
+
+.all_btn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+.all_btn:hover {
+  background: #ddd;
+  color: black;
+}
+.cancelBtn{
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+.cancelBtn:hover {
+  background: red;
+  color: black;
+}
+

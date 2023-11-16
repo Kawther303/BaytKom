@@ -53,6 +53,26 @@
   <div class="space"></div>
 <div>
 
+
+  <div class="nav_list">
+    <div class="h_logo">
+    <img src="../static/css/backgrounds/logo.jpg" class="b_logo">aytkom</div>
+ 
+  <div class="n"><a href="{% url 'home' %}">Home</a></div>
+  <div class="n"><a href="{% url 'index_list' %}">Rooms</a></div>
+  
+  {% if user.is_authenticated %}
+  <div class="n"><a href="{% url 'user_booking' %}">User Bookings</a></div>
+  {% else %}
+    <div class="n"><a href="{% url 'signup' %}">Signup</a></div>
+  <div class="n"><a href="{% url 'login' %}">Login</a></div>
+  {% endif %}
+
+  {% if user.profile.user_type == "ADMIN" %}
+  <div class="n"><a href="{% url 'admin_dashboard' user.id %}">Admin Dashboard </a></div>
+  {% endif %}
+ </div></div>
+
 </div>
 
 

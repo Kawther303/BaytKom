@@ -37,26 +37,17 @@ def about(request):
     return render(request, 'about.html')
 
 
+def other(request):
+    return render(request, 'other.html')
 
 def rooms_index(request):
     rooms = Room.objects.all()
 
     return render(request, 'rooms/index.html', {'rooms': rooms})
 
-# @login_required
-# def rooms_adminindex(request):
-#     rooms = Room.objects.all()
-#     profile = Profile.objects.filter(user_id=request.user.id)
-#     if (profile):
-#         user = profile[0]
-#     else:
-#         user=''
-#     return render(request, 'rooms/index.html', {'rooms': rooms, 'user':user})
-
 
 @login_required
 def admin_dashboard(request, user_id):
-    # user = User.objects.get(id=user_id)
     profile = Profile.objects.filter(user_id=request.user.id)
     if (profile):
         user = profile[0]
@@ -90,11 +81,7 @@ class BookCreate(CreateView):
     fields = ['room', 'from_date', 'to_date', 'guest_name', 'guest_email', 'guest_mobile', 'price']
     success_url = '/rooms/'
 
-# @login_required
-# def rooms_showdetail(request, room_id):
-#     room = Room.objects.get(id=room_id)
-#     booking_form = BookingForm()
-#     return render(request, 'rooms/showDetail.html', {'room': room, 'booking_form': booking_form})
+
 
 def signup(request):
     error_message = ''
@@ -146,7 +133,7 @@ class FacilityDetail(LoginRequiredMixin, DetailView):
     model = Facility
 
 
-# room will display all the facility and have the form for adding new facility for specific image 
+# room will display all the facility and have the form for adding new facility for specific room 
 @login_required
 def rooms_detail(request, room_id):
     room = Room.objects.get(id=room_id)
@@ -191,11 +178,6 @@ def add_roompic(request, room_id):
     
     return render(request, 'add_roompic.html', {'form': form})
 
-# class RoomPicDetail(LoginRequiredMixin, DetailView):
-
-
-#     model = RoomPic
-#     fields = ['RoomPic']
 
 class FacilityUpdate(LoginRequiredMixin, UpdateView):
     model = Facility
@@ -209,13 +191,13 @@ class FacilityDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def assoc_facility(request, room_id, facility_id):
-    # Add this facility_id with the room selected (room_id)
+
     Room.objects.get(id=room_id).facilities.add(facility_id)
     return redirect('detail', room_id=room_id)
 
 @login_required
 def unassoc_facility(request, room_id, facility_id):
-    # remove this facility_id with the room selected (room_id)
+
     Room.objects.get(id=room_id).facilities.remove(facility_id)
     return redirect('detail', room_id=room_id)
 
@@ -252,19 +234,6 @@ def booking_create(request, room_id):
     return render(request, 'booking/detail.html', {'room' : room, 'booking_form':booking_form, 'user':user ,'context':context ,'email':email} )
 
 
-
-# @login_required
-# def add_booking(request, room_id, user_id):
-#   form = BookingForm(request.POST)
-#   if form.is_valid():
-#     new_booking = form.save(commit = False)
-#     new_booking.room = room_id
-#     new_booking.user = user_id
-#     new_booking.price = request.POST['price']
-#     new_booking.save()
-#   return render(request, 'booking/confirmation.html', {'booking' : form} )
-
-
 @login_required
 def booking_confirmation(request):
     return render(request, 'booking/booking_confirmation_email.html')
@@ -277,7 +246,7 @@ def add_booking(request, room_id, user_id):
  users = User.objects.get(username=request.user)
  user = Profile.objects.get(user_id=users.id)
  form = BookingForm(request.POST)
- check_room = checkAvailable(room_id,request.POST['from_date'],request.POST['to_date']);
+ check_room = checkAvailable(room_id,request.POST['from_date'],request.POST['to_date'])
  if check_room == True:
   if form.is_valid():
     new_booking = form.save(commit = False)
@@ -307,8 +276,6 @@ def add_booking(request, room_id, user_id):
           print("Email sent successfully")
     except BadHeaderError as e:
             print(f"Invalid header found. Email not sent. Error: {e}")
-
-    # return redirect(to='home')
     return render(request, 'booking/confirmation.html', {'booking' : booking} ) 
   else:
     return HttpResponse ('<h3>booking is having issue please retry again!</h3>') 
@@ -324,10 +291,11 @@ def booking_confirmation(request):
 # to check if the room is available
 def checkAvailable(room,check_in,check_out):
     the_list = []  
- 
     the_check_in = datetime.datetime.strptime(check_in, "%Y-%m-%d").date()
     the_check_out = datetime.datetime.strptime(check_out, "%Y-%m-%d").date()
     booking_list = Booking.objects.filter(room_id=room,status='A')
+
+
 
     for booking in booking_list:
         if booking.from_date > the_check_out or booking.to_date <the_check_in:
@@ -361,12 +329,8 @@ def checkAvailability(request):
     check_in = request.GET['check_in']
     check_out = request.GET['check_out']
 
-    print('room_id',room_id)
-    print('check_in',check_in)
-    print('check_out',check_out)
 
     check = checkAvailable(room_id,check_in,check_out) 
-    print('check', check )
     if (check == True):
         ch = 1
     else:
@@ -434,41 +398,6 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         profile.save()
         return super().form_valid(form)
 
-# class ReviewList(LoginRequiredMixin, ListView):
-#     model = Review
-    
-
-
-# class ReviewCreate(LoginRequiredMixin, CreateView):
-#     model = Review
-#     fields = ['comment', 'date']
-
-#     def form_valid(self, form):
-#         form.instance.room_id = self.request.room_id
-#         return super().form_valid(form)
-
-
-
-# @login_required
-# def add_review(request, room_id):
-#     print('room_id', room_id)
-#     room = Room.objects.get(id=room_id)
-#     print('fff', room)
-#     # room = rooms[0]
-
-#     if request.method == 'POST':
-#         form = ReviewForm(request.POST)
-#         if form.is_valid():
-#             print('userrrrrrrrrrr', request.user.id)
-#             new_review = form.save(commit=False)
-#             new_review.room_id = room_id
-#             new_review.user_id = request.user.id
-#             new_review.save()
-#             return render('add_review', {'room' : room, 'form': form})
-#     else:
-#         form = ReviewForm()
-    
-#         return render(request, 'add_review.html', {'room' : room, 'form': form})
 
 def room_review_list(request, room_id):
     room = Room.objects.get(id=room_id)
@@ -510,6 +439,6 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 @login_required
 def adminRoom_index(request):
     rooms = Room.objects.filter(user=request.user)
-    print("ussser:",request.user.id)
-    print("roooms:",rooms)
+
     return render(request, 'rooms/adminindex.html', {'rooms': rooms })
+

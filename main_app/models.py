@@ -25,7 +25,6 @@ RATING=(
 #  user_type = models.CharField(choices=UserType, default=UserType[1][0], max_length=10)
 
 class Facility(models.Model):
-
   name = models.CharField(max_length=100, default="")
   description = models.TextField(max_length=250, blank=True)
   icon = models.ImageField(upload_to = "main_app/static/facilityImg", blank=True, null=True)
@@ -36,7 +35,7 @@ class Facility(models.Model):
 
 
   def get_absolute_url(self):
-    return reverse('detail', kwargs={'pk': self.id})
+    return reverse('facilities_detail', kwargs={'pk': self.id})
 
 
 
