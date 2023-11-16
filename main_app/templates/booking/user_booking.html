@@ -30,7 +30,7 @@
   <p class="px">Status :<span class="teal-text">Confirm</span>  </p>
   {% if  r.booking.to_date < today %}
   <a href="{% url 'room_review' r.room.id%}"> 
-    <button id="btn_review" class="reviewBtn">Add Review</button>
+    <button id="btn_review" class="all_btn">Add Review</button>
    </a>
    {% else %}
     <a href="{% url 'cancel_booking' r.booking.id %}"> <button id="btn_cancel" class="cancelBtn">Cancel</button> </a> 

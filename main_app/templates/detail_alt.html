@@ -42,7 +42,7 @@
       <h6>Address:  {{room.address}}</h6>
       <h6>Location:  {{room.location}}</h6>
     </div>
-    <a href="{% url 'room_review_list' room.id %}"> <button id="btn_review" class="reviewBtn">Customer Reviews</button> </a>
+    <a href="{% url 'room_review_list' room.id %}"> <button id="btn_review" class="all_btn">Customer Reviews</button> </a>
       <div class="row">
         <div class="col s6 ">
           {% if room.facilities.count  %}
